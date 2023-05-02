@@ -7,8 +7,13 @@ import { BackgroundColor, FontSize } from '../../GlobalStyles';
 
 
 
-const InputField=( {source, placeholder, value, dateInput, onDateChange, dateValue})=>{
-    return (
+const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChange, dateValue})=>{
+   
+ 
+ 
+  
+  
+  return (
       <View
         style={{
           width: '100%',
@@ -24,7 +29,7 @@ const InputField=( {source, placeholder, value, dateInput, onDateChange, dateVal
 
         <TextInput
           style={{marginLeft: 12, fontSize: FontSize.for_caption}}
-          placeholder={placeholder}></TextInput>
+          placeholder={placeholder} value={value} ></TextInput>
       </View>
     );
 }

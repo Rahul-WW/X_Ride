@@ -25,6 +25,8 @@ const OnboardingScreen1 = ({navigation}) => {
       <ImageBackground
         source={require('../images/OnboardingImage1.png')}
         style={{resizeMode: 'cover', width, height, position: 'relative'}}>
+
+          
         {/* main container strts */}
         <View style={styles.container}>
           <View style={styles.titleBox}>
@@ -48,7 +50,7 @@ const OnboardingScreen1 = ({navigation}) => {
           <View style={styles.lowerContainer}>
             <Pressable
               style={[styles.skip, styles.skipPosition]}
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() => navigation.navigate('SignIn')}>
               <Text style={styles.nextTypo}>Skip</Text>
             </Pressable>
             <Pressable

@@ -9,21 +9,42 @@ import {
   Dimensions,
   Pressable,
   Image,
- 
+  Alert,
+  Platform,
 } from 'react-native';
 const {width, height} = Dimensions.get('window');
-import CheckBox from "react-native-check-box"
-
+import CheckBox from 'react-native-check-box';
 
 import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
-
-
-
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const SignUp = ({navigation}) => {
-    const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [text, setText] = useState('');
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(!show);
+    setDate(currentDate);
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      '/' +
+      (tempDate.getMonth() + 1) +
+      '/' +
+      tempDate.getFullYear();
+    setText(fDate);
+  };
+
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
   return (
     <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
@@ -51,11 +72,15 @@ const SignUp = ({navigation}) => {
           />
         </View>
         <View style={styles.inputDivs}>
-          <InputField
-            placeholder="Date of Birth"
-            source={require('../images/dobInputIcon.png')}
-          />
+          <Pressable onPress={() => showMode('date')}>
+            <InputField
+              placeholder="Date of Birth"
+              source={require('../images/dobInputIcon.png')}
+              value={text}
+            />
+          </Pressable>
         </View>
+
         <View style={styles.inputDivs}>
           <InputField
             placeholder="Email id"
@@ -77,14 +102,11 @@ const SignUp = ({navigation}) => {
 
         <View style={styles.checkBoxDiv}>
           <CheckBox
-          style={{padding: 0}}
+            style={{borderColor: 'red', width: 18}}
             isChecked={isChecked}
             onClick={() => setIsChecked(!isChecked)}
             checkedImage={
-              <Image
-                source={require('../images/checkedCheckBox.png')}
-              
-              />
+              <Image source={require('../images/checkedCheckBox.png')} />
             }
           />
           <View style={styles.checkboxTextDiv}>
@@ -108,13 +130,28 @@ const SignUp = ({navigation}) => {
               Have an account?
               <Text
                 style={styles.signInText}
-                onPress={() => navigation.navigate('Login')}>
+                onPress={() => navigation.navigate('SignIn')}>
                 {' '}
                 Sign In
               </Text>
             </Text>
           </View>
         </View>
+
+        {/* this is date picker */}
+        <View>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
+        </View>
+        {/* date picker upto here */}
       </View>
     </SafeAreaView>
   );
@@ -167,7 +204,7 @@ const styles = StyleSheet.create({
   checkBoxDiv: {
     height: 44,
     marginTop: 16,
-    borderWidth: 1,
+
     flexDirection: 'row',
   },
   checkboxText: {
@@ -180,7 +217,6 @@ const styles = StyleSheet.create({
   },
   checkboxTextDiv: {
     marginLeft: 8,
-    borderWidth: 1,
   },
   registerBtnDiv: {
     marginTop: 24,

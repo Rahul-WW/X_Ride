@@ -23,7 +23,7 @@ import OnboardingScreen2 from './src/screens/OnboardingScreen2';
 import OnboardingScreen3 from './src/screens/OnboardingScreen3';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUp from './src/screens/SignUp';
-import Login from "./src/screens/Login"
+import SignIn from './src/screens/SignIn';
 const Stack = createNativeStackNavigator();
 
 
@@ -42,9 +42,8 @@ function App() {
         <Stack.Screen name="OnboardingScreen1" component={OnboardingScreen1} />
         <Stack.Screen name="OnboardingScreen2" component={OnboardingScreen2} />
         <Stack.Screen name="OnboardingScreen3" component={OnboardingScreen3} />
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
-        
       </Stack.Navigator>
     </NavigationContainer>
   );
