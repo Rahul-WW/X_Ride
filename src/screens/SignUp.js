@@ -18,6 +18,7 @@ import CheckBox from 'react-native-check-box';
 import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import XBtn from '../components/XBtn';
 
 const SignUp = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -47,7 +48,7 @@ const SignUp = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
+    <SafeAreaView style={{backgroundColor: '#F3F7FA', height}}>
       <Image
         style={{width: '100%'}}
         source={require('../images/XRideIcon.png')}
@@ -118,11 +119,12 @@ const SignUp = ({navigation}) => {
         </View>
 
         <View style={styles.registerBtnDiv}>
-          <Pressable>
-            <Image
+          <Pressable onPress={() => navigation.navigate('EnterOTP')}>
+            {/* <Image
               style={{width: '100%'}}
               source={require('../images/registerBtn.png')}
-            />
+            /> */}
+            <XBtn Btnwidth={"100%"} textInsideBtn="REGISTER" goTo={"EnterOTP"}/>
           </Pressable>
 
           <View style={styles.haveAnAccountBox}>
@@ -152,6 +154,9 @@ const SignUp = ({navigation}) => {
           )}
         </View>
         {/* date picker upto here */}
+
+
+       
       </View>
     </SafeAreaView>
   );
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova-Regular',
     letterSpacing: 0.32,
 
-    lineHeight: 16 * 1.4,
+    lineHeight: 20 * 1.4,
   },
   signcaptionTextBox: {
     top: 12,

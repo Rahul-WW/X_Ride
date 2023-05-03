@@ -12,7 +12,7 @@ const GoBackBtn = () => {
   };
 
   return (
-    <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={handlePress} style={{marginTop:16}}>
       <Image
         
         resizeMode="cover"

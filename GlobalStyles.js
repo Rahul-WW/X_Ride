@@ -26,3 +26,16 @@ export const BackgroundColor = {
 export const BorderRadius={
     for_input: 16,
 }
+
+export const LetterSpacing = {
+  letterSpacing: 0.32,
+};
+
+export const LineHeight = {
+  lineHeight: 16 * 1.4,
+};
+
+
+export const FontFamily = {
+  fontFamily: 'ProximaNova-Regular',
+};

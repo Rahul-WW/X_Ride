@@ -17,6 +17,7 @@ import {
 const {width, height} = Dimensions.get('window');
 
 const COLORS = {primary: '#282534', white: '#fff'};
+import XBtn from '../components/XBtn';
 
 const OnboardingScreen3 = ({navigation}) => {
   return (
@@ -53,7 +54,13 @@ const OnboardingScreen3 = ({navigation}) => {
             <Pressable
               onPress={() => navigation.navigate('SignUp')}
               style={[styles.skip, styles.skipPosition]}>
-              <Image source={require('../images/getStartedBtn.png')} />
+              <View>
+                <XBtn
+                  Btnwidth={177}
+                  textInsideBtn="Get Started"
+                  goTo="SignUp"
+                />
+              </View>
             </Pressable>
           </View>
         </View>

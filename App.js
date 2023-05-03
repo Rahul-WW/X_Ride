@@ -24,6 +24,8 @@ import OnboardingScreen3 from './src/screens/OnboardingScreen3';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignUp from './src/screens/SignUp';
 import SignIn from './src/screens/SignIn';
+import EnterOTP from './src/screens/EnterOTP';
+import Home from "./src/screens/Home"
 const Stack = createNativeStackNavigator();
 
 
@@ -44,6 +46,8 @@ function App() {
         <Stack.Screen name="OnboardingScreen3" component={OnboardingScreen3} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="EnterOTP" component={EnterOTP} />
+        <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -18,6 +18,7 @@ import {
 const {width, height} = Dimensions.get('window');
 
 const COLORS = {primary: '#282534', white: '#fff'};
+import XBtn from '../components/XBtn';
 
 const OnboardingScreen1 = ({navigation}) => {
   return (
@@ -25,8 +26,6 @@ const OnboardingScreen1 = ({navigation}) => {
       <ImageBackground
         source={require('../images/OnboardingImage1.png')}
         style={{resizeMode: 'cover', width, height, position: 'relative'}}>
-
-          
         {/* main container strts */}
         <View style={styles.container}>
           <View style={styles.titleBox}>
@@ -56,7 +55,13 @@ const OnboardingScreen1 = ({navigation}) => {
             <Pressable
               onPress={() => navigation.navigate('OnboardingScreen2')}
               style={[styles.skip, styles.skipPosition]}>
-              <Image source={require('../images/NextBtn.png')} />
+              <View>
+                <XBtn
+                  Btnwidth={127}
+                  textInsideBtn="Next"
+                  goTo='OnboardingScreen2'
+                />
+              </View>
             </Pressable>
           </View>
         </View>
