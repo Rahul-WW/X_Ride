@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
+  ScrollView
 } from 'react-native';
 import XBtn from '../components/XBtn';
 const {width, height} = Dimensions.get('window');
@@ -24,58 +25,64 @@ import InputField from '../components/InputField';
 const SignIn = ({navigation}) => {
   return (
     <SafeAreaView style={styles.background}>
-      <ImageBackground
-        source={require('../images/signInPic.png')}
-        style={styles.bgImage}>
-        <View style={styles.bgText}>
-          <Text style={styles.signInText}>Sign In</Text>
-          <Text style={styles.captionText}>
-            We are happy to see you again! You can continue where you left by
-            logging in.
-          </Text>
-        </View>
-      </ImageBackground>
+      <ScrollView>
+        <View>
+          <ImageBackground
+            source={require('../images/signInPic.png')}
+            style={styles.bgImage}>
+            <View style={styles.bgText}>
+              <Text style={styles.signInText}>Sign In</Text>
+              <Text style={styles.captionText}>
+                We are happy to see you again! You can continue where you left
+                by logging in.
+              </Text>
+            </View>
+          </ImageBackground>
 
-      <View style={styles.belowImgBox}>
-        <View style={styles.inputDivs}>
-          <InputField
-            placeholder="Email id"
-            source={require('../images/emailIcon.png')}
-          />
-        </View>
+          <View style={styles.belowImgBox}>
+            <View style={styles.inputDivs}>
+              <InputField
+                placeholder="Email id"
+                source={require('../images/emailIcon.png')}
+              />
+            </View>
 
-        <View style={[styles.inputDivs, styles.inputDivs2]}>
-          <InputField
-            placeholder="Password"
-            source={require('../images/passwordIcon.png')}
-          />
-        </View>
+            <View style={[styles.inputDivs, styles.inputDivs2]}>
+              <InputField
+                placeholder="Password"
+                source={require('../images/passwordIcon.png')}
+              />
+            </View>
 
-        {/* <View style={styles.forgetTextDiv}>
+            {/* <View style={styles.forgetTextDiv}>
           <Text>Forget Password</Text>
         </View> */}
-        <View style={styles.forgotTextDiv}>
-          <Text style={styles.forgotText}>Forgot password?</Text>
-        </View>
+            <View style={styles.forgotTextDiv}>
+              <Text
+                style={styles.forgotText}
+                onPress={() => navigation.navigate('ForgotPassword')}>
+                Forgot password?
+              </Text>
+            </View>
 
-        <View>
-          <XBtn Btnwidth={'100%'} textInsideBtn="SIGN IN" goTo="Home" />
-        </View>
+            <View>
+              <XBtn Btnwidth={'100%'} textInsideBtn="SIGN IN" goTo="Home" />
+            </View>
 
-        <View style={styles.newUser}>
-          <Text style={styles.newUserText}>
-            New User?
-            <Text
-              style={styles.newUserRegisterText}
-              onPress={() => navigation.navigate('SignUp')}>
-              {' '}
-              Register
-            </Text>
-          </Text>
+            <View style={styles.newUser}>
+              <Text style={styles.newUserText}>
+                New User?
+                <Text
+                  style={styles.newUserRegisterText}
+                  onPress={() => navigation.navigate('SignUp')}>
+                  {' '}
+                  Register
+                </Text>
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-
-      
+      </ScrollView>
     </SafeAreaView>
   );
 };

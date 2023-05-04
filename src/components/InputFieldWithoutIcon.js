@@ -1,31 +1,17 @@
 import React from 'react';
-import {
-  TextInput,
-  View,
-  Image,
-  StyleSheet,
-  Dimensions,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import {TextInput, View, Image, StyleSheet} from 'react-native';
 //import DateTimePicker from 'react-native-community/datetimepicker';
-import { BackgroundColor, FontSize } from '../../GlobalStyles';
-const {width, height}= Dimensions.get("window")
+import {BackgroundColor, FontSize} from '../../GlobalStyles';
 
-
-
-
-
-const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChange, dateValue, source2})=>{
-   
-
-  const handleHideViaInput=()=>{
- Alert.alert("yess")
-  }
- 
- 
+const InputFieldWithoutIcon = ({
   
-  
+  placeholder,
+  value,
+  dateInput,
+  OpenModal,
+  onDateChange,
+  dateValue,
+}) => {
   return (
     <View
       style={{
@@ -38,8 +24,6 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChang
         alignItems: 'center',
         borderColor: '#E3E9ED',
       }}>
-      <Image style={{marginLeft: 20}} source={source} />
-
       <TextInput
         style={{
           marginLeft: 12,
@@ -55,11 +39,8 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChang
         scrollEnabled={true}
         placeholder={placeholder}
         value={value}></TextInput>
-    
     </View>
   );
-}
+};
 
-
-
-export default InputField
+export default InputFieldWithoutIcon;

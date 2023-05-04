@@ -52,7 +52,7 @@ const SingleBoxOtp = () => {
   return (
     <View
       style={{
-        width: 54,
+        width: 56,
         height: 56,
         borderRadius: 16,
         borderColor: '#E3E9ED',
@@ -109,7 +109,10 @@ const styles = StyleSheet.create({
   FourBoxCombine: {
     height: 56,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    
+    
+    justifyContent:"space-around",
+    
   },
   timer: {
     marginTop: 162,

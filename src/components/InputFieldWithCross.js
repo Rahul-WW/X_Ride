@@ -9,23 +9,22 @@ import {
   TouchableOpacity,
 } from 'react-native';
 //import DateTimePicker from 'react-native-community/datetimepicker';
-import { BackgroundColor, FontSize } from '../../GlobalStyles';
-const {width, height}= Dimensions.get("window")
+import {BackgroundColor, FontSize} from '../../GlobalStyles';
+const {width, height} = Dimensions.get('window');
 
-
-
-
-
-const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChange, dateValue, source2})=>{
-   
-
-  const handleHideViaInput=()=>{
- Alert.alert("yess")
-  }
- 
- 
+const InputFieldWithCross = ({
+  source,
+  placeholder,
+  value,
+  dateInput,
+  OpenModal,
+  onDateChange,
+  dateValue,
+  source2,
+  handleHideRouteInput,
+}) => {
   
-  
+
   return (
     <View
       style={{
@@ -55,11 +54,19 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChang
         scrollEnabled={true}
         placeholder={placeholder}
         value={value}></TextInput>
-    
+      <TouchableOpacity
+        onPress={handleHideRouteInput}
+        style={{
+          borderColor: 'red',
+          borderWidth: 1,
+          width: 20,
+          height: 20,
+          marginRight: 20,
+        }}>
+        <Image source={source2} />
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
-
-
-export default InputField
+export default InputFieldWithCross;

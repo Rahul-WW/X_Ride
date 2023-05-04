@@ -26,6 +26,10 @@ import SignUp from './src/screens/SignUp';
 import SignIn from './src/screens/SignIn';
 import EnterOTP from './src/screens/EnterOTP';
 import Home from "./src/screens/Home"
+import ForgotPassword from './src/screens/ForgotPassword';
+import CreatNewPass from './src/screens/CreatNewPass';
+import Quotes from './src/screens/Quotes';
+import Location from './src/screens/Location';
 const Stack = createNativeStackNavigator();
 
 
@@ -48,6 +52,10 @@ function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="EnterOTP" component={EnterOTP} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="CreatNewPass" component={CreatNewPass} />
+        <Stack.Screen name="Quotes" component={Quotes} />
+        <Stack.Screen name="Location" component={Location} />
       </Stack.Navigator>
     </NavigationContainer>
   );
