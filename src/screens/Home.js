@@ -1,4 +1,4 @@
-import React, {useState}from 'react';
+import React, {useState} from 'react';
 
 import {
   SafeAreaView,
@@ -12,7 +12,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   Pressable,
- 
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -24,20 +23,13 @@ const {width, height} = Dimensions.get('window');
 import XBtn from '../components/XBtn';
 
 const Home = ({navigation}) => {
-
   const [isChecked, setIsChecked] = useState(false);
 
-  const [showViaRouteInput, setShowViaRouteInput]= useState(true)
+  const [showViaRouteInput, setShowViaRouteInput] = useState(true);
 
-  
-
-
-  const handleHideRouteInput=()=>{
-    setShowViaRouteInput(false)
-  }
-
-
-
+  const handleHideRouteInput = () => {
+    setShowViaRouteInput(false);
+  };
 
   return (
     <SafeAreaView
@@ -71,45 +63,51 @@ const Home = ({navigation}) => {
           </View>
           <View style={styles.lowercontainer}>
             <View style={styles.inputDivs}>
-              <Pressable onPress={()=> navigation.navigate("Location")}>
+              <Pressable onPress={() => navigation.navigate('Location')}>
                 <InputField
                   placeholder="Pickup Location"
                   source={require('../images/pickupIcon.png')}
                 />
               </Pressable>
             </View>
-            <View style={styles.line}></View>
-            <View style={styles.viaBox}>
-              <TouchableOpacity onPress={() => setShowViaRouteInput(true)}>
-                <Image source={require('../images/viaIcon.png')} />
-              </TouchableOpacity>
 
-              <Text>Via</Text>
-            </View>
-            <View style={[styles.inputDivs, styles.inputDivs2]}>
+            <View style={styles.line}></View>
+
+            <View style={styles.viaRouteBox}>
+              <View style={styles.viaSmallbox}>
+                <TouchableOpacity onPress={() => setShowViaRouteInput(true)}>
+                  <Image source={require('../images/viaIcon.png')} />
+                </TouchableOpacity>
+
+                <Text style={styles.viaText}>Via</Text>
+              </View>
+
               {showViaRouteInput && (
-                <InputFieldWithCross
-                  placeholder="Via Route"
-                  source={require('../images/viaRouteIcon.png')}
-                  source2={require('../images/crossIcon.png')}
-                  handleHideRouteInput={handleHideRouteInput}
-                />
+                <View style={[styles.inputDivs, styles.inputDiv2]}>
+                  <InputFieldWithCross
+                    placeholder="Via Route"
+                    source={require('../images/viaRouteIcon.png')}
+                    source2={require('../images/crossIcon.png')}
+                    handleHideRouteInput={handleHideRouteInput}
+                  />
+                </View>
               )}
             </View>
-            <View style={styles.line2}></View>
-            <View style={[styles.inputDivs, styles.inputDivs3]}>
+            {showViaRouteInput && <View style={styles.line2}></View>}
+
+            <View style={[styles.inputDivs, styles.inputDiv3]}>
               <InputField
                 placeholder="Drop Location"
                 source={require('../images/dropIcon.png')}
               />
             </View>
-            <View style={[styles.inputDivs, styles.inputDivs4]}>
+            <View style={[styles.inputDivs, styles.inputDiv4]}>
               <InputField
                 placeholder="Pickup Date and Time"
                 source={require('../images/dobInputIcon.png')}
               />
             </View>
-            <View style={[styles.inputDivs, styles.inputDivs5]}>
+            <View style={[styles.inputDivs, styles.inputDiv5]}>
               <InputField
                 placeholder="Passengers"
                 source={require('../images/nameInputIcon.png')}
@@ -117,7 +115,7 @@ const Home = ({navigation}) => {
             </View>
             <View style={styles.checkBoxDiv}>
               <CheckBox
-                style={{borderColor: 'red', width: 18}}
+                style={{width: 18}}
                 isChecked={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
                 checkedImage={
@@ -149,6 +147,12 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
   backGround: {
     backgroundColor: '#F3F7FA',
+    // borderColor: 'red',
+    // borderWidth: 1,
+  },
+  viaText:{
+  fontWeight:400,
+  fontSize:16,
   },
   logoBox: {
     width,
@@ -184,6 +188,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
 
     position: 'relative',
+   
   },
   imageContainer: {
     borderRadius: 16,
@@ -202,29 +207,37 @@ const styles = StyleSheet.create({
     top: '77.87%',
     fontSize: 18,
     color: 'white',
-    // fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNova-Regular',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
     fontWeight: 600,
   },
   inputDivs: {
-    margintop: 20,
     height: 56,
   },
-  inputDivs2: {
-    top: 12 + 12 + 22,
-    zIndex: -1,
+  viaRouteBox: {
+    marginTop: 12,
+    position: 'relative',
   },
-  inputDivs3: {
-    top: 12 + 8,
-    zIndex: -1,
+  viaSmallbox: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 8,
   },
-  inputDivs4: {
-    top: 12 + 8 + 20,
+  inputDiv2: {
+    marginTop: 12,
+    marginBottom: 8,
   },
-  inputDivs5: {
-    top: 12 + 8 + 22 + 20,
+  inputDiv3: {
+    marginTop: 12,
   },
+  inputDiv4: {
+    marginTop: 20,
+  },
+  inputDiv5: {
+    marginTop: 20,
+  },
+
   line: {
     height: 70,
     width: 0,
@@ -235,9 +248,10 @@ const styles = StyleSheet.create({
     left: 32,
     color: '#4F565E',
     top: 44,
+    zIndex:1
   },
   line2: {
-    height: 44,
+   height:44,
     width: 0,
     borderColor: 'black',
     borderStyle: 'dashed',
@@ -245,26 +259,18 @@ const styles = StyleSheet.create({
     zIndex: 1,
     left: 32,
     color: '#4F565E',
-    top: 32,
-    position:"relative"
+   position:"absolute",
+   top:132,
+   zIndex:1
+    
   },
-  viaBox: {
-    height: 22,
-    position: 'absolute',
-    right: 0,
-    flexDirection: 'row',
-    gap: 8,
-    top: 68,
-  },
+  
   checkBoxDiv: {
     height: 22,
-    top: 20,
+    marginTop: 20,
 
-    marginTop: 20 + 44,
     flexDirection: 'row',
-    marginBottom: 32,
-    // borderColor:"red",
-    // borderWidth:1
+    marginBottom: 20,
   },
   checkboxText: {
     fontFamily: 'ProximaNova-Regular',
@@ -281,12 +287,12 @@ const styles = StyleSheet.create({
     width,
     backgroundColor: 'white',
     height: 72,
-  
+
     paddingTop: 12,
     paddingHorizontal: 20,
 
     paddingBottom: 12,
-    position:"absolute",
+    position: 'absolute',
     left: 0,
     bottom: 0,
   },

@@ -57,8 +57,7 @@ const InputFieldWithCross = ({
       <TouchableOpacity
         onPress={handleHideRouteInput}
         style={{
-          borderColor: 'red',
-          borderWidth: 1,
+         
           width: 20,
           height: 20,
           marginRight: 20,
