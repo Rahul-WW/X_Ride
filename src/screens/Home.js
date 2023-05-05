@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, createContext } from 'react';
 
 import {
   SafeAreaView,
@@ -12,6 +12,8 @@ import {
   ImageBackground,
   TouchableOpacity,
   Pressable,
+  ScrollView,
+  Alert
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -20,133 +22,144 @@ import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
 import InputFieldWithCross from '../components/InputFieldWithCross';
 const {width, height} = Dimensions.get('window');
-import XBtn from '../components/XBtn';
+import {DrawerActions} from 'react-navigation';
+
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+import { useNavigation } from '@react-navigation/native';
 
-const Home = ({navigation}) => {
+const Home = () => {
+  const navigation = useNavigation();
+
   const [isChecked, setIsChecked] = useState(false);
-
   const [showViaRouteInput, setShowViaRouteInput] = useState(true);
 
+  
   const handleHideRouteInput = () => {
     setShowViaRouteInput(false);
   };
 
   return (
-    <SafeAreaView
-      style={{
-        position: 'relative',
+    <ScrollView>
+      <SafeAreaView
+        style={{
+          position: 'relative',
 
-        height,
-        backgroundColor: '#F3F7FA',
-        flex: 1,
-      }}>
-      <View style={styles.backGround}>
-        <View style={styles.logoBox}>
-          <Image
-            style={styles.menulogo}
-            source={require('../images/menuIcon.png')}
-          />
-          <Image style={styles.xlogo} source={require('../images/xLogo.png')} />
-          <Image
-            style={styles.belllogo}
-            source={require('../images/bellIcon.png')}
-          />
-        </View>
-        <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            <ImageBackground
-              style={styles.imageOnHome}
-              resizeMode="cover"
-              source={require('../images/imageOnHome.png')}>
-              <Text style={styles.textOnImage}>Book Your Ride!</Text>
-            </ImageBackground>
+          height,
+          backgroundColor: '#F3F7FA',
+          flex: 1,
+        }}>
+        <View style={styles.backGround}>
+          <View style={styles.logoBox}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Image
+                style={styles.menulogo}
+                source={require('../images/menuIcon.png')}
+              />
+            </TouchableOpacity>
+
+            <Image
+              style={styles.xlogo}
+              source={require('../images/xLogo.png')}
+            />
+            <Image
+              style={styles.belllogo}
+              source={require('../images/bellIcon.png')}
+            />
           </View>
-          <View style={styles.lowercontainer}>
-            <View style={styles.inputDivs}>
-              <Pressable onPress={() => navigation.navigate('Location')}>
-                <InputField
-                  placeholder="Pickup Location"
-                  source={require('../images/pickupIcon.png')}
-                />
-              </Pressable>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              <ImageBackground
+                style={styles.imageOnHome}
+                resizeMode="cover"
+                source={require('../images/imageOnHome.png')}>
+                <Text style={styles.textOnImage}>Book Your Ride!</Text>
+              </ImageBackground>
             </View>
-
-            <View style={styles.line}></View>
-
-            <View style={styles.viaRouteBox}>
-              <View style={styles.viaSmallbox}>
-                <TouchableOpacity onPress={() => setShowViaRouteInput(true)}>
-                  <Image source={require('../images/viaIcon.png')} />
-                </TouchableOpacity>
-
-                <Text style={styles.viaText}>Via</Text>
+            <View style={styles.lowercontainer}>
+              <View style={styles.inputDivs}>
+                <Pressable onPress={() => navigation.navigate('Location')}>
+                  <InputField
+                    placeholder="Pickup Location"
+                    source={require('../images/pickupIcon.png')}
+                  />
+                </Pressable>
               </View>
 
-              {showViaRouteInput && (
-                <View style={[styles.inputDivs, styles.inputDiv2]}>
-                  <InputFieldWithCross
-                    placeholder="Via Route"
-                    source={require('../images/viaRouteIcon.png')}
-                    source2={require('../images/crossIcon.png')}
-                    handleHideRouteInput={handleHideRouteInput}
+              <View style={styles.line}></View>
+
+              <View style={styles.viaRouteBox}>
+                <View style={styles.viaSmallbox}>
+                  <TouchableOpacity onPress={() => setShowViaRouteInput(true)}>
+                    <Image source={require('../images/viaIcon.png')} />
+                  </TouchableOpacity>
+
+                  <Text style={styles.viaText}>Via</Text>
+                </View>
+
+                {showViaRouteInput && (
+                  <View style={[styles.inputDivs, styles.inputDiv2]}>
+                    <InputFieldWithCross
+                      placeholder="Via Route"
+                      source={require('../images/viaRouteIcon.png')}
+                      source2={require('../images/crossIcon.png')}
+                      handleHideRouteInput={handleHideRouteInput}
+                    />
+                  </View>
+                )}
+              </View>
+              {showViaRouteInput && <View style={styles.line2}></View>}
+
+              <View style={[styles.inputDivs, styles.inputDiv3]}>
+                <InputField
+                  placeholder="Drop Location"
+                  source={require('../images/dropIcon.png')}
+                />
+              </View>
+              <View style={[styles.inputDivs, styles.inputDiv4]}>
+                <InputField
+                  placeholder="Pickup Date and Time"
+                  source={require('../images/dobInputIcon.png')}
+                />
+              </View>
+              <View style={[styles.inputDivs, styles.inputDiv5]}>
+                <InputField
+                  placeholder="Passengers"
+                  source={require('../images/nameInputIcon.png')}
+                />
+              </View>
+              <View style={styles.checkBoxDiv}>
+                <CheckBox
+                  style={{width: 18}}
+                  isChecked={isChecked}
+                  onClick={() => setIsChecked(!isChecked)}
+                  checkedImage={
+                    <Image source={require('../images/checkedCheckBox.png')} />
+                  }
+                />
+                <View style={styles.checkboxTextDiv}>
+                  <Text style={styles.checkboxText}>Need Return Booking</Text>
+                </View>
+              </View>
+              {isChecked && (
+                <View style={[styles.inputDivs]}>
+                  <InputField
+                    placeholder="Return Date and Time"
+                    source={require('../images/dobInputIcon.png')}
                   />
                 </View>
               )}
             </View>
-            {showViaRouteInput && <View style={styles.line2}></View>}
-
-            <View style={[styles.inputDivs, styles.inputDiv3]}>
-              <InputField
-                placeholder="Drop Location"
-                source={require('../images/dropIcon.png')}
-              />
-            </View>
-            <View style={[styles.inputDivs, styles.inputDiv4]}>
-              <InputField
-                placeholder="Pickup Date and Time"
-                source={require('../images/dobInputIcon.png')}
-              />
-            </View>
-            <View style={[styles.inputDivs, styles.inputDiv5]}>
-              <InputField
-                placeholder="Passengers"
-                source={require('../images/nameInputIcon.png')}
-              />
-            </View>
-            <View style={styles.checkBoxDiv}>
-              <CheckBox
-                style={{width: 18}}
-                isChecked={isChecked}
-                onClick={() => setIsChecked(!isChecked)}
-                checkedImage={
-                  <Image source={require('../images/checkedCheckBox.png')} />
-                }
-              />
-              <View style={styles.checkboxTextDiv}>
-                <Text style={styles.checkboxText}>Need Return Booking</Text>
-              </View>
-            </View>
-            {isChecked && (
-              <View style={[styles.inputDivs]}>
-                <InputField
-                  placeholder="Return Date and Time"
-                  source={require('../images/dobInputIcon.png')}
-                />
-              </View>
-            )}
           </View>
         </View>
-      </View>
-      <View style={styles.getQuotesDiv}>
-        <XBtnWithoutArrow
-          Btnwidth={'100%'}
-          textInsideBtn="GET QUOTES"
-          goTo="Quotes"
-        />
-       
-      </View>
-    </SafeAreaView>
+        <View style={styles.getQuotesDiv}>
+          <XBtnWithoutArrow
+            Btnwidth={'100%'}
+            textInsideBtn="GET QUOTES"
+            goTo="Quotes"
+          />
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
