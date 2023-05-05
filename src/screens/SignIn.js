@@ -11,6 +11,8 @@ import {
   ScrollView
 } from 'react-native';
 import XBtn from '../components/XBtn';
+import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+
 const {width, height} = Dimensions.get('window');
 import {
   FontSize,
@@ -66,7 +68,12 @@ const SignIn = ({navigation}) => {
             </View>
 
             <View>
-              <XBtn Btnwidth={'100%'} textInsideBtn="SIGN IN" goTo="Home" />
+             
+              <XBtnWithoutArrow
+                Btnwidth={'100%'}
+                textInsideBtn="SIGN IN"
+                goTo="Home"
+              />
             </View>
 
             <View style={styles.newUser}>

@@ -21,6 +21,7 @@ import InputField from '../components/InputField';
 import InputFieldWithCross from '../components/InputFieldWithCross';
 const {width, height} = Dimensions.get('window');
 import XBtn from '../components/XBtn';
+import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 
 const Home = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -138,7 +139,12 @@ const Home = ({navigation}) => {
         </View>
       </View>
       <View style={styles.getQuotesDiv}>
-        <XBtn Btnwidth={'100%'} textInsideBtn="GET QUOTES" goTo="Quotes" />
+        <XBtnWithoutArrow
+          Btnwidth={'100%'}
+          textInsideBtn="GET QUOTES"
+          goTo="Quotes"
+        />
+       
       </View>
     </SafeAreaView>
   );
@@ -287,6 +293,8 @@ const styles = StyleSheet.create({
     width,
     backgroundColor: 'white',
     height: 72,
+  
+   
 
     paddingTop: 12,
     paddingHorizontal: 20,

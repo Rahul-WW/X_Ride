@@ -22,7 +22,7 @@ import {
 const {width, height} = Dimensions.get('window');
 import InputField from '../components/InputField';
 import XBtn from '../components/XBtn';
-
+import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 
 const ForgotPassword = ({navigation}) => {
   return (
@@ -45,10 +45,15 @@ const ForgotPassword = ({navigation}) => {
           />
         </View>
         <View>
-          <XBtn Btnwidth={'100%'} textInsideBtn="REQUEST RESET LINK" goTo="CreatNewPass" />
+          
+          <XBtnWithoutArrow
+            Btnwidth={'100%'}
+            textInsideBtn="REQUEST RESET LINK"
+            goTo="CreatNewPass"
+          />
         </View>
       </View>
-{/* 
+      {/* 
       <Button onPress={() => navigation.navigate('SignUp')} title={'Go back'} /> */}
     </SafeAreaView>
   );

@@ -23,6 +23,8 @@ const {width, height} = Dimensions.get('window');
 
 import InputFieldWithoutIcon from '../components/InputFieldWithoutIcon';
 import XBtn from '../components/XBtn';
+import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+
 
 const CreatNewPass = ({navigation}) => {
   return (
@@ -45,7 +47,12 @@ const CreatNewPass = ({navigation}) => {
           <InputFieldWithoutIcon placeholder="Confirm Password" />
         </View>
         <View>
-          <XBtn Btnwidth={'100%'} textInsideBtn="RESET PASSWORD" goTo="Home" />
+          <XBtnWithoutArrow
+            Btnwidth={'100%'}
+            textInsideBtn="RESET PASSWORD"
+            goTo="Home"
+          />
+          
         </View>
       </View>
 
