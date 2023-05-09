@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 
-const CompletedBtn = ({color, handlepress}) => {
+const CompletedBtn = ({color, handlepress, text}) => {
 
   return (
     <Pressable style={{width: '50%'}} onPress={handlepress}>
@@ -31,9 +31,9 @@ const CompletedBtn = ({color, handlepress}) => {
 
                   letterSpacing: 0.32,
                   lineHeight: 18 * 1.3,
-                  color: 'Black',
+                  color: '#4F565E',
                 }}>
-                Completed
+                {text}
               </Text>
             </View>
           </View>
@@ -47,7 +47,6 @@ const CompletedBtn = ({color, handlepress}) => {
           style={{
             borderBottomRightRadius: 16,
             borderTopRightRadius: 16,
-           
           }}>
           <View
             style={{
@@ -66,7 +65,7 @@ const CompletedBtn = ({color, handlepress}) => {
                 lineHeight: 18 * 1.4,
                 color: '#FFFFFF',
               }}>
-              Completed
+              {text}
             </Text>
           </View>
         </LinearGradient>

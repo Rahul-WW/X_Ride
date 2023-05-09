@@ -23,8 +23,8 @@ const Mybookings = () => {
           <Header headertext={'My Bookings'} />
           <View style={styles.container}>
             <View style={styles.togglingBtnsDiv}>
-              <UpcomingBtn handlepress={handlepress} color={bg} />
-              <CompletedBtn handlepress={handlepress} color={bg} />
+              <UpcomingBtn handlepress={handlepress} color={bg} text={"Upcoming"} />
+              <CompletedBtn handlepress={handlepress} color={bg} text={"Completed"} />
             </View>
 
             <View>

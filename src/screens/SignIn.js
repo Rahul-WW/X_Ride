@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import XBtn from '../components/XBtn';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
@@ -22,7 +22,6 @@ import {
   LineHeight,
 } from '../../GlobalStyles';
 import InputField from '../components/InputField';
-
 
 const SignIn = ({navigation}) => {
   return (
@@ -96,7 +95,6 @@ const SignIn = ({navigation}) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#F3F7FA',
-    
   },
   bgImage: {
     width,
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.for_title,
     color: 'white',
     letterSpacing: LetterSpacing.letterSpacing,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'Proxima Nova Rg',
     lineHeight: 20 * 1.4,
   },
   captionText: {
@@ -124,12 +122,12 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: LetterSpacing.letterSpacing,
     lineHeight: LineHeight.lineHeight,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'Proxima Nova Rg',
   },
   belowImgBox: {
     marginHorizontal: 20,
     marginTop: 40,
-    
+
     height: 272,
   },
   inputDivs: {

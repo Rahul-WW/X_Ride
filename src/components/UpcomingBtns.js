@@ -10,7 +10,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-const UpcomingBtn = ({color, handlepress}) => {
+const UpcomingBtn = ({color, handlepress, text}) => {
 
  
   
@@ -45,7 +45,7 @@ const UpcomingBtn = ({color, handlepress}) => {
                   lineHeight: 18 * 1.4,
                   color: '#FFFFFF',
                 }}>
-                Upcoming
+                {text}
               </Text>
             </View>
           </LinearGradient>
@@ -76,7 +76,7 @@ const UpcomingBtn = ({color, handlepress}) => {
                 lineHeight: 18 * 1.3,
                 color: '#4F565E',
               }}>
-              Upcoming
+              {text}
             </Text>
           </View>
         </View>

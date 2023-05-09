@@ -1,14 +1,14 @@
-import { View, Text, SafeAreaView, Dimensions} from 'react-native'
-import React from 'react'
+import {View, Text, SafeAreaView, Dimensions} from 'react-native';
+import React from 'react';
 const {width, height} = Dimensions.get('window');
 import GoBackWhiteBtn from './GoBackWhiteBtn';
+
 
 const Header = ({headertext}) => {
   return (
     <SafeAreaView>
       <View
         style={{
-         
           height: 54,
           backgroundColor: '#292F3B',
         }}>
@@ -16,13 +16,14 @@ const Header = ({headertext}) => {
           style={{
             flexDirection: 'row',
             height: 28,
-        marginHorizontal:20,
+            marginHorizontal: 20,
             marginTop: 13,
             alignItems: 'center',
             gap: 12,
           }}>
           <View style={{padding: 8}}>
             <GoBackWhiteBtn />
+
           </View>
 
           <Text
@@ -37,10 +38,11 @@ const Header = ({headertext}) => {
             }}>
             {headertext}
           </Text>
+         
         </View>
       </View>
     </SafeAreaView>
   );
-}
+};
 
-export default Header
+export default Header;
