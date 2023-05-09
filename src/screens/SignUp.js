@@ -20,7 +20,7 @@ import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import XBtn from '../components/XBtn';
-
+import CheckedBox from "../svgImages/CheckedBox.svg"
 const SignUp = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -49,8 +49,8 @@ const SignUp = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: '#F3F7FA', height}}>
-      <ScrollView >
+    <ScrollView>
+      <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
         <View>
           <View style={styles.logoBox}>
             <Image
@@ -108,11 +108,12 @@ const SignUp = ({navigation}) => {
 
             <View style={styles.checkBoxDiv}>
               <CheckBox
-                style={{borderColor: 'red', width: 18}}
+                style={{position:"absolute" }}
                 isChecked={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
                 checkedImage={
-                  <Image source={require('../images/checkedCheckBox.png')} />
+                  // <Image source={require('../images/checkedCheckBox.png')} />
+                  <CheckedBox/>
                 }
               />
               <View style={styles.checkboxTextDiv}>
@@ -162,8 +163,8 @@ const SignUp = ({navigation}) => {
             {/* date picker upto here */}
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -226,8 +227,10 @@ const styles = StyleSheet.create({
   checkBoxDiv: {
     height: 44,
     marginTop: 16,
-
+    
     flexDirection: 'row',
+   
+    position:"relative"
   },
   checkboxText: {
     fontFamily: 'ProximaNova-Regular',
@@ -238,7 +241,10 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
   },
   checkboxTextDiv: {
-    marginLeft: 8,
+    height:44,
+    marginLeft: 28,
+    
+   
   },
   registerBtnDiv: {
     marginTop: 24,

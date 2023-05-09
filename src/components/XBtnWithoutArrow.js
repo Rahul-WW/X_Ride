@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const {width} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 
-const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability}) => {
+const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -23,7 +23,7 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability}) => {
       <View
         style={{
           height: 48,
-          borderRadius: 16,
+         
           width: Btnwidth,
         }}>
         <LinearGradient

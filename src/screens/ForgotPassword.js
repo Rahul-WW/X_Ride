@@ -29,7 +29,7 @@ const ForgotPassword = ({navigation}) => {
     <SafeAreaView style={styles.backGround}>
       <View style={styles.container}>
         <View>
-          <GoBackBtn />
+          <GoBackBtn  />
         </View>
         <View style={styles.forgotPasswordBox}>
           <Text style={styles.forgotPasswordTextTitle}>Forgot Password</Text>

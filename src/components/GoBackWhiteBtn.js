@@ -2,9 +2,9 @@ import React from 'react';
 import {TouchableOpacity, Image, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import BackBlack from "../svgImages/BackBlack.svg"
+import BackWhite from "../svgImages/BackWhite.svg"
 
-const GoBackBtn = () => {
+const GoBackWhiteBtn = () => {
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -13,17 +13,12 @@ const GoBackBtn = () => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View style={{marginTop:16}}>
+      <View >
        
-          {/* <Image
-            resizeMode="cover"
-            source={require('../images/backArrow.png')}
-          /> */}
-          <BackBlack/>
-      
+      <BackWhite  />
       </View>
     </TouchableOpacity>
   );
 };
 
-export default GoBackBtn;
+export default GoBackWhiteBtn;

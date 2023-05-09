@@ -22,35 +22,41 @@ import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
 import InputFieldWithCross from '../components/InputFieldWithCross';
 const {width, height} = Dimensions.get('window');
-import {DrawerActions} from 'react-navigation';
+import {NavigationContainer, NavigationContext} from '@react-navigation/native';
+
+const DrawerNavigationContext = createContext();
+
 
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
-import { useNavigation } from '@react-navigation/native';
 
-const Home = () => {
-  const navigation = useNavigation();
 
+
+
+
+const Home = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [showViaRouteInput, setShowViaRouteInput] = useState(true);
 
-  
   const handleHideRouteInput = () => {
     setShowViaRouteInput(false);
   };
 
+
+  
+ 
+
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: '#F3F7FA'}}>
       <SafeAreaView
         style={{
           position: 'relative',
-
           height,
           backgroundColor: '#F3F7FA',
           flex: 1,
         }}>
         <View style={styles.backGround}>
           <View style={styles.logoBox}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
               <Image
                 style={styles.menulogo}
                 source={require('../images/menuIcon.png')}
@@ -141,7 +147,7 @@ const Home = () => {
                 </View>
               </View>
               {isChecked && (
-                <View style={[styles.inputDivs]}>
+                <View style={[styles.inputDivs, styles.inputDiv6]}>
                   <InputField
                     placeholder="Return Date and Time"
                     source={require('../images/dobInputIcon.png')}
@@ -151,6 +157,14 @@ const Home = () => {
             </View>
           </View>
         </View>
+        <Button
+          onPress={() => navigation.navigate('Mybookings')}
+          title="Go to my bookings"
+        />
+        <Button
+          onPress={() => navigation.navigate('Profile')}
+          title="go to profile"
+        />
         <View style={styles.getQuotesDiv}>
           <XBtnWithoutArrow
             Btnwidth={'100%'}
@@ -169,9 +183,9 @@ const styles = StyleSheet.create({
     // borderColor: 'red',
     // borderWidth: 1,
   },
-  viaText:{
-  fontWeight:400,
-  fontSize:16,
+  viaText: {
+    fontWeight: 400,
+    fontSize: 16,
   },
   logoBox: {
     width,
@@ -207,7 +221,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
 
     position: 'relative',
-   
   },
   imageContainer: {
     borderRadius: 16,
@@ -256,6 +269,9 @@ const styles = StyleSheet.create({
   inputDiv5: {
     marginTop: 20,
   },
+  inputDiv6: {
+    marginBottom: 20,
+  },
 
   line: {
     height: 70,
@@ -267,10 +283,10 @@ const styles = StyleSheet.create({
     left: 32,
     color: '#4F565E',
     top: 44,
-    zIndex:1
+    zIndex: 1,
   },
   line2: {
-   height:44,
+    height: 44,
     width: 0,
     borderColor: 'black',
     borderStyle: 'dashed',
@@ -278,12 +294,11 @@ const styles = StyleSheet.create({
     zIndex: 1,
     left: 32,
     color: '#4F565E',
-   position:"absolute",
-   top:132,
-   zIndex:1
-    
+    position: 'absolute',
+    top: 132,
+    zIndex: 1,
   },
-  
+
   checkBoxDiv: {
     height: 22,
     marginTop: 20,
@@ -306,8 +321,6 @@ const styles = StyleSheet.create({
     width,
     backgroundColor: 'white',
     height: 72,
-  
-   
 
     paddingTop: 12,
     paddingHorizontal: 20,

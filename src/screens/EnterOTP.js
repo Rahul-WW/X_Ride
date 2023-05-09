@@ -20,7 +20,7 @@ const EnterOTP = () => {
     <SafeAreaView style={styles.backGround}>
       <View style={styles.container}>
         <View>
-          <GoBackBtn />
+          <GoBackBtn  />
         </View>
         <View style={styles.VerifyEmailBox}>
           <Text style={styles.VerifyEmailTextTitle}>Verify Email</Text>

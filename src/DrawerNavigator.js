@@ -5,7 +5,7 @@ import Home from './screens/Home'
 import Mybookings from './screens/Mybookings'
 import PaymentHistory from './screens/PaymentHistory'
 import SupportHome from './screens/SupportHome'
-
+import SideBar from './screens/SideBar'
 
 const Drawer= createDrawerNavigator()
 
@@ -14,9 +14,10 @@ const Drawer= createDrawerNavigator()
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator >
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Mybookings" component={Mybookings} />
+
+      {/* <Drawer.Screen name="Mybookings" component={Mybookings} /> */}
       <Drawer.Screen name="PaymentHistory" component={PaymentHistory} />
       <Drawer.Screen name="SupportHomeme" component={SupportHome} />
     </Drawer.Navigator>

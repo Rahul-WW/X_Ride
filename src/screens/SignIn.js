@@ -27,7 +27,7 @@ import InputField from '../components/InputField';
 const SignIn = ({navigation}) => {
   return (
     <SafeAreaView style={styles.background}>
-      <ScrollView>
+      <ScrollView style={styles.background}>
         <View>
           <ImageBackground
             source={require('../images/signInPic.png')}
@@ -68,7 +68,6 @@ const SignIn = ({navigation}) => {
             </View>
 
             <View>
-             
               <XBtnWithoutArrow
                 Btnwidth={'100%'}
                 textInsideBtn="SIGN IN"
@@ -97,7 +96,7 @@ const SignIn = ({navigation}) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#F3F7FA',
-    height,
+    
   },
   bgImage: {
     width,

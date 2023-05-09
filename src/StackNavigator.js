@@ -15,6 +15,9 @@ import DrawerNavigator from './DrawerNavigator';
 import OnboardingScreen1 from './screens/OnboardingScreen1';
 import OnboardingScreen2 from './screens/OnboardingScreen2';
 import OnboardingScreen3 from './screens/OnboardingScreen3';
+import Mybookings from './screens/Mybookings';
+import Profile from './screens/Profile';
+import DrawerButton from './components/DrawerButton';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +30,7 @@ const StackNavigator = () => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen
-        name="Drawer"
+        name="DrawerNavigator"
         component={DrawerNavigator}
         options={{headerShown: false}}
       />
@@ -39,6 +42,8 @@ const StackNavigator = () => {
       <Stack.Screen name="CreatNewPass" component={CreatNewPass} />
       <Stack.Screen name="Quotes" component={Quotes} />
       <Stack.Screen name="Location" component={Location} />
+      <Stack.Screen name="Mybookings" component={Mybookings} />
+      <Stack.Screen name="Profile" component={Profile} />
       {/* Add any other screens that are not navigated through the drawer */}
     </Stack.Navigator>
   );

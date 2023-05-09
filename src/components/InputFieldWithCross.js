@@ -22,9 +22,9 @@ const InputFieldWithCross = ({
   dateValue,
   source2,
   handleHideRouteInput,
-}) => {
+  editablity,
   
-
+}) => {
   return (
     <View
       style={{
@@ -53,11 +53,11 @@ const InputFieldWithCross = ({
         numberOfLines={4}
         scrollEnabled={true}
         placeholder={placeholder}
-        value={value}></TextInput>
+        value={value}
+        editable={editablity}></TextInput>
       <TouchableOpacity
         onPress={handleHideRouteInput}
         style={{
-         
           width: 20,
           height: 20,
           marginRight: 20,
