@@ -23,6 +23,8 @@ const InputFieldWithCross = ({
   source2,
   handleHideRouteInput,
   editablity,
+  Icon,
+  Icon2
   
 }) => {
   return (
@@ -37,7 +39,16 @@ const InputFieldWithCross = ({
         alignItems: 'center',
         borderColor: '#E3E9ED',
       }}>
-      <Image style={{marginLeft: 20}} source={source} />
+      <View
+        style={{
+          marginLeft: 20,
+          width: 24,
+          height: 24,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {Icon}
+      </View>
 
       <TextInput
         style={{
@@ -46,7 +57,7 @@ const InputFieldWithCross = ({
           fontFamily: 'ProximaNova-Regular',
 
           flex: 1,
-
+        
           lineHeight: 16 * 1.4,
         }}
         multiline={true}
@@ -62,7 +73,16 @@ const InputFieldWithCross = ({
           height: 20,
           marginRight: 20,
         }}>
-        <Image source={source2} />
+        <View
+          style={{
+          
+            width: 20,
+            height: 20,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          {Icon2}
+        </View>
       </TouchableOpacity>
     </View>
   );

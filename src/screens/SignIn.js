@@ -12,6 +12,10 @@ import {
 } from 'react-native';
 import XBtn from '../components/XBtn';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+import EmailIcon from '../svgImages/EmailIcon.svg';
+import MobileIcon from '../svgImages/MobileIcon.svg';
+import PasswordIcon from '../svgImages/PasswordIcon.svg';
+
 
 const {width, height} = Dimensions.get('window');
 import {
@@ -26,7 +30,7 @@ import InputField from '../components/InputField';
 const SignIn = ({navigation}) => {
   return (
     <SafeAreaView style={styles.background}>
-      <ScrollView style={styles.background}>
+      <ScrollView>
         <View>
           <ImageBackground
             source={require('../images/signInPic.png')}
@@ -44,14 +48,14 @@ const SignIn = ({navigation}) => {
             <View style={styles.inputDivs}>
               <InputField
                 placeholder="Email id"
-                source={require('../images/emailIcon.png')}
+                Icon={<EmailIcon width={24} height={18} />}
               />
             </View>
 
             <View style={[styles.inputDivs, styles.inputDivs2]}>
               <InputField
                 placeholder="Password"
-                source={require('../images/passwordIcon.png')}
+                Icon={<PasswordIcon width={24} height={14} />}
               />
             </View>
 
@@ -95,6 +99,7 @@ const SignIn = ({navigation}) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#F3F7FA',
+    flex: 1,
   },
   bgImage: {
     width,
@@ -158,6 +163,10 @@ const styles = StyleSheet.create({
 
     marginHorizontal: 'auto',
     marginTop: 12,
+    
+    marginBottom:40,
+    borderWidth:1,
+    marginBottom:40
   },
   newUserText: {
     textAlign: 'center',

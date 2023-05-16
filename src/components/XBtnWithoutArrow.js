@@ -17,7 +17,9 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
 
   const handlePress = () => {
     navigation.navigate(goTo);
+   
   };
+   
   return (
     <Pressable onPress={handlePress} disabled={disability}>
       <View

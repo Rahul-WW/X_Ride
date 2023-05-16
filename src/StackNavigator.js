@@ -17,7 +17,11 @@ import OnboardingScreen2 from './screens/OnboardingScreen2';
 import OnboardingScreen3 from './screens/OnboardingScreen3';
 import Mybookings from './screens/Mybookings';
 import Profile from './screens/Profile';
+import QuotesForPickupOnly from './screens/QuotesForPickupOnly';
+import TripDetails from './screens/TripDetails';
+import AddDetails from './screens/AddDetails';
 import DrawerButton from './components/DrawerButton';
+import Payment from './screens/Payment';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +48,13 @@ const StackNavigator = () => {
       <Stack.Screen name="Location" component={Location} />
       <Stack.Screen name="Mybookings" component={Mybookings} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen
+        name="QuotesForPickupOnly"
+        component={QuotesForPickupOnly}
+      />
+      <Stack.Screen name="TripDetails" component={TripDetails} />
+      <Stack.Screen name="AddDetails" component={AddDetails} />
+      <Stack.Screen name="Payment" component={Payment}/>
       {/* Add any other screens that are not navigated through the drawer */}
     </Stack.Navigator>
   );

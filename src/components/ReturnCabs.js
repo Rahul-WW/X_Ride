@@ -1,4 +1,4 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import Star2 from '../svgImages/Star2.svg';
@@ -16,81 +16,136 @@ const ReturnCabs = ({
   cabinBag,
   ratings,
   source,
+  id2,
+  handlePress2,
+  selected2,
 }) => {
+
+
+
+  let condition = false;
+
+  if (selected2 == id2) {
+    condition = true;
+
+    console.log(condition);
+  }
   return (
     <View>
-      <View //bahar wala
-        style={styles.container1}>
-        <View // first   ie pic wala
-          style={styles.picBox}>
-          <LinearGradient
-            locations={[0, 1]}
-            colors={['#F6F6F6', '#FFFFFF']}
-            useAngle={true}
-            angle={180}
-            style={{borderTopLeftRadius: 14, borderTopRightRadius: 14}}>
-            <View style={styles.picContainer}>
-              <Image source={source} style={{position: 'absolute', top: 30}} />
+      <GradientBorder condition={condition}>
+        <View //bahar wala
+        // style={[
+        //   styles.container1,
+        //   {borderColor: selected2 === id2 ? 'green' : '#E3E9ED'},
+        //   // {backgroundColor: selected === id ? '#01b78a' : 'white'},
+
+        // ]}
+        >
+          <TouchableOpacity onPress={() => handlePress2(id2)}>
+            <View // first   ie pic wala
+              style={styles.picBox}>
+              <LinearGradient
+                locations={[0, 1]}
+                colors={['#F6F6F6', '#FFFFFF']}
+                useAngle={true}
+                angle={180}
+                style={{borderTopLeftRadius: 14, borderTopRightRadius: 14}}>
+                <View style={styles.picContainer}>
+                  <Image
+                    source={source}
+                    style={{position: 'absolute', top: 30}}
+                  />
+                </View>
+              </LinearGradient>
             </View>
-          </LinearGradient>
+
+            <View //  second ie cab type and price
+              style={styles.priceCabDetails}>
+              <View>
+                <Text style={styles.cabTypeText}>{type}</Text>
+                <Text style={styles.carName}>{name}</Text>
+              </View>
+              <View style={styles.priceBox}>
+                <Text style={styles.priceText}>{`£ ${price}`}</Text>
+              </View>
+            </View>
+
+            <View // 3rd ie pasengers nd ratings
+              style={styles.cabDetails}>
+              <View style={styles.passengerBox}>
+                <View style={styles.svgSize}>
+                  <Name2 width={20} height={20} />
+                </View>
+
+                <Text
+                  style={
+                    styles.passengerText
+                  }>{`${passengers} Passengers`}</Text>
+              </View>
+              <View style={styles.passengerBox}>
+                <View style={styles.svgSize}>
+                  <Suitcase2 width={20} height={20} />
+                </View>
+
+                <Text
+                  style={styles.passengerText}>{`${suitcase} Suitcase`}</Text>
+              </View>
+              <View style={styles.passengerBox2}>
+                <View style={styles.svgSize}>
+                  <CabinBag2 width={20} height={20} />
+                </View>
+
+                <Text
+                  style={styles.passengerText}>{`${cabinBag} Cabin Bag`}</Text>
+              </View>
+              <View style={styles.passengerBox2}>
+                <View style={styles.svgSize}>
+                  <Star2 width={20} height={20} />
+                </View>
+
+                <Text style={styles.passengerText}>{`${ratings} Rated`}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        <View //  second ie cab type and price
-          style={styles.priceCabDetails}>
-          <View>
-            <Text style={styles.cabTypeText}>{type}</Text>
-            <Text style={styles.carName}>{name}</Text>
-          </View>
-          <View style={styles.priceBox}>
-            <Text style={styles.priceText}>{`£ ${price}`}</Text>
-          </View>
-        </View>
-
-        <View // 3rd ie pasengers nd ratings
-          style={styles.cabDetails}>
-          <View style={styles.passengerBox}>
-            <View style={styles.svgSize}>
-              <Name2 width={20} height={20} />
-            </View>
-
-            <Text
-              style={styles.passengerText}>{`${passengers} Passengers`}</Text>
-          </View>
-          <View style={styles.passengerBox}>
-            <View style={styles.svgSize}>
-              <Suitcase2 width={20} height={20} />
-            </View>
-
-            <Text style={styles.passengerText}>{`${suitcase} Suitcase`}</Text>
-          </View>
-          <View style={styles.passengerBox2}>
-            <View style={styles.svgSize}>
-              <CabinBag2 width={20} height={20} />
-            </View>
-
-            <Text style={styles.passengerText}>{`${cabinBag} Cabin Bag`}</Text>
-          </View>
-          <View style={styles.passengerBox2}>
-            <View style={styles.svgSize}>
-              <Star2 width={20} height={20} />
-            </View>
-
-            <Text style={styles.passengerText}>{`${ratings} Rated`}</Text>
-          </View>
-        </View>
-      </View>
+      </GradientBorder>
     </View>
   );
 };
 
+const GradientBorder = ({children, condition}) => {
+  if (condition) {
+    return (
+      <LinearGradient
+        colors={['#00c96d', '#048ad7']}
+        useAngle={true}
+        angle={90}
+        style={{borderRadius: 24, padding: 1}}>
+        <View style={{borderRadius: 24, backgroundColor: 'white'}}>
+          {children}
+        </View>
+      </LinearGradient>
+    );
+  } else {
+    return (
+      <View
+        style={{
+          borderColor: '#E3E9ED',
+          borderRadius: 24,
+          borderWidth: 1,
+          backgroundColor: 'white',
+        }}>
+        {children}
+      </View>
+    );
+  }
+};
+
 const styles = StyleSheet.create({
   container1: {
-    borderWidth: 1,
-
     borderRadius: 24,
-    borderColor: '#E3E9ED',
+
     backgroundColor: 'white',
-    marginBottom: 20,
   },
   picBox: {
     marginHorizontal: 20,

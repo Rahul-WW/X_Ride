@@ -1,4 +1,10 @@
-import React, {useState, useContext, createContext } from 'react';
+import React, {
+  useState,
+  useContext,
+  createContext,
+  useRef,
+  useEffect,
+} from 'react';
 
 import {
   SafeAreaView,
@@ -13,179 +19,280 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
-  Alert
+  Alert,
+  Animated,
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
-
+import LinearGradient from 'react-native-linear-gradient';
 import {FontSize, Color, FontWeight} from '../../GlobalStyles';
 import InputField from '../components/InputField';
 import InputFieldWithCross from '../components/InputFieldWithCross';
 const {width, height} = Dimensions.get('window');
 import {NavigationContainer, NavigationContext} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import PickupIcon from '../svgImages/PickupIcon.svg';
+import DropIcon from '../svgImages/DropIcon.svg';
+import ViaRouteIcon from '../svgImages/ViaRouteIcon.svg';
+import Name2 from '../svgImages/Name2.svg';
+import TimePicker from '../svgImages/TimePicker.svg';
+import Cross from '../svgImages/Cross.svg';
+import CheckedCB from '../svgImages/CheckedCB.svg';
+import UncheckBox from '../svgImages/UncheckBox.svg';
+import Via from '../svgImages/Via.svg';
+import MenuIcon from '../svgImages/MenuIcon.svg';
+import Xlogo from '../svgImages/Xlogo.svg';
+import Bell from '../svgImages/Bell.svg';
 
 const DrawerNavigationContext = createContext();
 
-
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
-
-
-
-
 
 const Home = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
-  const [showViaRouteInput, setShowViaRouteInput] = useState(true);
+  // const [showViaRouteInput, setShowViaRouteInput] = useState(true);
 
+  const [count, setCount] = useState(0);
+
+  //this function is for increasing the Via Routes
+  const incrementCount = () => {
+    if (count < 5) {
+      setCount(count + 1);
+    }
+  };
+
+  // this function is used to decrease the Via Routes
   const handleHideRouteInput = () => {
-    setShowViaRouteInput(false);
+    if (count > 0) {
+      setCount(count - 1);
+    }
+  };
+
+  //this is for checkbox
+  const handleCheckBox = () => {
+    setIsChecked(!isChecked);
+    
   };
 
 
-  
- 
+
 
   return (
-    <ScrollView style={{backgroundColor: '#F3F7FA'}}>
-      <SafeAreaView
-        style={{
-          position: 'relative',
-          height,
-          backgroundColor: '#F3F7FA',
-          flex: 1,
-        }}>
-        <View style={styles.backGround}>
-          <View style={styles.logoBox}>
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Image
-                style={styles.menulogo}
-                source={require('../images/menuIcon.png')}
-              />
-            </TouchableOpacity>
-
-            <Image
-              style={styles.xlogo}
-              source={require('../images/xLogo.png')}
-            />
-            <Image
-              style={styles.belllogo}
-              source={require('../images/bellIcon.png')}
-            />
-          </View>
-          <View style={styles.container}>
-            <View style={styles.imageContainer}>
-              <ImageBackground
-                style={styles.imageOnHome}
-                resizeMode="cover"
-                source={require('../images/imageOnHome.png')}>
-                <Text style={styles.textOnImage}>Book Your Ride!</Text>
-              </ImageBackground>
+    <SafeAreaView style={{flex: 1, position: 'relative'}}>
+      <Animated.View>
+        <View style={styles.logoBox}>
+          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+            <View style={styles.menulogo}>
+              <MenuIcon width={24} height={24} />
             </View>
-            <View style={styles.lowercontainer}>
-              <View style={styles.inputDivs}>
-                <Pressable onPress={() => navigation.navigate('Location')}>
-                  <InputField
-                    placeholder="Pickup Location"
-                    source={require('../images/pickupIcon.png')}
-                  />
-                </Pressable>
+          </TouchableOpacity>
+          <View style={styles.xlogo}>
+            <Xlogo width={84} height={28} />
+          </View>
+          <View style={styles.belllogo}>
+            <Bell width={24} height={24} />
+          </View>
+        </View>
+      </Animated.View>
+      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+        <View
+          style={{
+            backgroundColor: '#F3F7FA',
+          }}>
+          <View style={styles.backGround}>
+            <View style={styles.container}>
+              <View style={styles.imageContainer}>
+                <ImageBackground
+                  style={styles.imageOnHome}
+                  resizeMode="cover"
+                  source={require('../images/imageOnHome.png')}>
+                  <Text style={styles.textOnImage}>Book Your Ride!</Text>
+                </ImageBackground>
               </View>
-
-              <View style={styles.line}></View>
-
-              <View style={styles.viaRouteBox}>
-                <View style={styles.viaSmallbox}>
-                  <TouchableOpacity onPress={() => setShowViaRouteInput(true)}>
-                    <Image source={require('../images/viaIcon.png')} />
-                  </TouchableOpacity>
-
-                  <Text style={styles.viaText}>Via</Text>
+              <View style={styles.lowercontainer}>
+                <View style={styles.inputDivs}>
+                  <Pressable onPress={() => navigation.navigate('Location')}>
+                    <InputField
+                      placeholder="Pickup Location"
+                      Icon={<PickupIcon width={20} height={24} />}
+                    />
+                  </Pressable>
                 </View>
 
-                {showViaRouteInput && (
-                  <View style={[styles.inputDivs, styles.inputDiv2]}>
-                    <InputFieldWithCross
-                      placeholder="Via Route"
-                      source={require('../images/viaRouteIcon.png')}
-                      source2={require('../images/crossIcon.png')}
-                      handleHideRouteInput={handleHideRouteInput}
+                <View style={styles.line}></View>
+
+                <View style={styles.viaRouteBox}>
+                  <View style={styles.viaSmallbox}>
+                    <TouchableOpacity onPress={incrementCount}>
+                      <Via width={16} height={16} />
+                    </TouchableOpacity>
+
+                    <Text style={styles.viaText}>Via</Text>
+                  </View>
+
+                  {Array(count)
+                    .fill()
+                    .map((_, i) => (
+                      <View
+                        key={i}
+                        style={[styles.inputDivs, styles.inputDiv2]}>
+                        <InputFieldWithCross
+                          placeholder="Via Route"
+                          Icon={<ViaRouteIcon width={20} height={24} />}
+                          Icon2={<Cross width={11} height={11} />}
+                          handleHideRouteInput={handleHideRouteInput}
+                        />
+                      </View>
+                    ))}
+                </View>
+
+                {Array(count)
+                  .fill()
+                  .map((_, i) => (
+                    <View key={i} style={styles.line2}></View>
+                  ))}
+                {/* {showViaRouteInput && <View style={styles.line2}></View>} */}
+                {count !== 0 ? <View style={styles.line2}></View> : null}
+
+                <View style={[styles.inputDivs, styles.inputDiv3]}>
+                  <InputField
+                    placeholder="Drop Location"
+                    Icon={<DropIcon width={20} height={24} />}
+                  />
+                </View>
+                <View style={[styles.inputDivs, styles.inputDiv4]}>
+                  <InputField
+                    placeholder="Pickup Date and Time"
+                    Icon={<TimePicker width={24} height={24} />}
+                  />
+                </View>
+                <View style={[styles.inputDivs, styles.inputDiv5]}>
+                  <InputField
+                    placeholder="Passengers"
+                    Icon={<Name2 width={20} height={20} />}
+                  />
+                </View>
+
+                <View style={styles.checkBoxDiv}>
+                  <CheckBox
+                    style={{
+                      width: 20,
+                      height: 20,
+                      borderColor: 'red',
+                      marginTop: 2,
+                      marginLeft: 2,
+                    }}
+                    isChecked={isChecked}
+                    onClick={handleCheckBox}
+                    // onClick={setIsChecked}
+                    checkedImage={<CheckedCB width={18} height={18} />}
+                    unCheckedImage={<UncheckBox width={19} height={19} />}
+                  />
+                  <View style={styles.checkboxTextDiv}>
+                    <Text style={styles.checkboxText}>Need Return Booking</Text>
+                  </View>
+                </View>
+                {isChecked && (
+                  <View style={[styles.inputDivs, styles.inputDiv6]}>
+                    <InputField
+                      placeholder="Return Date and Time"
+                      Icon={<TimePicker width={24} height={24} />}
                     />
                   </View>
                 )}
               </View>
-              {showViaRouteInput && <View style={styles.line2}></View>}
-
-              <View style={[styles.inputDivs, styles.inputDiv3]}>
-                <InputField
-                  placeholder="Drop Location"
-                  source={require('../images/dropIcon.png')}
-                />
-              </View>
-              <View style={[styles.inputDivs, styles.inputDiv4]}>
-                <InputField
-                  placeholder="Pickup Date and Time"
-                  source={require('../images/dobInputIcon.png')}
-                />
-              </View>
-              <View style={[styles.inputDivs, styles.inputDiv5]}>
-                <InputField
-                  placeholder="Passengers"
-                  source={require('../images/nameInputIcon.png')}
-                />
-              </View>
-              <View style={styles.checkBoxDiv}>
-                <CheckBox
-                  style={{width: 18}}
-                  isChecked={isChecked}
-                  onClick={() => setIsChecked(!isChecked)}
-                  checkedImage={
-                    <Image source={require('../images/checkedCheckBox.png')} />
-                  }
-                />
-                <View style={styles.checkboxTextDiv}>
-                  <Text style={styles.checkboxText}>Need Return Booking</Text>
-                </View>
-              </View>
-              {isChecked && (
-                <View style={[styles.inputDivs, styles.inputDiv6]}>
-                  <InputField
-                    placeholder="Return Date and Time"
-                    source={require('../images/dobInputIcon.png')}
-                  />
-                </View>
-              )}
             </View>
           </View>
-        </View>
-        <Button
-          onPress={() => navigation.navigate('Mybookings')}
-          title="Go to my bookings"
-        />
-        <Button
-          onPress={() => navigation.navigate('Profile')}
-          title="go to profile"
-        />
-        <View style={styles.getQuotesDiv}>
-          <XBtnWithoutArrow
-            Btnwidth={'100%'}
-            textInsideBtn="GET QUOTES"
-            goTo="Quotes"
+         
+          <Button
+            onPress={() => navigation.navigate('Mybookings')}
+            title="Go to my bookings"
           />
+          <Button
+            onPress={() => navigation.navigate('Profile')}
+            title="go to profile"
+          />
+          {/* <View style={{height:500, width:100, borderWidth:1, marginHorizontal:40 }}></View> */}
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+      <View style={styles.getQuotesDiv}>
+        <Pressable
+          onPress={() => {
+            if (isChecked) {
+              navigation.navigate('Quotes', {showReturnJourney: isChecked});
+            } else {
+              navigation.navigate('QuotesForPickupOnly', {
+                showReturnJourney: isChecked,
+              });
+            }
+          }}>
+          <GetQuotesBtn Btnwidth={'100%'} textInsideBtn="GET QUOTES" />
+        </Pressable>
+      
+      </View>
+    </SafeAreaView>
   );
 };
 
+
+const GetQuotesBtn=({Btnwidth, textInsideBtn})=>{
+  return (
+    <View
+      style={{
+        height: 48,
+
+        width: Btnwidth,
+      }}>
+      <LinearGradient
+        locations={[0, 1]}
+        colors={['#00c96d', '#048ad7']}
+        useAngle={true}
+        angle={90}
+        style={{borderRadius: 16}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            textAlign: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            borderRadius: 16,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 14,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                alignItems: 'center',
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 600,
+                fontFamily: 'ProximaNova-Regular',
+                letterSpacing: 0.32,
+                lineHeight: 18,
+              }}>
+              {textInsideBtn}
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+    </View>
+  );
+}
 const styles = StyleSheet.create({
   backGround: {
     backgroundColor: '#F3F7FA',
     // borderColor: 'red',
-    // borderWidth: 1,
+    //  borderWidth: 1,
+    marginBottom: 80,
   },
   viaText: {
     fontWeight: 400,
     fontSize: 16,
+    lineHeight: 16 * 1.4,
   },
   logoBox: {
     width,
@@ -255,6 +362,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 8,
+
+    height: 23,
+    alignItems: 'center',
   },
   inputDiv2: {
     marginTop: 12,
@@ -295,16 +405,18 @@ const styles = StyleSheet.create({
     left: 32,
     color: '#4F565E',
     position: 'absolute',
-    top: 132,
+    top: 133,
     zIndex: 1,
   },
 
   checkBoxDiv: {
     height: 22,
-    marginTop: 20,
-
+    marginTop: 22,
+    width: 186,
     flexDirection: 'row',
     marginBottom: 20,
+
+    alignContent: 'center',
   },
   checkboxText: {
     fontFamily: 'ProximaNova-Regular',

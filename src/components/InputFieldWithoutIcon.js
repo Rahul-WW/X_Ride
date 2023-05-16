@@ -33,6 +33,7 @@ const InputFieldWithoutIcon = ({
           flex: 1,
 
           lineHeight: 16 * 1.4,
+          letterSpacing: 0.32
         }}
         multiline={true}
         numberOfLines={4}

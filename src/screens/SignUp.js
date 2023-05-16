@@ -11,7 +11,7 @@ import {
   Image,
   Alert,
   Platform,
-  ScrollView
+  ScrollView, Animated
 } from 'react-native';
 const {width, height} = Dimensions.get('window');
 import CheckBox from 'react-native-check-box';
@@ -21,6 +21,13 @@ import InputField from '../components/InputField';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import XBtn from '../components/XBtn';
 import CheckedBox from "../svgImages/CheckedBox.svg"
+import Name2 from "../svgImages/Name2.svg"
+import TimePicker from "../svgImages/TimePicker.svg"
+import EmailIcon from "../svgImages/EmailIcon.svg"
+import MobileIcon from "../svgImages/MobileIcon.svg"
+import PasswordIcon from "../svgImages/PasswordIcon.svg"
+import Xlogo2 from "../svgImages/Xlogo2.svg"
+
 const SignUp = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -49,15 +56,16 @@ const SignUp = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
-        <View>
-          <View style={styles.logoBox}>
-            <Image
-              source={require('../images/xLogo.png')}
-              style={styles.logo}
-            />
+    <SafeAreaView style={styles.mainContainer}>
+      <Animated.View>
+        <View style={styles.logoBox}>
+          <View style={styles.logo}>
+            <Xlogo2 />
           </View>
+        </View>
+      </Animated.View>
+      <ScrollView>
+        <View>
           <View style={styles.container}>
             <View style={styles.registerBox}>
               <View style={styles.registerTextBox}>
@@ -74,14 +82,14 @@ const SignUp = ({navigation}) => {
             <View style={styles.inputDivs}>
               <InputField
                 placeholder="Name"
-                source={require('../images/nameInputIcon.png')}
+                Icon={<Name2 width={20} height={20} />}
               />
             </View>
             <View style={styles.inputDivs}>
               <Pressable onPress={() => showMode('date')}>
                 <InputField
                   placeholder="Date of Birth"
-                  source={require('../images/dobInputIcon.png')}
+                  Icon={<TimePicker width={24} height={24} />}
                   value={text}
                 />
               </Pressable>
@@ -90,30 +98,30 @@ const SignUp = ({navigation}) => {
             <View style={styles.inputDivs}>
               <InputField
                 placeholder="Email id"
-                source={require('../images/emailIcon.png')}
+                Icon={<EmailIcon width={24} height={18} />}
               />
             </View>
             <View style={styles.inputDivs}>
               <InputField
                 placeholder="Mobile No"
-                source={require('../images/mobileIcon.png')}
+                Icon={<MobileIcon width={16} height={24} />}
               />
             </View>
             <View style={styles.inputDivs}>
               <InputField
                 placeholder="Password"
-                source={require('../images/passwordIcon.png')}
+                Icon={<PasswordIcon width={24} height={14} />}
               />
             </View>
 
             <View style={styles.checkBoxDiv}>
               <CheckBox
-                style={{position:"absolute" }}
+                style={{position: 'absolute'}}
                 isChecked={isChecked}
                 onClick={() => setIsChecked(!isChecked)}
                 checkedImage={
                   // <Image source={require('../images/checkedCheckBox.png')} />
-                  <CheckedBox/>
+                  <CheckedBox />
                 }
               />
               <View style={styles.checkboxTextDiv}>
@@ -163,12 +171,17 @@ const SignUp = ({navigation}) => {
             {/* date picker upto here */}
           </View>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    height,
+    backgroundColor: '#F3F7FA',
+    
+  },
   container: {
     marginHorizontal: 20,
   },
@@ -192,6 +205,7 @@ const styles = StyleSheet.create({
   registerBox: {
     marginTop: 30,
     height: 84,
+    
   },
   registerTextBox: {
     width: 77,
@@ -227,10 +241,10 @@ const styles = StyleSheet.create({
   checkBoxDiv: {
     height: 44,
     marginTop: 16,
-    
+
     flexDirection: 'row',
-   
-    position:"relative"
+
+    position: 'relative',
   },
   checkboxText: {
     fontFamily: 'ProximaNova-Regular',
@@ -241,15 +255,14 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
   },
   checkboxTextDiv: {
-    height:44,
+    height: 44,
     marginLeft: 28,
-    
-   
   },
   registerBtnDiv: {
     marginTop: 24,
-
+  
     height: 82,
+    marginBottom:40
   },
   signInText: {
     color: '#00C96D',

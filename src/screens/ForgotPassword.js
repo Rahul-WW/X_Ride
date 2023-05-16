@@ -23,13 +23,15 @@ const {width, height} = Dimensions.get('window');
 import InputField from '../components/InputField';
 import XBtn from '../components/XBtn';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+import EmailIcon from '../svgImages/EmailIcon.svg';
+ 
 
 const ForgotPassword = ({navigation}) => {
   return (
     <SafeAreaView style={styles.backGround}>
       <View style={styles.container}>
         <View>
-          <GoBackBtn  />
+          <GoBackBtn />
         </View>
         <View style={styles.forgotPasswordBox}>
           <Text style={styles.forgotPasswordTextTitle}>Forgot Password</Text>
@@ -41,11 +43,10 @@ const ForgotPassword = ({navigation}) => {
         <View style={styles.inputDivs}>
           <InputField
             placeholder="Email id"
-            source={require('../images/emailIcon.png')}
+            Icon={<EmailIcon width={24} height={18} />}
           />
         </View>
         <View>
-          
           <XBtnWithoutArrow
             Btnwidth={'100%'}
             textInsideBtn="REQUEST RESET LINK"

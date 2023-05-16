@@ -1,5 +1,5 @@
-import { View, Text, ScrollView,StyleSheet, SafeAreaView, Alert, Pressable, Dimensions } from 'react-native'
-import React, {useState, useEffect} from 'react'
+import { View, Text, ScrollView,StyleSheet, SafeAreaView, Alert, Pressable, Dimensions, Animated } from 'react-native'
+import React, {useState, useEffect, useRef} from 'react'
 import UpcomingBookings from '../components/UpcomingBookings';
 import CompletedBookings from '../components/CompletedBookings';
 import Header from '../components/Header'
@@ -17,59 +17,71 @@ const Mybookings = () => {
   }
 
   return (
-    <ScrollView style={{backgroundColor: '#F3F7FA'}}>
-      <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
-        <View>
-          <Header headertext={'My Bookings'} />
-          <View style={styles.container}>
-            <View style={styles.togglingBtnsDiv}>
-              <UpcomingBtn handlepress={handlepress} color={bg} text={"Upcoming"} />
-              <CompletedBtn handlepress={handlepress} color={bg} text={"Completed"} />
-            </View>
+    <SafeAreaView>
+      <Animated.View>
+        <Header headertext={'My Bookings'} />
+      </Animated.View>
+      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+        <View style={{backgroundColor: '#F3F7FA'}}>
+          <View>
+            <View style={styles.container}>
+              <View style={styles.togglingBtnsDiv}>
+                <UpcomingBtn
+                  handlepress={handlepress}
+                  color={bg}
+                  text={'Upcoming'}
+                />
+                <CompletedBtn
+                  handlepress={handlepress}
+                  color={bg}
+                  text={'Completed'}
+                />
+              </View>
 
-            <View>
-              {bg === true ? (
-                <View>
+              <View>
+                {bg === true ? (
                   <View>
-                    <UpcomingBookings />
+                    <View>
+                      <UpcomingBookings />
+                    </View>
+                    <View>
+                      <UpcomingBookings />
+                    </View>
+                    <View>
+                      <UpcomingBookings />
+                    </View>
+                    <View>
+                      <UpcomingBookings />
+                    </View>
+                    <View>
+                      <UpcomingBookings />
+                    </View>
+                    <View>
+                      <UpcomingBookings />
+                    </View>
                   </View>
+                ) : (
                   <View>
-                    <UpcomingBookings />
+                    <View>
+                      <CompletedBookings />
+                    </View>
+                    <View>
+                      <CompletedBookings />
+                    </View>
+                    <View>
+                      <CompletedBookings />
+                    </View>
+                    <View>
+                      <CompletedBookings />
+                    </View>
                   </View>
-                  <View>
-                    <UpcomingBookings />
-                  </View>
-                  <View>
-                    <UpcomingBookings />
-                  </View>
-                  <View>
-                    <UpcomingBookings />
-                  </View>
-                  <View>
-                    <UpcomingBookings />
-                  </View>
-                </View>
-              ) : (
-                <View>
-                  <View>
-                    <CompletedBookings />
-                  </View>
-                  <View>
-                    <CompletedBookings />
-                  </View>
-                  <View>
-                    <CompletedBookings />
-                  </View>
-                  <View>
-                    <CompletedBookings />
-                  </View>
-                </View>
-              )}
+                )}
+              </View>
             </View>
           </View>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

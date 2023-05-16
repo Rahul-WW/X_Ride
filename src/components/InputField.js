@@ -7,6 +7,7 @@ import {
   Dimensions,
   Alert,
   TouchableOpacity,
+  Text
 } from 'react-native';
 //import DateTimePicker from 'react-native-community/datetimepicker';
 import { BackgroundColor, FontSize } from '../../GlobalStyles';
@@ -16,7 +17,7 @@ const {width, height}= Dimensions.get("window")
 
 
 
-const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChange, dateValue, source2})=>{
+const InputField=( {source, placeholder, value, dateInput,OpenModal,Icon, onDateChange, dateValue, source2})=>{
    
 
   const handleHideViaInput=()=>{
@@ -38,24 +39,32 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal, onDateChang
         alignItems: 'center',
         borderColor: '#E3E9ED',
       }}>
-      <Image style={{marginLeft: 20}} source={source} />
+      <View
+        style={{
+          marginLeft: 20,
+          width: 24,
+          height: 24,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {Icon}
+      </View>
 
       <TextInput
         style={{
           marginLeft: 12,
           fontSize: FontSize.for_caption,
           fontFamily: 'ProximaNova-Regular',
-
           flex: 1,
-
+          borderRadius: 16,
           lineHeight: 16 * 1.4,
+          color: '#4F565E',
         }}
         multiline={true}
         numberOfLines={4}
         scrollEnabled={true}
         placeholder={placeholder}
         value={value}></TextInput>
-    
     </View>
   );
 }

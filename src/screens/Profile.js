@@ -1,5 +1,5 @@
-import { View, Text,ScrollView, StyleSheet, SafeAreaView, Image, Dimensions, Pressable  } from 'react-native'
-import React, {useState} from 'react'
+import { View, Text,ScrollView, StyleSheet, SafeAreaView, Image, Dimensions, Pressable , Animated } from 'react-native'
+import React, {useState, useRef} from 'react'
 import Header from '../components/Header'
 import InputField from '../components/InputField';
 import InputFieldWithCross from '../components/InputFieldWithCross';
@@ -7,6 +7,12 @@ import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 
 
 const {width, height}= Dimensions.get("window")
+import Name2 from '../svgImages/Name2.svg';
+import TimePicker from '../svgImages/TimePicker.svg';
+import EmailIcon from '../svgImages/EmailIcon.svg';
+import MobileIcon from '../svgImages/MobileIcon.svg';
+import PasswordIcon from '../svgImages/PasswordIcon.svg';
+import Pencil2 from "../svgImages/Pencil2.svg"
 
 const Profile = () => {
 
@@ -23,67 +29,71 @@ const Profile = () => {
 
 
   return (
-    <ScrollView style={{backgroundColor: '#F3F7FA'}}>
-      <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView>
+      <Animated.View>
         <Header headertext={'Profile'} />
-        <View style={styles.container}>
-          <View style={styles.imageBox}>
-            <Image
-              style={{width: 100, height: 100, borderRadius: 16}}
-              source={{
-                uri: 'https://images.unsplash.com/photo-1595290293434-555d42427e84?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OXw5NDUyNDk0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-              }}
-            />
-            <View style={styles.profileIcon}>
-              <Image source={require('../images/ProfileimageIcon.png')} />
+      </Animated.View>
+      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+        <View style={styles.safeArea}>
+          <View style={styles.container}>
+            <View style={styles.imageBox}>
+              <Image
+                style={{width: 100, height: 100, borderRadius: 16}}
+                source={{
+                  uri: 'https://images.unsplash.com/photo-1595290293434-555d42427e84?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OXw5NDUyNDk0fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
+                }}
+              />
+              <View style={styles.profileIcon}>
+                <Image source={require('../images/ProfileimageIcon.png')} />
+              </View>
+            </View>
+            <View style={styles.inputDivs}>
+              <InputField
+                placeholder="Name"
+                Icon={<Name2 width={20} height={20} />}
+              />
+            </View>
+            <View style={styles.inputDivs2}>
+              <InputField
+                placeholder="Date of Birth"
+                Icon={<TimePicker width={24} height={24} />}
+              />
+            </View>
+
+            <View style={[styles.inputDivs2]}>
+              <InputFieldWithCross
+                placeholder="jaslin@gmail.com"
+                Icon={<EmailIcon width={20} height={24} />}
+                Icon2={<Pencil2 width={16} height={16} />}
+                editablity={cantEditEmail}
+                handleHideRouteInput={handleHideRouteInput} // this  function called to make the input enable
+                //
+              />
+            </View>
+            <View style={styles.inputDivs2}>
+              <InputField
+                placeholder="62004489454"
+                Icon={<MobileIcon width={24} height={24} />}
+              />
+            </View>
+            <View style={[styles.inputDivs2]}>
+              <InputFieldWithCross
+                placeholder="**********"
+                Icon={<PasswordIcon width={24} height={14} />}
+                Icon2={<Pencil2 width={16} height={16} />}
+              />
             </View>
           </View>
-          <View style={styles.inputDivs}>
-            <InputField
-              placeholder="Name"
-              source={require('../images/nameInputIcon.png')}
-            />
-          </View>
-          <View style={styles.inputDivs2}>
-            <InputField
-              placeholder="Date of Birth"
-              source={require('../images/dobInputIcon.png')}
-            />
-          </View>
-
-          <View style={[styles.inputDivs2]}>
-            <InputFieldWithCross
-              placeholder="jaslin@gmail.com"
-              source={require('../images/emailIcon.png')}
-              source2={require('../images/pencilEditIcon.png')}
-              editablity={cantEditEmail}
-              handleHideRouteInput={handleHideRouteInput} // this  function called to make the input enable 
-                                                         //
-            />
-          </View>
-          <View style={styles.inputDivs2}>
-            <InputField
-              placeholder="62004489454"
-              source={require('../images/mobilIcon.png')}
-            />
-          </View>
-          <View style={[styles.inputDivs2]}>
-            <InputFieldWithCross
-              placeholder="**********"
-              source={require('../images/passwordIcon.png')}
-              source2={require('../images/pencilEditIcon.png')}
+          <View style={styles.getQuotesDiv}>
+            <XBtnWithoutArrow
+              Btnwidth={'100%'}
+              textInsideBtn="SAVE DETAILS "
+              goTo="Home"
             />
           </View>
         </View>
-        <View style={styles.getQuotesDiv}>
-          <XBtnWithoutArrow
-            Btnwidth={'100%'}
-            textInsideBtn="SAVE DETAILS "
-            goTo="Home"
-          />
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
