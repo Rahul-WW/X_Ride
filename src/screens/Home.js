@@ -44,16 +44,19 @@ import MenuIcon from '../svgImages/MenuIcon.svg';
 import Xlogo from '../svgImages/Xlogo.svg';
 import Bell from '../svgImages/Bell.svg';
 
-const DrawerNavigationContext = createContext();
 
-import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 
-const Home = ({navigation}) => {
+import {useNavigation} from '@react-navigation/native';
+
+
+const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
+ 
   // const [showViaRouteInput, setShowViaRouteInput] = useState(true);
 
   const [count, setCount] = useState(0);
-
+  const navigation = useNavigation();
+  
   //this function is for increasing the Via Routes
   const incrementCount = () => {
     if (count < 5) {
@@ -71,17 +74,15 @@ const Home = ({navigation}) => {
   //this is for checkbox
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
-    
   };
 
-
-
+  // console.log(drawerNavigation);
 
   return (
     <SafeAreaView style={{flex: 1, position: 'relative'}}>
       <Animated.View>
         <View style={styles.logoBox}>
-          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <View style={styles.menulogo}>
               <MenuIcon width={24} height={24} />
             </View>
@@ -200,21 +201,37 @@ const Home = ({navigation}) => {
                     />
                   </View>
                 )}
+
+                <View>
+                  <View
+                    style={{
+                      borderWidth: 1,
+                      height: 50,
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                    }}>
+                    <Button
+                      onPress={() => navigation.navigate('Mybookings')}
+                      title="Go to my bookings"
+                    />
+                    <Button
+                      onPress={() => navigation.navigate('Profile')}
+                      title="go to profile"
+                    />
+                    <Button
+                      onPress={() => navigation.navigate('About')}
+                      title="go to About"
+                    />
+                  </View>
+                </View>
               </View>
             </View>
           </View>
-         
-          <Button
-            onPress={() => navigation.navigate('Mybookings')}
-            title="Go to my bookings"
-          />
-          <Button
-            onPress={() => navigation.navigate('Profile')}
-            title="go to profile"
-          />
+
           {/* <View style={{height:500, width:100, borderWidth:1, marginHorizontal:40 }}></View> */}
         </View>
       </ScrollView>
+
       <View style={styles.getQuotesDiv}>
         <Pressable
           onPress={() => {
@@ -228,14 +245,12 @@ const Home = ({navigation}) => {
           }}>
           <GetQuotesBtn Btnwidth={'100%'} textInsideBtn="GET QUOTES" />
         </Pressable>
-      
       </View>
     </SafeAreaView>
   );
 };
 
-
-const GetQuotesBtn=({Btnwidth, textInsideBtn})=>{
+const GetQuotesBtn = ({Btnwidth, textInsideBtn}) => {
   return (
     <View
       style={{
@@ -281,7 +296,7 @@ const GetQuotesBtn=({Btnwidth, textInsideBtn})=>{
       </LinearGradient>
     </View>
   );
-}
+};
 const styles = StyleSheet.create({
   backGround: {
     backgroundColor: '#F3F7FA',
@@ -346,7 +361,7 @@ const styles = StyleSheet.create({
     top: '77.87%',
     fontSize: 18,
     color: 'white',
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'Proxima Nova_regular',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
     fontWeight: 600,
@@ -384,15 +399,15 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    height: 70,
+    height: 72,
     width: 0,
     borderColor: 'black',
     borderStyle: 'dashed',
     borderLeftWidth: 1,
     position: 'absolute',
-    left: 32,
+    left: 32.5,
     color: '#4F565E',
-    top: 44,
+    top: 42,
     zIndex: 1,
   },
   line2: {
@@ -402,7 +417,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderLeftWidth: 1,
     zIndex: 1,
-    left: 32,
+    left: 32.5,
     color: '#4F565E',
     position: 'absolute',
     top: 133,

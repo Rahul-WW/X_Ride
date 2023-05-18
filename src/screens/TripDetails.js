@@ -31,6 +31,7 @@ const TripDetails = ({navigation, route}) => {
   const PickupDateTime = 'Wed 24 Feb, 12 PM';
   const DropLocation = 'Elland Road Stadium, Leed United';
   const DropDateTime = 'Wed 22 Feb';
+  const VaiRoute = 'BackSide Road Stadium';
   const PricePickupJourney = 280;
   const PriceReturnJourney = 240;
  
@@ -52,6 +53,7 @@ const TripDetails = ({navigation, route}) => {
                 PickupDateTime={PickupDateTime}
                 DropLocation={DropLocation}
                 DropDateTime={DropDateTime}
+                VaiRoute={VaiRoute}
               />
               <PickupDetails
                 PickupLocation={PickupLocation}
@@ -60,6 +62,7 @@ const TripDetails = ({navigation, route}) => {
                 DropDateTime={DropDateTime}
                 pickupOrReturn={'Pickup'}
                 Price={PricePickupJourney}
+                showReturnJourney={showReturnJourney}
               />
 
               {showReturnJourney ? (
@@ -139,9 +142,11 @@ const PickupDetails = ({
   DropDateTime,
   pickupOrReturn,
   Price,
+  showReturnJourney,
 }) => {
   return (
-    <View style={[styles.PickBox]}>
+    <View
+      style={[styles.PickBox, {marginBottom: !showReturnJourney ? 100 : 20}]}>
       {/* first layer of title and price */}
       <View style={styles.titleAndPriceBox}>
         <Text style={styles.PickupTitle}>{pickupOrReturn}</Text>
@@ -174,8 +179,6 @@ const PickupDetails = ({
       {/* third layer ie type of cab, pickup time, ratings */}
 
       <View style={styles.cabDetails}>
-
-       
         <View style={styles.cabTypeBox}>
           <View style={styles.svgSize}>
             <CabIcon width={18} height={18} />

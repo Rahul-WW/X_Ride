@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 32.2,
     fontWeight: 600,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'Proxima Nova_regular',
   },
 
   CaptionBox: {

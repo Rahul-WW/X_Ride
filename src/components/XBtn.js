@@ -14,11 +14,11 @@ import {useNavigation} from '@react-navigation/native';
 
 
 const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
-const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
-  const handlePress=()=>{
-    navigation.navigate(goTo)
-  }
+  const handlePress = () => {
+    navigation.navigate(goTo);
+  };
   return (
     <Pressable onPress={handlePress} disabled={disability}>
       <View

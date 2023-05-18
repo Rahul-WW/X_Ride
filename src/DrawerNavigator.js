@@ -12,12 +12,15 @@ const Drawer= createDrawerNavigator()
 
 
 
-const DrawerNavigator = () => {
+const DrawerNavigator = ({navigation}) => {
   return (
-    <Drawer.Navigator >
+    <Drawer.Navigator initialRouteName="Home">
+      {/* <Drawer.Screen name="Home">
+        {props => <Home {...props} drawerNavigation={navigation} />}
+      </Drawer.Screen> */}
       <Drawer.Screen name="Home" component={Home} />
 
-      {/* <Drawer.Screen name="Mybookings" component={Mybookings} /> */}
+      <Drawer.Screen name="Mybookings" component={Mybookings} />
       <Drawer.Screen name="PaymentHistory" component={PaymentHistory} />
       <Drawer.Screen name="SupportHomeme" component={SupportHome} />
     </Drawer.Navigator>

@@ -23,12 +23,11 @@ const Header = ({headertext}) => {
           }}>
           <View style={{padding: 8}}>
             <GoBackWhiteBtn />
-
           </View>
 
           <Text
             style={{
-              color: 'white',
+              color: '#FFFFFF',
               fontSize: 18,
               fontWeight: 500,
               fontFamily: 'ProximaNova-Regular',
@@ -38,7 +37,6 @@ const Header = ({headertext}) => {
             }}>
             {headertext}
           </Text>
-         
         </View>
       </View>
     </SafeAreaView>

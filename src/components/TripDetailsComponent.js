@@ -5,14 +5,12 @@ const {width, height} = Dimensions.get('window');
 
 import WhitePickup from '../svgImages/WhitePickup.svg';
 import WhiteDrop from '../svgImages/WhiteDrop.svg';
-import EditTrip from '../svgImages/EditTrip.svg';
-import Star2 from '../svgImages/Star2.svg';
 
-import Name2 from '../svgImages/Name2.svg';
 import WhiteUser from '../svgImages/WhiteUser.svg';
 import WhiteSuitcase from '../svgImages/WhiteSuitcase.svg';
 import WhiteRoundtrip from '../svgImages/WhiteRoundtrip.svg';
 import WhiteCabinbag from '../svgImages/WhiteCabinbag.svg';
+import ViaRouteIcon from "../svgImages/ViaRouteIcon.svg"
 
 
 
@@ -21,10 +19,9 @@ const TripDetailsComponent = ({
   PickupLocation,
   PickupDateTime,
   DropLocation,
-  DropDateTime
+  DropDateTime,
+  VaiRoute,
 }) => {
- 
-
   return (
     <View style={styles.container}>
       {/* pickup and drop details, this box is upto horizontal line */}
@@ -41,10 +38,22 @@ const TripDetailsComponent = ({
           </View>
         </View>
 
-        <View style={styles.editBox}>
-          <EditTrip />
-          <Text style={{color: 'white'}}>EDIT</Text>
+        {/* this is Via icons and vai Location box */}
+
+        <View
+          style={{
+            borderColor: 'white',
+            flexDirection: 'row',
+            gap: 12,
+            marginTop: 21,
+            height: 22,
+            alignItems: 'center',
+          }}>
+          <ViaRouteIcon width={24} />
+          <Text style={styles.dateTimeOfpickup}>{VaiRoute}</Text>
         </View>
+        {/* this is Via icons and vai Location box upto here */}
+
         <View style={styles.dropLocationBox}>
           <WhiteDrop />
 
@@ -62,6 +71,7 @@ const TripDetailsComponent = ({
       <View style={styles.horizontalLine}></View>
 
       <View style={styles.dashedline}></View>
+      <View style={styles.dashedline2}></View>
 
       {/* passengers and suitcase and bags */}
       <View style={styles.passengerDetailsBox}>
@@ -172,12 +182,12 @@ const styles = StyleSheet.create({
     top: 105,
   },
   horizontalLine: {
-    borderColor: '#E3E9ED',
-    borderWidth: 1,
     borderRadius: 2,
     marginTop: 184,
     marginHorizontal: 20,
     marginBottom: 20,
+    height: 1,
+    backgroundColor: '#E3E9ED',
   },
   passengerAndPriceBox: {
     marginHorizontal: 20,
@@ -191,15 +201,25 @@ const styles = StyleSheet.create({
 
     borderColor: 'white',
     borderStyle: 'dashed',
-    borderLeftWidth: 2,
-    left: 32,
-    height: 73,
+    borderRightWidth: 2,
+    left: 31.25,
+    height: 35,
     top: 48,
+  },
+  dashedline2: {
+    position: 'absolute',
+
+    borderColor: 'white',
+    borderStyle: 'dashed',
+    borderRightWidth: 2,
+    left: 31.25,
+    height: 35,
+    top: 97,
+    zIndex:1000
   },
   passengerDetailsBox: {
     marginHorizontal: 20,
     height: 60,
-
   },
   iconWithText: {
     flexDirection: 'row',
@@ -211,7 +231,7 @@ const styles = StyleSheet.create({
   iconWithText2: {
     flexDirection: 'row',
     gap: 8,
-    
+
     height: 22,
   },
   svgSize: {

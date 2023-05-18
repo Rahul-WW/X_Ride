@@ -22,7 +22,9 @@ import TripDetails from './screens/TripDetails';
 import AddDetails from './screens/AddDetails';
 import DrawerButton from './components/DrawerButton';
 import Payment from './screens/Payment';
-
+import About from './screens/About';
+import RefundPolicy from './screens/RefundPolicy';
+import PrivacyPolicy from './screens/PrivacyPolicy';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -54,7 +56,10 @@ const StackNavigator = () => {
       />
       <Stack.Screen name="TripDetails" component={TripDetails} />
       <Stack.Screen name="AddDetails" component={AddDetails} />
-      <Stack.Screen name="Payment" component={Payment}/>
+      <Stack.Screen name="Payment" component={Payment} />
+      <Stack.Screen name="About" component={About} />
+      <Stack.Screen name="RefundPolicy" component={RefundPolicy} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       {/* Add any other screens that are not navigated through the drawer */}
     </Stack.Navigator>
   );
