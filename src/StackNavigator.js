@@ -77,7 +77,7 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="OnboardingScreen1"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
