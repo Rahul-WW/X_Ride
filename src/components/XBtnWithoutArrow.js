@@ -25,7 +25,7 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
       <View
         style={{
           height: 48,
-         
+      
           width: Btnwidth,
         }}>
         <LinearGradient

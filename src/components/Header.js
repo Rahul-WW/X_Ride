@@ -16,7 +16,7 @@ const Header = ({headertext}) => {
           style={{
             flexDirection: 'row',
             height: 28,
-            marginHorizontal: 20,
+            marginHorizontal: 16,
             marginTop: 13,
             alignItems: 'center',
             gap: 12,

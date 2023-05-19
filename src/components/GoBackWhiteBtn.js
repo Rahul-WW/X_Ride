@@ -13,9 +13,9 @@ const GoBackWhiteBtn = () => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View >
+      <View style={{ height:24, width:20, flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
        
-      <BackWhite  />
+          <BackWhite  />
       </View>
     </TouchableOpacity>
   );

@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderStyle: 'dashed',
     borderRightWidth: 2,
-    left: 31.25,
+    left: 31.2,
     height: 35,
     top: 48,
   },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderStyle: 'dashed',
     borderRightWidth: 2,
-    left: 31.25,
+    left: 31.2,
     height: 35,
     top: 97,
     zIndex:1000

@@ -15,10 +15,6 @@ const GoBackBtn = () => {
     <TouchableOpacity onPress={handlePress}>
       <View style={{marginTop:16}}>
        
-          {/* <Image
-            resizeMode="cover"
-            source={require('../images/backArrow.png')}
-          /> */}
           <BackBlack/>
       
       </View>

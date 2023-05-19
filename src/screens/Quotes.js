@@ -28,6 +28,7 @@ import Sort1 from '../svgImages/Sort1.svg';
 import HeaderForPopUps from '../components/HeaderForPopUps';
 import RadioForm from 'react-native-simple-radio-button';
 
+
 const Cabs = [
   {
     id: 1,
@@ -254,24 +255,26 @@ const Quotes = ({navigation, route}) => {
                 color={bg}
                 text={'For Return'}
               />
-              <View
-                style={{
-                  height: 48,
-                  width: 48,
-                  borderWidth: 2,
-                  alignSelf: 'center',
+              <Pressable onPress={() => navigation.navigate('Filter')}>
+                <View
+                  style={{
+                    height: 48,
+                    width: 48,
+                    borderWidth: 2,
+                    alignSelf: 'center',
 
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: 'red',
-                  paddingHorizontal: 10,
-                  borderRadius: 16,
-                  borderColor: '#E3E9ED',
-                  marginLeft: 13,
-                  backgroundColor: 'white',
-                }}>
-                <Filter width={24} height={24} />
-              </View>
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: 'red',
+                    paddingHorizontal: 10,
+                    borderRadius: 16,
+                    borderColor: '#E3E9ED',
+                    marginLeft: 13,
+                    backgroundColor: 'white',
+                  }}>
+                  <Filter width={24} height={24} />
+                </View>
+              </Pressable>
             </View>
 
             {bg === true ? (
@@ -453,6 +456,31 @@ const Quotes = ({navigation, route}) => {
         </TouchableOpacity>
       </View> */}
       {/* floating sort btn ends here */}
+      <View style={styles.floatingBtn}>
+        <TouchableOpacity
+          onPress={() =>  scrollViewRef.current.scrollTo({y: 0, animated: true})}>
+          <View>
+            <LinearGradient
+              locations={[0, 1]}
+              colors={['#00c96d', '#048ad7']}
+              useAngle={true}
+              angle={90}
+              style={{borderRadius: 8}}>
+              <View>
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    left: 10,
+                    top: 10,
+                  }}>
+                  <Sort1 width={20} height={20} />
+                </View>
+              </View>
+            </LinearGradient>
+          </View>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -569,8 +597,8 @@ const sortingList = () => {
 };
 
 const styles = StyleSheet.create({
-  mainContainer:{
-  flex:1
+  mainContainer: {
+    flex: 1,
   },
   centeredView: {
     flex: 1,
@@ -589,10 +617,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     elevation: 5,
     height: 80,
-    
-    borderColor:"red",
-    paddingVertical:16,
-    
+
+    borderColor: 'red',
+    paddingVertical: 16,
   },
 
   textStyle: {
@@ -623,9 +650,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   floatingBtn: {
-    marginLeft: 20,
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
     width: 40,
-    height: 48,
+    height: 40,
   },
 });
 export default Quotes;

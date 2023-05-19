@@ -1,6 +1,3 @@
-
-
-
 import React, {useState, useRef} from 'react';
 
 import {
@@ -17,20 +14,19 @@ import {
   TouchableHighlight,
   Pressable,
   Alert,
-  Animated
+  Animated,
 } from 'react-native';
 
 import GoBackWhiteBtn from '../components/GoBackWhiteBtn';
 import BothDirection from '../svgImages/BothDirection.svg';
 
-
 const {width, height} = Dimensions.get('window');
 import LinearGradient from 'react-native-linear-gradient';
 import Sort1 from '../svgImages/Sort1.svg';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
-import HeaderForPopUps from "../components/HeaderForPopUps"
-
-import RadioForm from "react-native-simple-radio-button"
+import HeaderForPopUps from '../components/HeaderForPopUps';
+import Filter from '../svgImages/Filter.svg';
+import RadioForm from 'react-native-simple-radio-button';
 
 const Cabs = [
   {
@@ -112,48 +108,71 @@ const sortingBasis = [
   },
 ];
 
-
 import PickupCabs from '../components/PickupCabs';
-
 
 const QuotesForPickupOnly = ({navigation, route}) => {
   const {showReturnJourney} = route.params;
 
-  console.log('showView1', showReturnJourney);
   const [modalVisible, setModalVisible] = useState(false);
   const [sortValue, setSortValue] = useState(-1);
   const [selectedPickupCab, setSelectedPickupCab] = useState({});
-    const [car, setCar] = useState(null);
+  const [car, setCar] = useState(null);
+  const scrollViewRef = useRef();
 
-    const handlePress = cab_no => {
-      console.log(cab_no);
-      setModalVisible(true);
-      Cabs.map(e => {
-        if (e.id === cab_no) {
-          setSelectedPickupCab(e);
-          setCar(e.source);
-        }
-      });
-    };
+  const handlePress = cab_no => {
+    console.log(cab_no);
+    setModalVisible(true);
+    Cabs.map(e => {
+      if (e.id === cab_no) {
+        setSelectedPickupCab(e);
+        setCar(e.source);
+      }
+    });
+  };
 
-    const handlePressNext = () => {
-     
-      setModalVisible(false);
-      navigation.navigate('TripDetails', {
-        showViews: route.params.showReturnJourney,
-      });
-    };
-console.log(selectedPickupCab)
-  
+  const handlePressNext = () => {
+    setModalVisible(false);
+    navigation.navigate('TripDetails', {
+      showViews: route.params.showReturnJourney,
+    });
+  };
+  console.log(selectedPickupCab);
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Animated.View>
         <HeaderForQuotes />
       </Animated.View>
-      <ScrollView>
+      <ScrollView ref={scrollViewRef}>
         <View style={styles.container}>
           <View style={styles.togglingBtnsDiv}>
-            <XBtnWithoutArrow Btnwidth={'100%'} textInsideBtn={'For Pickup'} disability={true} />
+            <View style={{width: '83%'}}>
+              <XBtnWithoutArrow
+                Btnwidth={'100%'}
+                textInsideBtn={'For Pickup'}
+                disability={true}
+              />
+            </View>
+
+            <Pressable onPress={() => navigation.navigate('Filter')}>
+              <View
+                style={{
+                  height: 48,
+                  width: 48,
+                  borderWidth: 2,
+                  alignSelf: 'center',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: 'red',
+                  paddingHorizontal: 10,
+                  borderRadius: 16,
+                  borderColor: '#E3E9ED',
+                  marginLeft: 13,
+                  backgroundColor: 'white',
+                }}>
+                <Filter width={24} height={24} />
+              </View>
+            </Pressable>
           </View>
 
           <View>
@@ -233,9 +252,9 @@ console.log(selectedPickupCab)
       {/* floating sort btn starts here */}
       <View style={styles.floatingBtn}>
         <TouchableOpacity
-          onPress={() => {
-            setModalVisible(true);
-          }}>
+          onPress={() =>
+            scrollViewRef.current.scrollTo({y: 0, animated: true})
+          }>
           <View>
             <LinearGradient
               locations={[0, 1]}
@@ -403,6 +422,9 @@ const styles = StyleSheet.create({
   togglingBtnsDiv: {
     height: 48,
     marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   floatingBtn: {
     position: 'absolute',
