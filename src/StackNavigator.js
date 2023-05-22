@@ -32,6 +32,7 @@ import PrivacyPolicy from './screens/PrivacyPolicy';
 import Filter from './screens/Filter';
 import {Animated} from 'react-native';
 
+
 const Stack = createStackNavigator();
 
 
@@ -77,7 +78,7 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="OnboardingScreen1"
+      initialRouteName="DrawerNavigator"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -168,7 +169,7 @@ const StackNavigator = () => {
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Mybookings"
         component={Mybookings}
         options={{
@@ -181,7 +182,7 @@ const StackNavigator = () => {
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
-      />
+      /> */}
       <Stack.Screen
         name="QuotesForPickupOnly"
         component={QuotesForPickupOnly}
@@ -210,13 +211,13 @@ const StackNavigator = () => {
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="About"
         component={About}
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
-      />
+      /> */}
       <Stack.Screen
         name="RefundPolicy"
         component={RefundPolicy}
@@ -238,6 +239,7 @@ const StackNavigator = () => {
           cardStyleInterpolator: forSlide, // Use the custom animation we defined earlier
         }}
       />
+
       {/* Add any other screens that are not navigated through the drawer */}
     </Stack.Navigator>
   );

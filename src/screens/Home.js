@@ -52,10 +52,12 @@ import {useNavigation} from '@react-navigation/native';
 const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
  
-  // const [showViaRouteInput, setShowViaRouteInput] = useState(true);
+  
 
   const [count, setCount] = useState(0);
   const navigation = useNavigation();
+
+  console.log(navigation)
   
   //this function is for increasing the Via Routes
   const incrementCount = () => {
@@ -136,24 +138,26 @@ const Home = () => {
                     .map((_, i) => (
                       <View
                         key={i}
-                        style={[styles.inputDivs, styles.inputDiv2]}>
+                        style={[styles.inputDivs, styles.inputDiv2, styles.inputDivforLine]}>
                         <InputFieldWithCross
                           placeholder="Via Route"
                           Icon={<ViaRouteIcon width={20} height={24} />}
                           Icon2={<Cross width={11} height={11} />}
                           handleHideRouteInput={handleHideRouteInput}
                         />
+
+                        <View style={styles.dashedLine2}></View>
                       </View>
                     ))}
                 </View>
 
-                {Array(count)
+                {/* {Array(count)
                   .fill()
                   .map((_, i) => (
                     <View key={i} style={styles.line2}></View>
-                  ))}
+                  ))} */}
                 {/* {showViaRouteInput && <View style={styles.line2}></View>} */}
-                {count !== 0 ? <View style={styles.line2}></View> : null}
+                {/* {count !== 0 ? <View style={styles.line2}></View> : null} */}
 
                 <View style={[styles.inputDivs, styles.inputDiv3]}>
                   <InputField
@@ -202,7 +206,7 @@ const Home = () => {
                   </View>
                 )}
 
-                <View>
+                {/* <View>
                   <View
                     style={{
                       borderWidth: 1,
@@ -218,12 +222,9 @@ const Home = () => {
                       onPress={() => navigation.navigate('Profile')}
                       title="go to profile"
                     />
-                    <Button
-                      onPress={() => navigation.navigate('About')}
-                      title="go to About"
-                    />
+                    
                   </View>
-                </View>
+                </View> */}
               </View>
             </View>
           </View>
@@ -383,10 +384,11 @@ const styles = StyleSheet.create({
   },
   inputDiv2: {
     marginTop: 12,
-    marginBottom: 8,
+    
   },
   inputDiv3: {
-    marginTop: 12,
+    marginTop: 44,
+    zIndex: -1000
   },
   inputDiv4: {
     marginTop: 20,
@@ -403,26 +405,14 @@ const styles = StyleSheet.create({
     width: 0,
     borderColor: 'black',
     borderStyle: 'dashed',
-    borderLeftWidth: 1,
+    borderWidth: 1,
     position: 'absolute',
-    left: 32.5,
-    color: '#4F565E',
-    top: 42,
+    left: 32,
+    top: 44,
     zIndex: 1,
+    borderColor: '#4F565E',
   },
-  line2: {
-    height: 44,
-    width: 0,
-    borderColor: 'black',
-    borderStyle: 'dashed',
-    borderLeftWidth: 1,
-    zIndex: 1,
-    left: 32.5,
-    color: '#4F565E',
-    position: 'absolute',
-    top: 133,
-    zIndex: 1,
-  },
+
 
   checkBoxDiv: {
     height: 22,
@@ -456,6 +446,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
+  },
+  inputDivforLine: {
+    position: 'relative',
+    
+  },
+  dashedLine2: {
+    position: 'absolute',
+    borderWidth: 1,
+    left: 32,
+    top: 44,
+    height: 44,
+    borderStyle: 'dashed',
+    borderColor: '#4F565E',
+    width: 0,
+    zIndex: 1000,
   },
 });
 

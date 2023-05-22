@@ -82,7 +82,7 @@ const SignIn = ({navigation}) => {
       [
         {
           text: 'OK',
-          onPress: () => navigation.navigate('Home'),
+          onPress: () => navigation.navigate('DrawerNavigator'),
         },
       ],
       {cancelable: false},
