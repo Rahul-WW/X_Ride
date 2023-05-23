@@ -8,33 +8,65 @@ import {
   StyleSheet,
   Pressable,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import Header from '../components/Header';
 import Sort from '../svgImages/Sort.svg';
 import PaymentHistoryIcon from '../svgImages/PaymentHistoryIcon.svg';
+import RadioUnchecked from '../svgImages/RadioUnchecked.svg';
+import RadioChecked from '../svgImages/RadioChecked.svg';
+import CheckBox from 'react-native-check-box';
+import DrawerCross from '../svgImages/DrawerCross.svg';
 const TransactionArray = [
-  {transactionID: '#232314', date: '12 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232315', date: '15 Sept', time: '12.00 AM', price: 123},
+  {transactionId: '#232314', date: '12 Sept', time: '12.00 AM', price: 121},
+  {transactionId: '#232315', date: '15 Sept', time: '12.00 AM', price: 122},
+  {transactionId: '#232314', date: '2 Sept', time: '12.00 AM', price: 126},
+  {transactionId: '#232314', date: '12 Sept', time: '12.00 AM', price: 127},
+  {transactionId: '#232314', date: '12 Sept', time: '12.00 AM', price: 128},
 
-  {transactionID: '#232316', date: '18 Sept', time: '12.00 AM', price: 123},
+  {transactionId: '#232316', date: '18 Sept', time: '12.00 AM', price: 123},
 
-  {transactionID: '#232317', date: '19 Sept', time: '12.00 AM', price: 123},
+  {transactionId: '#232317', date: '19 Sept', time: '12.00 AM', price: 124},
 
-  {transactionID: '#232318', date: '12 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '2 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '12 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '12 Sept', time: '12.00 AM', price: 123},
+  {transactionId: '#232318', date: '12 Sept', time: '12.00 AM', price: 125},
 
-  {transactionID: '#232318', date: '12 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '2 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '12 Sept', time: '12.00 AM', price: 123},
-  {transactionID: '#232314', date: '12 Sept', time: '12.00 AM', price: 123},
+  {transactionId: '#232318', date: '12 Sept', time: '12.00 AM', price: 129},
+  {transactionId: '#232314', date: '2 Sept', time: '12.00 AM', price: 130},
+  {transactionId: '#232314', date: '12 Sept', time: '12.00 AM', price: 143},
+  {transactionId: '#232314', date: '12 Sept', time: '12.00 AM', price: 153},
 ];
 
+const DataSortBasis = [
+  {
+    value: 'Date',
+  },
+  {
+    value: 'Price',
+  },
+  {
+    value: 'TransactionId',
+  },
+];
 
 const PaymentHistory = () => {
+  const [data, setData] = useState(TransactionArray);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [option, setOption] = useState(null);
+
+  useEffect(() => {
+    if (option === 'Price') {
+      setData([...data].sort((a, b) => b.price - a.price));
+    } else if(option === null){
+      setData(TransactionArray);
+    }
+    //similarlly sort according to the option selected
+    //keep in mind for the Date formate before sorting
+  }, [option]);
+
+ // console.log(option);
+
   return (
     <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
       <Animated.View>
@@ -52,7 +84,9 @@ const PaymentHistory = () => {
           <Text style={{fontWeight: 400, fontSize: 16, color: '#292F3B'}}>
             All Transactions
           </Text>
-          <Pressable style={{width: 82, height: 27}}>
+          <Pressable
+            style={{width: 82, height: 27}}
+            onPress={() => setModalVisible(!modalVisible)}>
             <LinearGradient
               colors={['#00c96d', '#048ad7']}
               useAngle={true}
@@ -69,21 +103,72 @@ const PaymentHistory = () => {
           </Pressable>
         </View>
         <View>
-          {TransactionArray.map((e,i)=>{
+          {data.map((e, i) => {
             return (
-              <View  key={i}>
-                <SinglePayment Tid={e.transactionID} date={e.date} time={e.time} price={e.price} />
+              <View key={i}>
+                <SinglePayment
+                  Tid={e.transactionId}
+                  date={e.date}
+                  time={e.time}
+                  price={e.price}
+                />
               </View>
             );
           })}
-          
+        </View>
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <TouchableOpacity
+              style={styles.centeredView2}
+              activeOpacity={1}
+              onPressOut={() => setModalVisible(false)}>
+              <View style={styles.modalView}>
+                <View style={styles.headerBox}>
+                  <View style={styles.headerContent}>
+                    <View style={{width: 84, height: 28}}>
+                      <Text
+                        style={{
+                          color: '#FFFFFF',
+                          fontSize: 18,
+                          fontWeight: 500,
+                          letterSpacing: 0.32,
+                          lineHeight: 18 * 1.4,
+                        }}>
+                        SORT
+                      </Text>
+                    </View>
+                    <View style={{height: 24, width: 24}}>
+                      <TouchableOpacity
+                        onPress={() => setModalVisible(!modalVisible)}>
+                        <DrawerCross />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.sortBox}>
+                  <View style={styles.sortingList}>
+                    <RadioButton
+                      data={DataSortBasis}
+                      onSelect={value => setOption(value)}
+                    />
+                  </View>
+                </View>
+              </View>
+            </TouchableOpacity>
+          </Modal>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const SinglePayment = ({Tid, date, time,price}) => {
+const SinglePayment = ({Tid, date, time, price}) => {
   return (
     <View
       style={{
@@ -93,7 +178,7 @@ const SinglePayment = ({Tid, date, time,price}) => {
         borderWidth: 1,
         backgroundColor: 'white',
         borderColor: '#E3E9ED',
-        marginBottom:16
+        marginBottom: 16,
       }}>
       <View
         style={{
@@ -122,7 +207,13 @@ const SinglePayment = ({Tid, date, time,price}) => {
             <PaymentHistoryIcon />
           </View>
           <View style={{width: 113}}>
-            <Text style={{fontWeight: 400, fontSize: 16, color: '#292F3B'}}>
+            <Text
+              style={{
+                fontWeight: 400,
+                fontSize: 16,
+                color: '#292F3B',
+                lineHeight: 16 * 1.4,
+              }}>
               {Tid}
             </Text>
             <View style={{flexDirection: 'row'}}>
@@ -164,7 +255,64 @@ const SinglePayment = ({Tid, date, time,price}) => {
   );
 };
 
+const RadioButton = ({data, onSelect}) => {
+  const [userOption, setUserOption] = useState(null);
+  const selectHandler = value => {
+    if (userOption === value) {
+      setUserOption(null); // uncheck the radio button
+      onSelect(null); // notify parent component
+    } else {
+      setUserOption(value); // set the selected radio button
+      onSelect(value); // notify parent component
+    }
+  };
+
+  return (
+    <View>
+      {data.map((basis, i) => {
+        return (
+          <View style={styles.singleSortBox1} key={i}>
+            <Pressable onPress={() => selectHandler(basis.value)}>
+              {basis.value === userOption ? (
+                <RadioChecked width={22} height={22} />
+              ) : (
+                <RadioUnchecked width={22} height={22} />
+              )}
+            </Pressable>
+            <Text style={styles.sortText}>{basis.value}</Text>
+          </View>
+        );
+      })}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
+  singleSortBox1: {
+    height: 22,
+    width: '100%',
+    marginBottom: 20,
+
+    flexDirection: 'row',
+    gap: 8,
+  },
+
+  sortText: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#4F565E',
+  },
+  sortBox: {
+    width: '100%',
+    height: 106,
+
+    marginTop: 20,
+  },
+  sortingList: {
+    height: 106,
+    width: 130,
+    marginLeft: 20,
+  },
   sortBtn: {
     borderRadius: 7,
     backgroundColor: 'white',
@@ -175,10 +323,47 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sortText: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: 400,
     color: '#4F565E',
     letterSpacing: 0.32,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  centeredView2: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  modalView: {
+    width: Dimensions.get('window').width,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5,
+    height: 210,
+
+    borderColor: 'red',
+    paddingVertical: 16,
+  },
+  headerBox: {
+    height: 54,
+    backgroundColor: '#292F3B',
+    width: '100%',
+
+    paddingVertical: 13,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+  },
+  headerContent: {
+    flexDirection: 'row',
+
+    marginHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

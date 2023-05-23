@@ -1,80 +1,92 @@
-import {View, Text, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Text, Dimensions, Image, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
+import MoneyIcon from "../svgImages/MoneyIcon.svg"
+import Name2 from "../svgImages/Name2.svg"
+
 
 const {width, height} = Dimensions.get('window');
+
 const passengers = 3,
   price = 1430; //pass this as a Prop in the Booking function
-const UpcomingBookings = () => {
+const UpcomingBookings = ({handleGoToUpcoming, pickupLocation, pickupTime, pickupDate,dropLocation, dropTime, dropDate,id,   passengerCount, price}) => {
+
+
+
+
   return (
-    <View style={styles.container}>
-      <View style={styles.pickupAndDropBox}>
-        <View style={styles.pickupBox}>
-          <Image
-            style={{width: 24, height: 24}}
-            source={require('../images/pickupIcon.png')}
-          />
+    <Pressable style={{marginBottom: 16}} onPress={()=>handleGoToUpcoming(id)}>
+      <View style={styles.container}>
+        <View style={styles.pickupAndDropBox}>
+          <View style={styles.pickupBox}>
+            <Image
+              style={{width: 24, height: 24}}
+              source={require('../images/pickupIcon.png')}
+            />
 
-          <View
-            style={{
-              height: 39,
-            }}>
-            <Text style={styles.pickupText}>Manchester Club Stadium (M16)</Text>
-            <Text style={styles.dateTimeOfpickup}>Wed 24 Feb, 12 PM</Text>
+            <View
+              style={{
+                height: 39,
+              }}>
+              <Text style={styles.pickupText}>
+                {pickupLocation}
+              </Text>
+              <Text style={styles.dateTimeOfpickup}>{pickupDate+" "+ pickupTime}</Text>
+            </View>
+          </View>
+          <View style={styles.dropLocationBox}>
+            <Image source={require('../images/dropIcon.png')} />
+
+            <View
+              style={{
+                height: 39,
+              }}>
+              <Text style={styles.pickupText}>
+                {dropLocation}
+              </Text>
+              <Text style={styles.dateTimeOfpickup}>{dropDate+" "+ dropTime}</Text>
+            </View>
           </View>
         </View>
-        <View style={styles.dropLocationBox}>
-          <Image source={require('../images/dropIcon.png')} />
+        <View style={styles.horizontalLine}></View>
 
-          <View
-            style={{
-              height: 39,
-            }}>
-            <Text style={styles.pickupText}>
-              Elland Road Stadium, Leed United
+        <View style={styles.passengerAndPriceBox}>
+          <View style={styles.passengerBox}>
+            <View>
+              <Name2 width={20} height={20} />
+            </View>
+
+            <Text style={styles.passengerPriceText}>{passengerCount}</Text>
+            <Text style={styles.passengerPriceText}>
+              {passengerCount >= 2 ? (
+                <Text> Passengers</Text>
+              ) : (
+                <Text> Passenger</Text>
+              )}{' '}
             </Text>
-            <Text style={styles.dateTimeOfpickup}>Wed 22 Feb</Text>
+          </View>
+          <View style={styles.priceBox}>
+            <View style={{alignSelf: 'center'}}>
+              <MoneyIcon width={20} height={15} />
+            </View>
+
+            <Text style={styles.passengerPriceText}>£ {price}</Text>
           </View>
         </View>
+
+        <View style={styles.dashedline}></View>
       </View>
-      <View style={styles.horizontalLine}></View>
-
-      <View style={styles.passengerAndPriceBox}>
-        <View style={styles.passengerBox}>
-          <Image source={require('../images/nameInputIcon.png')} />
-          <Text style={styles.passengerPriceText}>{passengers}</Text>
-          <Text style={styles.passengerPriceText}>
-            {passengers >= 2 ? (
-              <Text> Passengers</Text>
-            ) : (
-              <Text> Passenger</Text>
-            )}{' '}
-          </Text>
-        </View>
-        <View style={styles.priceBox}>
-          <View style={{alignSelf: 'center'}}>
-            <Image source={require('../images/moneyIcon.png')} />
-          </View>
-
-          <Text style={styles.passengerPriceText}>£ {price}</Text>
-        </View>
-      </View>
-
-      <View style={styles.dashedline}></View>
-    </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: 200,
     borderColor: '#E3E9ED',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor:"red",
+
     backgroundColor: 'white',
     position: 'relative',
-    marginBottom:16
-    
   },
 
   pickupAndDropBox: {
@@ -101,7 +113,6 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova-Regular',
     color: '#4F565E',
     letterSpacing: 0.32,
-
     lineHeight: 16 * 1,
   },
   pickupBox: {
@@ -115,21 +126,25 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   horizontalLine: {
-    borderColor: '#E3E9ED',
-    borderWidth: 1,
-    borderRadius: 2,
+    height: 1,
+
     marginTop: 145,
     marginHorizontal: 20,
+
+    backgroundColor: '#E3E9ED',
   },
   passengerAndPriceBox: {
     marginHorizontal: 20,
     marginTop: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 16,
   },
   passengerBox: {
     flexDirection: 'row',
     gap: 8,
+
+    alignItems: 'center',
   },
   priceBox: {
     flexDirection: 'row',
@@ -146,10 +161,12 @@ const styles = StyleSheet.create({
 
     borderColor: '#4F565E',
     borderStyle: 'dashed',
-    borderLeftWidth: 1,
-    left: 32,
+    borderWidth:1,
+    width: 2,
+    left: 31,
     height: 38,
     top: 48,
+    backgroundColor: 'white',
   },
 });
 

@@ -5,7 +5,8 @@ import {View, Text, Dimensions, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import MaskedView from '@react-native-community/masked-view';
 
-
+import MoneyIcon from '../svgImages/MoneyIcon.svg';
+import Name2 from '../svgImages/Name2.svg';
 const {width, height} = Dimensions.get('window');
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -52,7 +53,9 @@ const CompletedBookings = () => {
 
       <View style={styles.passengerAndPriceBox}>
         <View style={styles.passengerBox}>
-          <Image source={require('../images/nameInputIcon.png')} />
+          <View>
+            <Name2 width={20} height={20} />
+          </View>
           <Text style={styles.passengerPriceText}>{passengers}</Text>
           <Text style={styles.passengerPriceText}>
             {passengers >= 2 ? (
@@ -64,16 +67,16 @@ const CompletedBookings = () => {
         </View>
         <View style={styles.priceBox}>
           <View style={{alignSelf: 'center'}}>
-            <Image source={require('../images/moneyIcon.png')} />
+            <MoneyIcon width={20} height={15} />
           </View>
 
           <Text style={styles.passengerPriceText}>£ {price}</Text>
         </View>
       </View>
-      <View style={styles.horizontalLine2}></View>
+      {/* <View style={styles.horizontalLine2}></View>
       <View style={styles.rebookBox}>
         <GradientText>RE-BOOK</GradientText>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -110,16 +113,7 @@ const styles = StyleSheet.create({
   transparentText: {
     opacity: 0,
   },
-  rebookBox: {
-    marginTop: 12,
-    marginBottom: 12,
-    height: 25,
-   
-    marginHorizontal: 107.5,
-    flexDirection:"row",
-    justifyContent:"center"
-  },
-  rebookText: {},
+
   horizontalLine2: {
     borderColor: '#E3E9ED',
     borderWidth: 1,
@@ -172,24 +166,27 @@ const styles = StyleSheet.create({
   dropLocationBox: {
     flexDirection: 'row',
     gap: 12,
-    marginBottom: 16,
+    marginBottom: 20,
   },
   horizontalLine: {
-    borderColor: '#E3E9ED',
-    borderWidth: 1,
-    borderRadius: 2,
+    height: 1,
     marginTop: 145,
     marginHorizontal: 20,
+
+    backgroundColor: '#E3E9ED',
   },
   passengerAndPriceBox: {
     marginHorizontal: 20,
     marginTop: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 16,
   },
   passengerBox: {
     flexDirection: 'row',
     gap: 8,
+
+    alignItems: 'center',
   },
   priceBox: {
     flexDirection: 'row',
@@ -206,10 +203,12 @@ const styles = StyleSheet.create({
 
     borderColor: '#4F565E',
     borderStyle: 'dashed',
-    borderLeftWidth: 1,
-    left: 32,
+    borderWidth: 1,
+    width: 2,
+    left: 31,
     height: 38,
     top: 48,
+    backgroundColor: 'white',
   },
 });
 

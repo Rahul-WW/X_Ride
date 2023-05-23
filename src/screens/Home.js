@@ -57,7 +57,7 @@ const Home = () => {
   const [count, setCount] = useState(0);
   const navigation = useNavigation();
 
-  console.log(navigation)
+  
   
   //this function is for increasing the Via Routes
   const incrementCount = () => {
