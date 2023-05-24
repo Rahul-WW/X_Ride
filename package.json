@@ -21,6 +21,8 @@
     "react": "18.2.0",
     "react-native": "0.71.7",
     "react-native-check-box": "^2.1.7",
+    "react-native-config": "^1.5.1",
+    "react-native-dotenv": "^3.4.8",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-linear-gradient": "^2.6.2",

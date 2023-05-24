@@ -170,13 +170,13 @@ const StackNavigator = () => {
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="UpcomingTrip"
         component={UpcomingTrip}
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}
-      />
+      /> */}
       {/* <Stack.Screen
         name="Profile"
         component={Profile}

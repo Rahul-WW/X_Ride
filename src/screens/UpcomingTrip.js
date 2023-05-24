@@ -10,38 +10,65 @@ import {
   Pressable,
   Dimensions,
   Animated,
+  Modal,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../components/Header';
+import MaskedView from '@react-native-community/masked-view';
 
 import UpcomingTripComponent from '../components/UpcomingTripComponent';
 import LinearGradient from 'react-native-linear-gradient';
+import EmailIcon2 from '../svgImages/EmailIcon2.svg';
+import ChatIcon from '../svgImages/ChatIcon.svg';
+import CallIcon from '../svgImages/CallIcon.svg';
+import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
+import DrawerCross from '../svgImages/DrawerCross.svg';
+import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 
-const UpcomingTrip = ({navigation, route}) => {
-  const {selectedfromList} = route.params;
+const UpcomingTrip = ({navigation}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+    const [modalVisible2, setModalVisible2] = useState(false);
 
-  console.log(selectedfromList);
+  // const {selectedfromList} = route.params;
+
+  // console.log(selectedfromList);
 
   const handleCallBtnPressed = () => {
     Alert.alert('yes pressed');
   };
+  const handlePressConfirmCancel=()=>{
+    setModalVisible(false)
+   setModalVisible2(true)
+  }
+
+  const handlePressGetNewQuotes=()=>{
+     setModalVisible2(false);
+    
+     navigation.navigate("Home")
+  }
 
   return (
-    <SafeAreaView style={{backgroundColor: '#F3F7FA'}}>
+    <SafeAreaView
+      style={{backgroundColor: '#F3F7FA', flex: 1, position: 'relative'}}>
       <Animated.View>
-        <Header headertext={'Upcoming Trip'} />
+        {/* <Header headertext={'Upcoming Trip'} /> */}
+        <HeaderDrawerScreens
+          headertext={'Upcoming Trip'}
+          navigation={navigation}
+          backto={'Mybookings'}
+        />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20, borderWidth: 1}}>
+      <ScrollView style={{marginHorizontal: 20}}>
         <View style={styles.container}>
           <UpcomingTripComponent
-            pickupLocation={selectedfromList.pickupLocation}
-            pickupDate={selectedfromList.pickupDate}
-            pickupTime={selectedfromList.pickupTime}
-            dropLocation={selectedfromList.dropLocation}
-            dropTime={selectedfromList.dropTime}
-            dropDate={selectedfromList.dropDate}
-            passengerCount={selectedfromList.passengerCount}
-            price={selectedfromList.price}
+            // pickupLocation={selectedfromList.pickupLocation}
+            // pickupDate={selectedfromList.pickupDate}
+            // pickupTime={selectedfromList.pickupTime}
+            // dropLocation={selectedfromList.dropLocation}
+            // dropTime={selectedfromList.dropTime}
+            // dropDate={selectedfromList.dropDate}
+            // passengerCount={selectedfromList.passengerCount}
+            // price={selectedfromList.price}
           />
 
           <View style={styles.tripDetails}>
@@ -148,7 +175,6 @@ const UpcomingTrip = ({navigation, route}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-               
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Name</Text>
@@ -158,7 +184,6 @@ const UpcomingTrip = ({navigation, route}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-              
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Contact No</Text>
@@ -168,7 +193,6 @@ const UpcomingTrip = ({navigation, route}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                 
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Email</Text>
@@ -178,7 +202,6 @@ const UpcomingTrip = ({navigation, route}) => {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                 
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Paid By</Text>
@@ -186,8 +209,351 @@ const UpcomingTrip = ({navigation, route}) => {
               </View>
             </View>
           </View>
+
+          <View style={styles.foranyEnquiry}>
+            <View style={styles.passengerDetailsTextBox}>
+              <Text style={{fontSize: 18, fontWeight: 500, color: '#292F3B'}}>
+                For any Enquiry
+              </Text>
+            </View>
+            <View style={styles.horizontal2}></View>
+            <View style={styles.detailList}>
+              <Pressable
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 12,
+                 
+                }}>
+                <CallIcon width={20} height={20} />
+                <View>
+                  <Text style={styles.detailsListText}>Call Us</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 12,
+                 
+                }}
+                onPress={() =>
+                  navigation.navigate('Support')
+                }>
+                <ChatIcon width={20} height={20} />
+                <View>
+                  <Text style={styles.detailsListText}>Chat with Us</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 12,
+                 
+                }}
+                onPress={() => navigation.navigate('Email')}>
+                <EmailIcon2 width={20} height={20} />
+                <View>
+                  <Text style={styles.detailsListText}>Email Us</Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+
+          <View
+            style={{
+              marginTop: 20,
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <TouchableOpacity onPressOut={() => setModalVisible(true)}>
+              <GradientText>Cancel Ride</GradientText>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
+
+      <View style={styles.footer}>
+        <View style={styles.footerContainer}>
+          <View
+            style={{
+              paddingLeft: 8,
+              flexDirection: 'row',
+              alignSelf: 'center',
+              gap: 8,
+            }}>
+            <View style={{alignSelf: 'center'}}>
+              <Text
+                style={{
+                  color: '#555555',
+                  fontWeight: 500,
+                  fontSize: 18,
+                  lineHeight: 18 * 1.4,
+                  letterSpacing: 0.32,
+                }}>
+                Driver On The Way
+              </Text>
+            </View>
+          </View>
+          <View style={{width: '50%'}}>
+            <XBtnWithoutArrow
+              Btnwidth={129}
+              textInsideBtn={'TRACK'}
+              goTo={'Payment'}
+            />
+          </View>
+        </View>
+      </View>
+      {/*First model  popup*/}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
+            <View style={styles.modalView}>
+              <View
+                style={styles.headerBox} // header of the popup
+              >
+                <View style={styles.headerContent}>
+                  <View style={{width: 200, height: 28}}>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        letterSpacing: 0.32,
+                        lineHeight: 18 * 1.4,
+                      }}>
+                      Cancellation Policy
+                    </Text>
+                  </View>
+                  <View style={{height: 24, width: 24}}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible(!modalVisible)}>
+                      <DrawerCross />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View //main container of popup with width 100%
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  flex: 1,
+                }}>
+                <View
+                  style={styles.popupContainer} // container with marginHorizontal 20
+                >
+                  <View style={styles.cancellationtimeBox}>
+                    <Text style={styles.cancellationText}>
+                      Cancellation Time
+                    </Text>
+                    <Text style={styles.cancellationText}>Refund Amount</Text>
+                  </View>
+                  <View style={styles.horizontal3}></View>
+                  <View style={styles.cancellationTimingAndPriceBox}>
+                    <View style={styles.timingAndPriceBox}>
+                      <View style={{width: '30%'}}>
+                        <Text style={styles.detailsListText}>
+                          Befor 6 hours of travel
+                        </Text>
+                      </View>
+                      <View style={styles.cancelPrice}>
+                        <Text style={styles.detailsListText}>£ 40</Text>
+                      </View>
+                    </View>
+                    <View style={styles.timingAndPriceBox}>
+                      <View style={{width: '35%'}}>
+                        <Text style={styles.detailsListText}>
+                          Befor 48 hours
+                        </Text>
+                      </View>
+                      <View style={styles.cancelPrice}>
+                        <Text style={styles.detailsListText}>£ 80</Text>
+                      </View>
+                    </View>
+                    <View style={styles.timingAndPriceBox2}>
+                      <View style={{width: '35%'}}>
+                        <Text style={styles.detailsListText}>
+                          Befor 5.30 hours of travel
+                        </Text>
+                      </View>
+                      <View style={styles.cancelPrice}>
+                        <Text style={styles.detailsListText}>No Refund</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.horizontal3}></View>
+                  <View style={styles.note}>
+                    <Text style={styles.noteText}>
+                      Note: You will get your refund in 5 business days.
+                    </Text>
+                  </View>
+                  <View style={styles.surityBox}>
+                    <View
+                      style={{
+                        borderColor: 'white',
+                        height: 44,
+                      }}>
+                      <Text style={styles.surityText}>
+                        Are you sure you want to cancel your ride?
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+
+                <View
+                  style={styles.resetBox} //bottom part containing buttons
+                >
+                  <View
+                    style={{
+                      marginHorizontal: 20,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      height: 48,
+                    }}>
+                    <Pressable style={{width: 124}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 16, padding: 2}}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisible(!modalVisible)}>
+                          <View style={[styles.resetBtn]}>
+                            <View>
+                              <Text style={styles.resetText}>NO</Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable>
+                    <Pressable style={{width: 195}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 16}}>
+                        <TouchableOpacity onPress={handlePressConfirmCancel}>
+                          <View style={styles.applyFilter}>
+                            <Text style={styles.applyText}>Yes, Cancel</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </View>
+
+      {/*second model  popup*/}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            setModalVisible2(!modalVisible2);
+          }}>
+          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
+            <View style={styles.modalView2}>
+              <View
+                style={styles.headerBox} // header of the popup
+              >
+                <View style={styles.headerContent}>
+                  <View style={{width: 200, height: 28}}>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        letterSpacing: 0.32,
+                        lineHeight: 18 * 1.4,
+                      }}>
+                      Cancelled Successfully
+                    </Text>
+                  </View>
+                  <View style={{height: 24, width: 24}}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible2(!modalVisible2)}>
+                      <DrawerCross />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View //main container of popup with width 100%
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  flex: 1,
+                }}>
+                <View
+                  style={styles.popupContainer} // container with marginHorizontal 20
+                >
+                  <View style={{width: '100%', height: 22}}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 400,
+                        color: '#4F565E',
+                        lineHeight: 16 * 1.4,
+                        letterSpacing: 0.32,
+                      }}>
+                      Hey! Your ride has been cancelled{' '}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: 44,
+
+                      marginTop: 12,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 400,
+                        color: '#4F565E',
+                        lineHeight: 16 * 1.4,
+                        letterSpacing: 0.32,
+                      }}>
+                      £ 40 has been deducted for cancelling too late
+                    </Text>
+                  </View>
+                </View>
+
+                <View
+                  style={styles.resetBox} //bottom part containing buttons
+                >
+                  <View
+                    style={{
+                      marginHorizontal: 20,
+                      height: 48,
+                    }}>
+                    <CallBtn
+                      Btnwidth={'100%'}
+                      textInsideBtn={'GET NEW QUOTES'}
+                      handleCallBtnPressed={handlePressGetNewQuotes}
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 };
@@ -242,12 +608,156 @@ const CallBtn = ({textInsideBtn, Btnwidth, handleCallBtnPressed}) => {
   );
 };
 
+const GradientText = ({children}) => {
+  return (
+    <MaskedView
+      style={styles.maskedView}
+      maskElement={<Text style={styles.text}>{children}</Text>}>
+      <LinearGradient
+        locations={[0, 1]}
+        colors={['#00C96D', '#048AD7']}
+        useAngle={true}
+        angle={90}>
+        <Text style={[styles.text, styles.transparentText]}>{children}</Text>
+      </LinearGradient>
+    </MaskedView>
+  );
+};
+
 const styles = StyleSheet.create({
+  resetBox: {
+    width: '100%',
+    backgroundColor: 'white',
+    height: 72,
+    paddingTop: 12,
+    position: 'absolute',
+    bottom: 0,
+  },
+  resetBtn: {
+    borderRadius: 15,
+    backgroundColor: 'white',
+    height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  resetText: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#4F565E',
+    letterSpacing: 0.32,
+  },
+  applyFilter: {
+    width: '100%',
+    height: '100%',
+
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  applyText: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#FFFFFF',
+    letterSpacing: 0.32,
+  },
+  surityBox: {
+    height: 76,
+    backgroundColor: '#292F3B',
+    width: '100%',
+    borderRadius: 16,
+    padding: 16,
+  },
+  noteText: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#292F3B',
+    lineHeight: 16 * 1.4,
+    letterSpacing: 0.32,
+    // fontFamily: 'ProximaNova-Regular',
+  },
+  surityText: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#FFFFFF',
+    lineHeight: 16 * 1.4,
+    letterSpacing: 0.32,
+    // fontFamily: "Proxima_Nova_Font"
+    // fontFamily: 'ProximaNova Bold',
+  },
+
+  note: {
+    height: 44,
+    marginBottom: 20,
+  },
+  cancellationTimingAndPriceBox: {
+    width: '100%',
+  },
+  timingAndPriceBox: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  timingAndPriceBox2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cancelPrice: {
+    width: '30%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  popupContainer: {
+    marginTop: 20,
+    marginHorizontal: 20,
+  },
+  cancellationtimeBox: {
+    width: '100%',
+    height: 23,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cancellationText: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#048AD7',
+    lineHeight: 16 * 1.4,
+    letterSpacing: 0.32,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    height: 72,
+    backgroundColor: 'white',
+  },
+  footerContainer: {
+    width: '100%',
+    height: 48,
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginTop: 12,
+    justifyContent: 'space-between',
+  },
+  maskedView: {
+    flexDirection: 'row',
+    textAlign: 'center',
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: 600,
+    fontWeight: 'bold',
+    lineHeight: 18 * 1.4,
+    letterSpacing: 0.32,
+  },
+  transparentText: {
+    opacity: 0,
+  },
   container: {
     marginTop: 20,
-   
+
     width: '100%',
-    marginBottom: 80,
+    marginBottom: 209,
   },
   tripDetails: {
     borderColor: '#E3E9ED',
@@ -347,8 +857,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginTop: 20,
   },
+  foranyEnquiry: {
+    borderColor: '#E3E9ED',
+    height: 200,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    marginTop: 20,
+  },
   passengerDetailsTextBox: {
-   
     marginTop: 20,
     marginLeft: 20,
     height: 25,
@@ -367,9 +883,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#E3E9ED',
     height: 1,
   },
+  horizontal3: {
+    width: '100%',
+    marginTop: 12,
+    marginBottom: 12,
+    backgroundColor: '#E3E9ED',
+    height: 1,
+  },
   detailList: {
     marginTop: 16,
-  
+
     marginHorizontal: 20,
     flexDirection: 'column',
     gap: 16,
@@ -379,7 +902,56 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: '#4F565E',
     lineHeight: 16 * 1.4,
-    letterSpacing: 0.32
+    letterSpacing: 0.32,
+  },
+  detailsListText2: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#4F565E',
+    // lineHeight: 16 * 1.4,
+    // letterSpacing: 0.32,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  centeredView2: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  modalView: {
+    width: Dimensions.get('window').width,
+    backgroundColor: '#F3F7FA',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5,
+    height: 534,
+  },
+  modalView2: {
+    width: Dimensions.get('window').width,
+    backgroundColor: '#F3F7FA',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5,
+    height: 250,
+  },
+  headerBox: {
+    height: 54,
+    backgroundColor: '#292F3B',
+    width: '100%',
+
+    paddingVertical: 13,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+  },
+  headerContent: {
+    flexDirection: 'row',
+
+    marginHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

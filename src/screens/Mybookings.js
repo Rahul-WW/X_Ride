@@ -167,11 +167,9 @@ const Mybookings = ({navigation}) => {
                       UpcomingArray.map((e)=>{
                         return (
                           <View key={e.id}>
-                            <UpcomingBookings
+                            <UpcomingBookings  // here we can also send some information to the UpcomingTrip using Params but creates lafda while using goback() 
                               handleGoToUpcoming={() =>
-                                navigation.navigate('UpcomingTrip', {
-                                  selectedfromList: e,
-                                })
+                                navigation.navigate('UpcomingTrip')
                               }
                               pickupLocation={e.pickupLocation}
                               pickupDate={e.pickupDate}

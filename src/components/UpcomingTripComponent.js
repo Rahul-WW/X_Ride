@@ -12,8 +12,18 @@ import WhiteRoundtrip from '../svgImages/WhiteRoundtrip.svg';
 import WhiteCabinbag from '../svgImages/WhiteCabinbag.svg';
 import ViaRouteIcon from '../svgImages/ViaRouteIcon.svg';
 import EditTrip from '../svgImages/EditTrip.svg';
-
-const UpcomingTripComponent = ({pickupLocation, pickupDate, pickupTime, dropDate, dropLocation, dropTime, passengerCount, price}) => {
+// {
+//   pickupLocation,
+//     pickupDate,
+//     pickupTime,
+//     dropDate,
+//     dropLocation,
+//     dropTime,
+//     passengerCount,
+//     price;
+// }  these are the parameters to be passed in UpcomingTripComponent whose parent is Mybookings, 
+//    where we have to make an API call to get the selected cab
+const UpcomingTripComponent = () => {
   return (
     <View style={styles.container}>
       {/* pickup and drop details, this box is upto horizontal line */}
@@ -22,10 +32,13 @@ const UpcomingTripComponent = ({pickupLocation, pickupDate, pickupTime, dropDate
           <WhitePickup />
 
           <View>
-            <Text style={styles.pickupText}>{pickupLocation}</Text>
+            {/* <Text style={styles.pickupText}>{pickupLocation}</Text> */}
+            <Text style={styles.pickupText}>Manchester Club Stadium (M16)</Text>
             <View style={{flexDirection: 'row', gap: 8}}>
-              <Text style={styles.dateTimeOfpickup}>{pickupDate}</Text>
-              <Text style={styles.dateTimeOfpickup}>{pickupTime}</Text>
+              {/* <Text style={styles.dateTimeOfpickup}>{pickupDate}</Text>
+              <Text style={styles.dateTimeOfpickup}>{pickupTime}</Text> */}
+              <Text style={styles.dateTimeOfpickup}>24 Feb 2023</Text>
+              <Text style={styles.dateTimeOfpickup}>12 AM</Text>
             </View>
           </View>
         </View>
@@ -57,10 +70,15 @@ const UpcomingTripComponent = ({pickupLocation, pickupDate, pickupTime, dropDate
             style={{
               height: 39,
             }}>
-            <Text style={styles.pickupText}>{dropLocation}</Text>
+            {/* <Text style={styles.pickupText}>{dropLocation}</Text> */}
+            <Text style={styles.pickupText}>
+              Elland Road Stadium, Leed United
+            </Text>
             <View style={{flexDirection: 'row', gap: 8}}>
-              <Text style={styles.dateTimeOfpickup}>{dropDate}</Text>
-              <Text style={styles.dateTimeOfpickup}>{dropTime}</Text>
+              {/* <Text style={styles.dateTimeOfpickup}>{dropDate}</Text>
+              <Text style={styles.dateTimeOfpickup}>{dropTime}</Text> */}
+              <Text style={styles.dateTimeOfpickup}>25 Feb 2023</Text>
+              <Text style={styles.dateTimeOfpickup}>12 AM</Text>
             </View>
           </View>
         </View>
@@ -84,10 +102,11 @@ const UpcomingTripComponent = ({pickupLocation, pickupDate, pickupTime, dropDate
               <WhiteUser width={16} height={16} />
             </View>
 
-            <Text
+            {/* <Text
               style={
                 styles.passengerText
-              }>{`${passengerCount} Passengers`}</Text>
+              }>{`${passengerCount} Passengers`}</Text> */}
+            <Text style={styles.passengerText}>2 Passengers</Text>
           </View>
           <View style={styles.iconWithText2}>
             <View style={styles.svgSize}>

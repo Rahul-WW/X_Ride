@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
     height: 210,
 
     borderColor: 'red',
-    paddingVertical: 16,
+    
   },
   headerBox: {
     height: 54,
