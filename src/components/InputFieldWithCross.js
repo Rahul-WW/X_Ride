@@ -57,7 +57,7 @@ const InputFieldWithCross = ({
           fontFamily: 'ProximaNova-Regular',
 
           flex: 1,
-        
+
           lineHeight: 16 * 1.4,
         }}
         multiline={true}
@@ -65,6 +65,8 @@ const InputFieldWithCross = ({
         scrollEnabled={true}
         placeholder={placeholder}
         value={value}
+        caretHidden={true}
+        showSoftInputOnFocus={false}
         editable={editablity}></TextInput>
       <TouchableOpacity
         onPress={handleHideRouteInput}
@@ -75,7 +77,6 @@ const InputFieldWithCross = ({
         }}>
         <View
           style={{
-          
             width: 20,
             height: 20,
             alignItems: 'center',

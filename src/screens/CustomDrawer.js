@@ -59,18 +59,21 @@ const CustomDrawer = props => {
                 }}
               />
             </View>
-            <View style={styles.nameAndCross}>
-              <View style={{width: '64%'}}>
-                <ScrollView vertical>
-                  <Text style={styles.text1}>Jaslin Jay</Text>
-                  <Text style={styles.text2}>jaslin@gmail.com</Text>
-                  <Text style={styles.text3}>9738025545</Text>
-                </ScrollView>
+
+            <TouchableOpacity onPress={()=> props.navigation.navigate("Profile")}>
+              <View style={styles.nameAndCross}>
+                <View style={{width: '64%'}}>
+                  <ScrollView vertical>
+                    <Text style={styles.text1}>Jaslin Jay</Text>
+                    <Text style={styles.text2}>jaslin@gmail.com</Text>
+                    <Text style={styles.text3}>9738025545</Text>
+                  </ScrollView>
+                </View>
+                <View>
+                  <ProfileEdit />
+                </View>
               </View>
-              <View>
-                <ProfileEdit />
-              </View>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -100,7 +103,8 @@ const CustomDrawer = props => {
           </TouchableOpacity>
 
           {/* Payment history route */}
-          <TouchableOpacity onPress={()=> props.navigation.navigate("PaymentHistory")}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('PaymentHistory')}>
             <View style={styles.screenBox2}>
               <View
                 style={{flexDirection: 'row', gap: 12, alignItems: 'center'}}>

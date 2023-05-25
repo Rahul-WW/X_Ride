@@ -21,6 +21,7 @@ import {
   ScrollView,
   Alert,
   Animated,
+  Keyboard,
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -43,22 +44,30 @@ import Via from '../svgImages/Via.svg';
 import MenuIcon from '../svgImages/MenuIcon.svg';
 import Xlogo from '../svgImages/Xlogo.svg';
 import Bell from '../svgImages/Bell.svg';
-
-
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import {useNavigation} from '@react-navigation/native';
 
-
 const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
- 
-  
+  const [form, setForm] = useState({
+    pickup: '',
+    drop: '',
+    vai: [],
+    pickupDate: '',
+    pickuptime: '',
+    passengersCount: '',
+  });
+  const [pickupLocation, setPickupLocation] = useState('');
+  const [dropLocation, setDropLocation] = useState('');
+  const [pickupDateInput, setPickupdateInput] = useState('');
+  const [passengers, setPassengers] = useState(form.passengersCount);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
+  const [pickupdate, setPickupdate] = useState(new Date());
   const [count, setCount] = useState(0);
   const navigation = useNavigation();
 
-  
-  
   //this function is for increasing the Via Routes
   const incrementCount = () => {
     if (count < 5) {
@@ -77,8 +86,65 @@ const Home = () => {
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
   };
+  const handleInputPickupLocation = () => {
+    Keyboard.dismiss();
+    navigation.navigate('Location');
+  };
 
-  // console.log(drawerNavigation);
+  const onDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDatePickerVisibility(Platform.OS === 'ios');
+    setPickupdate(currentDate);
+
+    let day = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+
+    setForm({
+      ...form,
+      pickupDate: `${day < 10 ? '0' + day : day}/${
+        month < 10 ? '0' + month : month
+      }/${year}`,
+    });
+
+    console.log(form);
+  };
+
+  const handleInputChange = (field, value) => {
+    console.log(field);
+    setForm({
+      ...form,
+      [field]: value,
+    });
+  };
+
+  const handleInputChangePassengers = (field, value) => {
+    setPassengers(value);
+    setForm({
+      ...form,
+      [field]: value,
+    });
+
+    console.log(form);
+  };
+
+  const handleSubmit = () => {
+
+    // if(form.passengersCount >= 1 || form.passengersCount< 6 ){
+    //   Alert.alert("Passengers count should be more than 0 and less than 5")
+    //   return 
+    // }
+    Alert.alert('Form Submitted');
+
+    console.log(form);
+    if (isChecked) {
+      navigation.navigate('Quotes', {showReturnJourney: isChecked});
+    } else {
+      navigation.navigate('QuotesForPickupOnly', {
+        showReturnJourney: isChecked,
+      });
+    }
+  };
 
   return (
     <SafeAreaView style={{flex: 1, position: 'relative'}}>
@@ -115,10 +181,21 @@ const Home = () => {
               <View style={styles.lowercontainer}>
                 <View style={styles.inputDivs}>
                   <Pressable onPress={() => navigation.navigate('Location')}>
-                    <InputField
-                      placeholder="Pickup Location"
-                      Icon={<PickupIcon width={20} height={24} />}
-                    />
+                    <View style={styles.inputContainer}>
+                      <View style={styles.leftIconContainer}>
+                        <PickupIcon width={20} height={24} />
+                      </View>
+
+                      <TextInput
+                        style={styles.inputBox}
+                        multiline={true}
+                        numberOfLines={4}
+                        scrollEnabled={true}
+                        placeholder="Pickup Location"
+                        value={pickupLocation}
+                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                        onPressIn={handleInputPickupLocation}></TextInput>
+                    </View>
                   </Pressable>
                 </View>
 
@@ -138,7 +215,11 @@ const Home = () => {
                     .map((_, i) => (
                       <View
                         key={i}
-                        style={[styles.inputDivs, styles.inputDiv2, styles.inputDivforLine]}>
+                        style={[
+                          styles.inputDivs,
+                          styles.inputDiv2,
+                          styles.inputDivforLine,
+                        ]}>
                         <InputFieldWithCross
                           placeholder="Via Route"
                           Icon={<ViaRouteIcon width={20} height={24} />}
@@ -166,16 +247,56 @@ const Home = () => {
                   />
                 </View>
                 <View style={[styles.inputDivs, styles.inputDiv4]}>
-                  <InputField
+                  {/* <InputField
                     placeholder="Pickup Date and Time"
                     Icon={<TimePicker width={24} height={24} />}
-                  />
+                  /> */}
+                  <Pressable onPress={() => setDatePickerVisibility(true)}>
+                    <View style={styles.inputContainer}>
+                      <View style={styles.leftIconContainer}>
+                        <TimePicker width={24} height={24} />
+                      </View>
+
+                      <TextInput
+                        style={styles.inputBox}
+                        multiline={true}
+                        numberOfLines={4}
+                        scrollEnabled={true}
+                        placeholder="Pickup Date and Time"
+                        value={form.pickupDate}
+                        caretHidden={true} //this will hide the Cursor
+                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                        onChangeText={value => handleInputChange('date', value)}
+                        keyboardType="numeric"
+                        onPressIn={() =>
+                          setDatePickerVisibility(true)
+                        }></TextInput>
+                    </View>
+                  </Pressable>
                 </View>
                 <View style={[styles.inputDivs, styles.inputDiv5]}>
-                  <InputField
+                  {/* <InputField
                     placeholder="Passengers"
                     Icon={<Name2 width={20} height={20} />}
-                  />
+                  /> */}
+                  <View style={styles.inputContainer}>
+                    <View style={styles.leftIconContainer}>
+                      <Name2 width={20} height={20} />
+                    </View>
+
+                    <TextInput
+                      style={styles.inputBox}
+                      multiline={true}
+                      numberOfLines={4}
+                      scrollEnabled={true}
+                      placeholder="Passengers"
+                      value={form.passengersCount}
+                      
+                      onChangeText={value =>
+                        handleInputChangePassengers('passengersCount', value)
+                      }
+                      keyboardType="numeric"></TextInput>
+                  </View>
                 </View>
 
                 <View style={styles.checkBoxDiv}>
@@ -244,61 +365,107 @@ const Home = () => {
               });
             }
           }}>
-          <GetQuotesBtn Btnwidth={'100%'} textInsideBtn="GET QUOTES" />
+          <GetQuotesBtn
+            Btnwidth={'100%'}
+            textInsideBtn="GET QUOTES"
+            onSubmit={handleSubmit}
+          />
         </Pressable>
+      </View>
+      <View>
+        {isDatePickerVisible && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={pickupdate}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            positiveButton={{label: 'OK', textColor: 'red'}}
+            onChange={onDateChange}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
-const GetQuotesBtn = ({Btnwidth, textInsideBtn}) => {
+const GetQuotesBtn = ({Btnwidth, textInsideBtn, onSubmit}) => {
   return (
-    <View
-      style={{
-        height: 48,
+    <Pressable onPress={onSubmit}>
+      <View
+        style={{
+          height: 48,
 
-        width: Btnwidth,
-      }}>
-      <LinearGradient
-        locations={[0, 1]}
-        colors={['#00c96d', '#048ad7']}
-        useAngle={true}
-        angle={90}
-        style={{borderRadius: 16}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            textAlign: 'center',
-            justifyContent: 'center',
-            gap: 8,
-            borderRadius: 16,
-          }}>
+          width: Btnwidth,
+        }}>
+        <LinearGradient
+          locations={[0, 1]}
+          colors={['#00c96d', '#048ad7']}
+          useAngle={true}
+          angle={90}
+          style={{borderRadius: 16}}>
           <View
             style={{
               flexDirection: 'row',
-              alignItems: 'center',
-              marginVertical: 14,
+              textAlign: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              borderRadius: 16,
             }}>
-            <Text
+            <View
               style={{
-                color: 'white',
+                flexDirection: 'row',
                 alignItems: 'center',
-                textAlign: 'center',
-                fontSize: 16,
-                fontWeight: 600,
-                fontFamily: 'ProximaNova-Regular',
-                letterSpacing: 0.32,
-                lineHeight: 18,
+                marginVertical: 14,
               }}>
-              {textInsideBtn}
-            </Text>
+              <Text
+                style={{
+                  color: 'white',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  fontFamily: 'ProximaNova-Regular',
+                  letterSpacing: 0.32,
+                  lineHeight: 18,
+                }}>
+                {textInsideBtn}
+              </Text>
+            </View>
           </View>
-        </View>
-      </LinearGradient>
-    </View>
+        </LinearGradient>
+      </View>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({
+  inputContainer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 16,
+    borderWidth: 1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#E3E9ED',
+  },
+  inputBox: {
+    marginLeft: 12,
+    // fontSize: FontSize.for_caption,
+    // fontFamily: 'ProximaNova-Regular',
+    fontSize: 16,
+    flex: 1,
+    borderRadius: 16,
+    lineHeight: 16 * 1.4,
+    color: '#4F565E',
+  },
+  leftIconContainer: {
+    marginLeft: 20,
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   backGround: {
     backgroundColor: '#F3F7FA',
     // borderColor: 'red',
@@ -384,11 +551,10 @@ const styles = StyleSheet.create({
   },
   inputDiv2: {
     marginTop: 12,
-    
   },
   inputDiv3: {
     marginTop: 44,
-    zIndex: -1000
+    zIndex: -1000,
   },
   inputDiv4: {
     marginTop: 20,
@@ -412,7 +578,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     borderColor: '#4F565E',
   },
-
 
   checkBoxDiv: {
     height: 22,
@@ -449,7 +614,6 @@ const styles = StyleSheet.create({
   },
   inputDivforLine: {
     position: 'relative',
-    
   },
   dashedLine2: {
     position: 'absolute',
