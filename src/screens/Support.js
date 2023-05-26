@@ -14,286 +14,98 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/Header';
-import HeaderDrawerScreens from "../components/HeaderDrawerScreens"
+import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
+import ChatSupport from "../svgImages/ChatSupport.svg"
+import EmailSupport from "../svgImages/EmailSupport.svg"
+import FAQ from "../svgImages/FAQ.svg"
+
+
+
+const initialImageWidth = 335;
+const initialImageHeight = 160;
+const aspectRatio = initialImageHeight / initialImageWidth;
+let initialWidth = Dimensions.get('window').width - 40;
 
 const Support = ({navigation}) => {
-    // const {selectedfromList} = route.params;
-    // console.log(selectedfromList)
   return (
     <SafeAreaView
       style={{backgroundColor: '#F3F7FA', flex: 1, position: 'relative'}}>
       <Animated.View>
         <HeaderDrawerScreens
           headertext={'Support'}
-          backto={'UpcomingTrip'}
+          backto={'Home'}
           navigation={navigation}
         />
-        
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20}}>
-        <View style={styles.container}></View>
-      </ScrollView>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require('../images/AboutImage.png')}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.aboutCompany}>
+            <Text style={styles.aboutCompanyText}>About the Company</Text>
+            <View style={{marginTop: 8}}>
+              <Text style={styles.paragraph1}>
+                Lorem Ipsum is simply dummy text of the printing and
+                typesetting. Lorem Ipsum is simply dummy text of the printing
+                and typesetting.
+              </Text>
+            </View>
+          </View>
 
-      <View style={styles.footer}>
-        <View style={styles.footerContainer}>
-          <View
-            style={{
-              paddingLeft: 8,
-              flexDirection: 'row',
-              alignSelf: 'center',
-              gap: 8,
-            }}></View>
+          <View style={styles.threeSections}>
+            {/* Chat section */}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ChatSupport', {from: 'Support'})
+              }>
+              <View style={styles.singleSection}>
+                <View>
+                  <ChatSupport />
+                </View>
+                <View>
+                  <Text style={styles.text1}>Chats</Text>
+                  <Text style={styles.text2}>Start a conversation now!</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+
+            {/* FAQ section */}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('FAQ', {from: 'Support'})
+              }></TouchableOpacity>
+            <View style={styles.singleSection}>
+              <View>
+                <FAQ />
+              </View>
+              <View>
+                <Text style={styles.text1}>FAQ's</Text>
+                <Text style={styles.text2}>
+                  Find inteliigent answers instantly
+                </Text>
+              </View>
+            </View>
+            {/* Email section */}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Email', {from: 'Support'})
+              }></TouchableOpacity>
+            <View style={styles.singleSection}>
+              <View>
+                <EmailSupport />
+              </View>
+              <View>
+                <Text style={styles.text1}>Email</Text>
+                <Text style={styles.text2}>Get solutions to your inbox</Text>
+              </View>
+            </View>
+          </View>
         </View>
-      </View>
-      {/*First model  popup*/}
-      {/* <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
-            <View style={styles.modalView}>
-              <View
-                style={styles.headerBox} // header of the popup
-              >
-                <View style={styles.headerContent}>
-                  <View style={{width: 200, height: 28}}>
-                    <Text
-                      style={{
-                        color: '#FFFFFF',
-                        fontSize: 18,
-                        fontWeight: 500,
-                        letterSpacing: 0.32,
-                        lineHeight: 18 * 1.4,
-                      }}>
-                      Cancellation Policy
-                    </Text>
-                  </View>
-                  <View style={{height: 24, width: 24}}>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible(!modalVisible)}>
-                      <DrawerCross />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-
-              <View //main container of popup with width 100%
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  position: 'relative',
-                  flex: 1,
-                }}>
-                <View
-                  style={styles.popupContainer} // container with marginHorizontal 20
-                >
-                  <View style={styles.cancellationtimeBox}>
-                    <Text style={styles.cancellationText}>
-                      Cancellation Time
-                    </Text>
-                    <Text style={styles.cancellationText}>Refund Amount</Text>
-                  </View>
-                  <View style={styles.horizontal3}></View>
-                  <View style={styles.cancellationTimingAndPriceBox}>
-                    <View style={styles.timingAndPriceBox}>
-                      <View style={{width: '30%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 6 hours of travel
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>£ 40</Text>
-                      </View>
-                    </View>
-                    <View style={styles.timingAndPriceBox}>
-                      <View style={{width: '35%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 48 hours
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>£ 80</Text>
-                      </View>
-                    </View>
-                    <View style={styles.timingAndPriceBox2}>
-                      <View style={{width: '35%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 5.30 hours of travel
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>No Refund</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.horizontal3}></View>
-                  <View style={styles.note}>
-                    <Text style={styles.noteText}>
-                      Note: You will get your refund in 5 business days.
-                    </Text>
-                  </View>
-                  <View style={styles.surityBox}>
-                    <View
-                      style={{
-                        borderColor: 'white',
-                        height: 44,
-                      }}>
-                      <Text style={styles.surityText}>
-                        Are you sure you want to cancel your ride?
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                <View
-                  style={styles.resetBox} //bottom part containing buttons
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      height: 48,
-                    }}>
-                    <Pressable style={{width: 124}}>
-                      <LinearGradient
-                        colors={['#00c96d', '#048ad7']}
-                        useAngle={true}
-                        angle={90}
-                        style={{borderRadius: 16, padding: 2}}>
-                        <TouchableOpacity
-                          onPress={() => setModalVisible(!modalVisible)}>
-                          <View style={[styles.resetBtn]}>
-                            <View>
-                              <Text style={styles.resetText}>NO</Text>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      </LinearGradient>
-                    </Pressable>
-                    <Pressable style={{width: 195}}>
-                      <LinearGradient
-                        colors={['#00c96d', '#048ad7']}
-                        useAngle={true}
-                        angle={90}
-                        style={{borderRadius: 16}}>
-                        <TouchableOpacity onPress={handlePressConfirmCancel}>
-                          <View style={styles.applyFilter}>
-                            <Text style={styles.applyText}>Yes, Cancel</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </LinearGradient>
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      </View> */}
-
-      {/*second model  popup*/}
-      {/* <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible2}
-          onRequestClose={() => {
-            setModalVisible2(!modalVisible2);
-          }}>
-          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
-            <View style={styles.modalView2}>
-              <View
-                style={styles.headerBox} // header of the popup
-              >
-                <View style={styles.headerContent}>
-                  <View style={{width: 200, height: 28}}>
-                    <Text
-                      style={{
-                        color: '#FFFFFF',
-                        fontSize: 18,
-                        fontWeight: 500,
-                        letterSpacing: 0.32,
-                        lineHeight: 18 * 1.4,
-                      }}>
-                      Cancelled Successfully
-                    </Text>
-                  </View>
-                  <View style={{height: 24, width: 24}}>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible2(!modalVisible2)}>
-                      <DrawerCross />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-
-              <View //main container of popup with width 100%
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  position: 'relative',
-                  flex: 1,
-                }}>
-                <View
-                  style={styles.popupContainer} // container with marginHorizontal 20
-                >
-                  <View style={{width: '100%', height: 22}}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        color: '#4F565E',
-                        lineHeight: 16 * 1.4,
-                        letterSpacing: 0.32,
-                      }}>
-                      Hey! Your ride has been cancelled{' '}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: '100%',
-                      height: 44,
-
-                      marginTop: 12,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        color: '#4F565E',
-                        lineHeight: 16 * 1.4,
-                        letterSpacing: 0.32,
-                      }}>
-                      £ 40 has been deducted for cancelling too late
-                    </Text>
-                  </View>
-                </View>
-
-                <View
-                  style={styles.resetBox} //bottom part containing buttons
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      height: 48,
-                    }}>
-                    <CallBtn
-                      Btnwidth={'100%'}
-                      textInsideBtn={'GET NEW QUOTES'}
-                      handleCallBtnPressed={handlePressGetNewQuotes}
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      </View> */}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -301,24 +113,67 @@ const Support = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-
-    width: '100%',
     marginBottom: 209,
-  },
-  footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    height: 72,
-    backgroundColor: 'white',
-  },
-  footerContainer: {
-    width: '100%',
-    height: 48,
-    flexDirection: 'row',
     marginHorizontal: 20,
-    marginTop: 12,
-    justifyContent: 'space-between',
+  },
+
+  imageContainer: {
+    width: initialWidth,
+    height: initialWidth * aspectRatio,
+    borderRadius: 12,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  aboutCompanyText: {
+    fontSize: 18,
+    fontWeight: 500,
+    color: '#292F3B',
+    letterSpacing: 0.32,
+    lineHeight: 18 * 1.4,
+  },
+  aboutCompany: {
+    marginTop: 20,
+  },
+  paragraph1: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#4F565E',
+    letterSpacing: 0.32,
+    lineHeight: 16 * 1.4,
+  },
+  threeSections: {
+    marginTop: 16,
+  },
+  singleSection: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 16,
+
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#E3E9ED',
+    borderWidth: 1,
+    height: 81,
+    gap: 16,
+    marginBottom: 16,
+    paddingLeft: 20,
+  },
+  text1: {
+    fontSize: 18,
+    fontWeight: 500,
+    color: '#292F3B',
+    letterSpacing: 0.32,
+    lineHeight: 18 * 1.4,
+  },
+  text2: {
+    color: '#4F565E',
+    fontSize: 16,
+    fontWeight: 400,
+    letterSpacing: 0.32,
+    lineHeight: 16 * 1.4,
   },
 });
 

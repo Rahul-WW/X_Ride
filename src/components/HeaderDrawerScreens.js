@@ -5,14 +5,9 @@ import BackWhite from '../svgImages/BackWhite.svg';
 
 
 const HeaderDrawerScreens = ({headertext, navigation, backto}) => {
- 
-
-
-    const handlePress=()=>{
-        navigation.navigate(backto)
-       
-    }
-
+  const handlePress = () => {
+     navigation.navigate(backto);
+  };
 
   return (
     <SafeAreaView>

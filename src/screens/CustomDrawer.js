@@ -60,7 +60,8 @@ const CustomDrawer = props => {
               />
             </View>
 
-            <TouchableOpacity onPress={()=> props.navigation.navigate("Profile")}>
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('Profile')}>
               <View style={styles.nameAndCross}>
                 <View style={{width: '64%'}}>
                   <ScrollView vertical>
@@ -118,15 +119,20 @@ const CustomDrawer = props => {
           </TouchableOpacity>
 
           {/* support route */}
-          <View style={styles.screenBox2}>
-            <View style={{flexDirection: 'row', gap: 12, alignItems: 'center'}}>
-              <Support />
-              <Text style={styles.title}>Suppport</Text>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('Support')}>
+            <View style={styles.screenBox2}>
+              <View
+                style={{flexDirection: 'row', gap: 12, alignItems: 'center'}}>
+                <Support />
+                <Text style={styles.title}>Suppport</Text>
+              </View>
+              <View style={styles.arrowBox}>
+                <ArrowSidebar />
+              </View>
             </View>
-            <View style={styles.arrowBox}>
-              <ArrowSidebar />
-            </View>
-          </View>
+          </TouchableOpacity>
+
           {/* About route */}
           <View style={styles.screenBox2}>
             <View style={{flexDirection: 'row', gap: 12, alignItems: 'center'}}>

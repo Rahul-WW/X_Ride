@@ -32,17 +32,20 @@ const Profile = ({navigation}) => {
   const [cantEditEmail, setCantEditEmail] = useState(false);
   const [cantEditPassword, setCantEditPassword] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+
+
   const handleHideRouteInput = () => {
     setCantEditEmail(!cantEditEmail);
     setModalVisible(!modalVisible);
   };
 
-  const handlePressConfirmCancel = () => {
+  const handlePressUpdate = () => {
     setModalVisible(false);
   };
 
   return (
-    <SafeAreaView style={{position: 'relative', flex: 1}}>
+    <SafeAreaView
+      style={{position: 'relative', flex: 1, backgroundColor: '#F3F7FA'}}>
       <Animated.View>
         <Header headertext={'Profile'} />
       </Animated.View>
@@ -78,7 +81,7 @@ const Profile = ({navigation}) => {
                 placeholder="jaslin@gmail.com"
                 Icon={<EmailIcon width={20} height={24} />}
                 Icon2={<Pencil2 width={16} height={16} />}
-                handleHideRouteInput={handleHideRouteInput} // this  function called to make the input enable
+
                 //
               />
             </View>
@@ -100,11 +103,9 @@ const Profile = ({navigation}) => {
         </View>
       </ScrollView>
       <View style={styles.getQuotesDiv}>
-        <XBtnWithoutArrow
-          Btnwidth={'100%'}
-          textInsideBtn="SAVE DETAILS "
-          goTo="Home"
-        />
+        <Pressable onPress={()=> navigation.navigate("Home")}>
+          <SaveBtn Btnwidth={'100%'} textInsideBtn="SAVE DETAILS " />
+        </Pressable>
       </View>
       <View style={styles.centeredView}>
         <Modal
@@ -148,14 +149,22 @@ const Profile = ({navigation}) => {
                   position: 'relative',
                   flex: 1,
                 }}>
-                <View   style={styles.popupContainer} // container with marginHorizontal 20
-                             >
-                  
-                  
-                 
-                {/* add here two input boxes */}
-                
-                  
+                <View
+                  style={styles.popupContainer} // container with marginHorizontal 20
+                >
+                  {/* add here two input boxes */}
+                  <View style={[styles.inputDivs2]}>
+                    <InputField
+                      placeholder="Current Password"
+                      Icon={<PasswordIcon width={24} height={14} />}
+                    />
+                  </View>
+                  <View style={[styles.inputDivs2]}>
+                    <InputField
+                      placeholder="New Password"
+                      Icon={<PasswordIcon width={24} height={14} />}
+                    />
+                  </View>
                 </View>
 
                 <View
@@ -190,7 +199,7 @@ const Profile = ({navigation}) => {
                         useAngle={true}
                         angle={90}
                         style={{borderRadius: 16}}>
-                        <TouchableOpacity onPress={handlePressConfirmCancel}>
+                        <TouchableOpacity onPress={handlePressUpdate}>
                           <View style={styles.applyFilter}>
                             <Text style={styles.applyText}>UPDATE</Text>
                           </View>
@@ -205,6 +214,52 @@ const Profile = ({navigation}) => {
         </Modal>
       </View>
     </SafeAreaView>
+  );
+};
+
+const SaveBtn = ({Btnwidth, textInsideBtn}) => {
+  return (
+    <View
+      style={{
+        height: 48,
+        width: Btnwidth,
+      }}>
+      <LinearGradient
+        locations={[0, 1]}
+        colors={['#00c96d', '#048ad7']}
+        useAngle={true}
+        angle={90}
+        style={{borderRadius: 16}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            textAlign: 'center',
+            justifyContent: 'center',
+            gap: 8,
+            borderRadius: 16,
+          }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 14,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                alignItems: 'center',
+                textAlign: 'center',
+                fontSize: 16,
+                fontWeight: 600,
+                letterSpacing: 0.32,
+                lineHeight: 18,
+              }}>
+              {textInsideBtn}
+            </Text>
+          </View>
+        </View>
+      </LinearGradient>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -239,6 +294,7 @@ const styles = StyleSheet.create({
   inputDivs2: {
     marginTop: 20,
     height: 56,
+    
   },
   getQuotesDiv: {
     width,
@@ -299,13 +355,12 @@ const styles = StyleSheet.create({
  
   
   popupContainer: {
-    marginTop: 20,
+   marginTop: 12,
     marginHorizontal: 20,
-    borderWidth:1
+    
   },
   
-  centeredView: {
-    flex: 1,
+  centeredView: { 
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

@@ -86,20 +86,30 @@ const Home = () => {
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
   };
+
+  //this is for clicking on PickupLocation box to navigate to Location page
   const handleInputPickupLocation = () => {
     Keyboard.dismiss();
     navigation.navigate('Location');
   };
 
+
+  //this function is for choosing date
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDatePickerVisibility(Platform.OS === 'ios');
     setPickupdate(currentDate);
+ 
+    let DateWhichIsSelected = new Date(currentDate).getTime();
+    let TodaysDate = new Date(Date.now()).getTime();
 
     let day = currentDate.getDate();
     let month = currentDate.getMonth() + 1;
     let year = currentDate.getFullYear();
-
+    if (DateWhichIsSelected < TodaysDate) {
+      Alert.alert('Select a valid Date');
+      return;
+    }
     setForm({
       ...form,
       pickupDate: `${day < 10 ? '0' + day : day}/${
@@ -110,6 +120,8 @@ const Home = () => {
     console.log(form);
   };
 
+
+  //this is for setting the form with the new changed data
   const handleInputChange = (field, value) => {
     console.log(field);
     setForm({
@@ -117,7 +129,8 @@ const Home = () => {
       [field]: value,
     });
   };
-
+ 
+  //this is for selecting the Passengers count and setting it to the Form
   const handleInputChangePassengers = (field, value) => {
     setPassengers(value);
     setForm({
@@ -128,12 +141,9 @@ const Home = () => {
     console.log(form);
   };
 
-  const handleSubmit = () => {
 
-    // if(form.passengersCount >= 1 || form.passengersCount< 6 ){
-    //   Alert.alert("Passengers count should be more than 0 and less than 5")
-    //   return 
-    // }
+  //this function is for submitting the form where we have to collect all the input values and need to make a post request.
+  const handleSubmit = () => {
     Alert.alert('Form Submitted');
 
     console.log(form);
@@ -291,7 +301,6 @@ const Home = () => {
                       scrollEnabled={true}
                       placeholder="Passengers"
                       value={form.passengersCount}
-                      
                       onChangeText={value =>
                         handleInputChangePassengers('passengersCount', value)
                       }
@@ -553,7 +562,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   inputDiv3: {
-    marginTop: 44,
+    marginTop: 34,
     zIndex: -1000,
   },
   inputDiv4: {

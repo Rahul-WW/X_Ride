@@ -12,7 +12,7 @@ import {
   Animated,
   Modal,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import MaskedView from '@react-native-community/masked-view';
 
@@ -21,32 +21,40 @@ import LinearGradient from 'react-native-linear-gradient';
 import EmailIcon2 from '../svgImages/EmailIcon2.svg';
 import ChatIcon from '../svgImages/ChatIcon.svg';
 import CallIcon from '../svgImages/CallIcon.svg';
-import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
-import DrawerCross from '../svgImages/DrawerCross.svg';
+
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
-
-const UpcomingTrip = ({navigation}) => {
+import MapView, {Marker} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
+//AIzaSyArB0gIEH4nZJtqJhjEpxHg8cXvlnZ4d7U
+const TrackTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisible2, setModalVisible2] = useState(false);
-
-  // const {selectedfromList} = route.params;
-
-  // console.log(selectedfromList);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [position, setPosition] = useState({
+    latitude: 12.9716,
+    longitude: 77.5946,
+    latitudeDelta: 0.011,
+    longitudeDelta: 0.011,
+  });
 
   const handleCallBtnPressed = () => {
-    
-    navigation.navigate("TrackTrip")
+    Alert.alert('yes pressed');
   };
-  const handlePressConfirmCancel=()=>{
-    setModalVisible(false)
-   setModalVisible2(true)
-  }
+  
+ 
 
-  const handlePressGetNewQuotes=()=>{
-     setModalVisible2(false);
-    
-     navigation.navigate("Home")
-  }
+  useEffect(() => {
+    Geolocation.getCurrentPosition(pos => {
+      const crd = pos.coords;
+
+      setPosition({
+        latitude: crd.latitude,
+        longitude: crd.longitude,
+        latitudeDelta: 0.0421,
+        longitudeDelta: 0.0421,
+      });
+      console.log(crd);
+    });
+  }, []);
 
   return (
     <SafeAreaView
@@ -54,12 +62,31 @@ const UpcomingTrip = ({navigation}) => {
       <Animated.View>
         {/* <Header headertext={'Upcoming Trip'} /> */}
         <HeaderDrawerScreens
-          headertext={'Upcoming Trip'}
+          headertext={'Track Trip'}
           navigation={navigation}
-          backto={'Mybookings'}
+          backto={'UpcomingTrip'}
         />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20}}>
+      <ScrollView>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={position}
+            showsUserLocation={true}
+            showsMyLocationButton={true}
+            followsUserLocation={true}
+            showsCompass={true}
+            scrollEnabled={true}
+            zoomEnabled={true}
+            pitchEnabled={true}
+            rotateEnabled={true}>
+            <Marker
+              title="Yor are here"
+              description="This is a description"
+              coordinate={position}
+            />
+          </MapView>
+        </View>
         <View style={styles.container}>
           <UpcomingTripComponent
             // pickupLocation={selectedfromList.pickupLocation}
@@ -70,7 +97,6 @@ const UpcomingTrip = ({navigation}) => {
             // dropDate={selectedfromList.dropDate}
             // passengerCount={selectedfromList.passengerCount}
             // price={selectedfromList.price}
-            widthEditBtn={true}
             isInpayment={false}
           />
 
@@ -83,8 +109,8 @@ const UpcomingTrip = ({navigation}) => {
                 </Text>
               </View>
             </View>
-            <View>
-              <View // first   ie pic wala
+            <View style={styles.horizontaline2}>
+              {/* <View // first   ie pic wala
                 style={styles.picBox}>
                 <LinearGradient
                   locations={[0, 1]}
@@ -109,7 +135,7 @@ const UpcomingTrip = ({navigation}) => {
                     <Text style={styles.cabName}>KA 0113</Text>
                   </View>
                 </LinearGradient>
-              </View>
+              </View> */}
             </View>
             <View
               style={{
@@ -239,7 +265,7 @@ const UpcomingTrip = ({navigation}) => {
                   gap: 12,
                 }}
                 onPress={() =>
-                  navigation.navigate('ChatSupport', {from: 'UpcomingTrip'})
+                  navigation.navigate('ChatSupport', {from: 'TrackTrip'})
                 }>
                 <ChatIcon width={20} height={20} />
                 <View>
@@ -260,21 +286,10 @@ const UpcomingTrip = ({navigation}) => {
               </Pressable>
             </View>
           </View>
-
-          <View
-            style={{
-              marginTop: 20,
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}>
-            <TouchableOpacity onPressOut={() => setModalVisible(true)}>
-              <GradientText>Cancel Ride</GradientText>
-            </TouchableOpacity>
-          </View>
         </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <View style={styles.footerContainer}>
           <View
             style={{
@@ -304,9 +319,9 @@ const UpcomingTrip = ({navigation}) => {
             />
           </View>
         </View>
-      </View>
+      </View> */}
       {/*First model  popup*/}
-      <View style={styles.centeredView}>
+      {/* <View style={styles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -454,10 +469,10 @@ const UpcomingTrip = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </Modal>
-      </View>
+      </View> */}
 
       {/*second model  popup*/}
-      <View style={styles.centeredView}>
+      {/* <View style={styles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
@@ -553,7 +568,7 @@ const UpcomingTrip = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </Modal>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
@@ -625,6 +640,21 @@ const GradientText = ({children}) => {
 };
 
 const styles = StyleSheet.create({
+  horizontaline2: {
+    marginHorizontal: 20,
+    marginTop: 12,
+    backgroundColor: '#E3E9ED',
+    height: 1,
+  },
+  mapContainer: {
+    width: '100%',
+    height: 508,
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
   resetBox: {
     width: '100%',
     backgroundColor: 'white',
@@ -754,14 +784,14 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   container: {
-    marginTop: 20,
+    marginTop: -20,
 
-    width: '100%',
     marginBottom: 209,
+    marginHorizontal: 20,
   },
   tripDetails: {
     borderColor: '#E3E9ED',
-    height: 385,
+    height: 222,
 
     borderRadius: 20,
 
@@ -782,7 +812,7 @@ const styles = StyleSheet.create({
     lineHeight: 18 * 1.4,
   },
   confirmBox: {
-    backgroundColor: '#00C96D',
+    backgroundColor: '#048AD7',
     paddingHorizontal: 8,
     height: 21,
     flexDirection: 'row',
@@ -874,6 +904,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
 
     backgroundColor: '#E3E9ED',
+    backgroundColor: '#E3E9ED',
     height: 1,
   },
   horizontal2: {
@@ -955,4 +986,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpcomingTrip;
+export default TrackTrip;

@@ -16,14 +16,16 @@ import React, {useState} from 'react';
 import Header from '../components/Header';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 
-const Email = ({navigation}) => {
+const Email = ({navigation, route}) => {
+
+  const {from} = route.params;
   return (
     <SafeAreaView
       style={{backgroundColor: '#F3F7FA', flex: 1, position: 'relative'}}>
       <Animated.View>
         <HeaderDrawerScreens
           headertext={'Email'}
-          backto={'UpcomingTrip'}
+          backto={from}
           navigation={navigation}
         />
       </Animated.View>

@@ -50,7 +50,7 @@ const DataSortBasis = [
   },
 ];
 
-const PaymentHistory = () => {
+const PaymentHistory = ({navigation}) => {
   const [data, setData] = useState(TransactionArray);
   const [modalVisible, setModalVisible] = useState(false);
   const [option, setOption] = useState(null);
@@ -72,7 +72,7 @@ const PaymentHistory = () => {
       <Animated.View>
         <Header headertext={'Payment History'} />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20}}>
+      <ScrollView style={{marginHorizontal: 20, marginBottom: 55}}>
         <View
           style={{
             height: 27,
@@ -106,12 +106,15 @@ const PaymentHistory = () => {
           {data.map((e, i) => {
             return (
               <View key={i}>
-                <SinglePayment
-                  Tid={e.transactionId}
-                  date={e.date}
-                  time={e.time}
-                  price={e.price}
-                />
+              
+                  <SinglePayment
+                    Tid={e.transactionId}
+                    date={e.date}
+                    time={e.time}
+                    price={e.price}
+                    navigation={navigation}
+                  />
+              
               </View>
             );
           })}
@@ -168,7 +171,7 @@ const PaymentHistory = () => {
   );
 };
 
-const SinglePayment = ({Tid, date, time, price}) => {
+const SinglePayment = ({Tid, date, time, price, navigation}) => {
   return (
     <View
       style={{
@@ -180,77 +183,63 @@ const SinglePayment = ({Tid, date, time, price}) => {
         borderColor: '#E3E9ED',
         marginBottom: 16,
       }}>
-      <View
-        style={{
-          height: 40,
-          marginHorizontal: 20,
-          marginVertical: 16,
-          flexDirection: 'row',
-          gap: 12,
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+      <TouchableOpacity
+       
+        onPress={() => navigation.navigate('PaymentHistoryDetails')}>
         <View
           style={{
+            height: 40,
+            marginHorizontal: 20,
+            marginVertical: 16,
             flexDirection: 'row',
             gap: 12,
             alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
           <View
             style={{
-              width: 40,
-              height: 40,
               flexDirection: 'row',
+              gap: 12,
               alignItems: 'center',
-              justifyContent: 'center',
             }}>
-            <PaymentHistoryIcon />
-          </View>
-          <View style={{width: 113}}>
-            <Text
+            <View
               style={{
-                fontWeight: 400,
-                fontSize: 16,
-                color: '#292F3B',
-                lineHeight: 16 * 1.4,
+                width: 40,
+                height: 40,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              {Tid}
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 13, fontWeight: 400, color: '#4F565E'}}>
-                {date}
+              <PaymentHistoryIcon />
+            </View>
+            <View style={{width: 113}}>
+              <Text
+                style={{
+                  fontWeight: 400,
+                  fontSize: 16,
+                  color: '#292F3B',
+                  lineHeight: 16 * 1.4,
+                }}>
+                {Tid}
               </Text>
-              <Text style={{fontSize: 13, fontWeight: 400, color: '#4F565E'}}>
-                {time}
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 13, fontWeight: 400, color: '#4F565E'}}>
+                  {date}
+                </Text>
+                <Text style={{fontSize: 13, fontWeight: 400, color: '#4F565E'}}>
+                  {time}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View>
-          <Text style={{fontSize: 18, fontWeight: 500, color: '#292F3B'}}>
-            {`£ ${price}`}
-          </Text>
+          <View>
+            <Text style={{fontSize: 18, fontWeight: 500, color: '#292F3B'}}>
+              {`£ ${price}`}
+            </Text>
+          </View>
         </View>
-      </View>
-
-      {/* <Text>hii</Text>
-      <TouchableOpacity
-        style={{
-          width: 20,
-          height: 20,
-          marginRight: 20,
-        }}>
-        <View
-          style={{
-            width: 20,
-            height: 20,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text>hiii</Text>
-        </View>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 };

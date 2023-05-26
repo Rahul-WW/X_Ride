@@ -11,6 +11,10 @@ import Profile from './screens/Profile'
 import UpcomingTrip from './screens/UpcomingTrip'
 import Email from './screens/Email'
 import HeaderDrawerScreens from './components/HeaderDrawerScreens'
+import TrackTrip from "./screens/TrackTrip"
+import ChatSupport from './screens/ChatSupport'
+import PaymentHistoryDetails from './screens/PaymentHistoryDetails'
+import FAQ from "./screens/FAQ"
 const Drawer= createDrawerNavigator()
 
 
@@ -39,6 +43,13 @@ const DrawerNavigator = ({navigation}) => {
       <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="UpcomingTrip" component={UpcomingTrip} />
       <Drawer.Screen name="Email" component={Email} />
+      <Drawer.Screen name="TrackTrip" component={TrackTrip} />
+      <Drawer.Screen name="ChatSupport" component={ChatSupport} />
+      <Drawer.Screen
+        name="PaymentHistoryDetails"
+        component={PaymentHistoryDetails}
+      />
+      <Drawer.Screen name="FAQ" component={FAQ} />
     </Drawer.Navigator>
   );
 }

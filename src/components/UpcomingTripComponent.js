@@ -23,9 +23,14 @@ import EditTrip from '../svgImages/EditTrip.svg';
 //     price;
 // }  these are the parameters to be passed in UpcomingTripComponent whose parent is Mybookings, 
 //    where we have to make an API call to get the selected cab
-const UpcomingTripComponent = () => {
+const UpcomingTripComponent = ({widthEditBtn, isInpayment}) => {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+       
+        {height: isInpayment ? 158 : !widthEditBtn ? 259 : 285},
+      ]}>
       {/* pickup and drop details, this box is upto horizontal line */}
       <View style={styles.pickupAndDropBox}>
         <View style={styles.pickupBox}>
@@ -42,10 +47,13 @@ const UpcomingTripComponent = () => {
             </View>
           </View>
         </View>
-        <View style={styles.editBox}>
-          <EditTrip />
-          <Text style={styles.editText}>EDIT</Text>
-        </View>
+
+        {widthEditBtn === true ? (
+          <View style={styles.editBox}>
+            <EditTrip />
+            <Text style={styles.editText}>EDIT</Text>
+          </View>
+        ) : null}
 
         {/* this is Via icons and vai Location box */}
 
@@ -63,7 +71,7 @@ const UpcomingTripComponent = () => {
         </View>
         {/* this is Via icons and vai Location box upto here */}
 
-        <View style={styles.dropLocationBox}>
+        <View style={[styles.dropLocationBox, {top: !widthEditBtn ? 73 : 106}]}>
           <WhiteDrop />
 
           <View
@@ -85,58 +93,67 @@ const UpcomingTripComponent = () => {
       </View>
       {/* pickup and drop details upto here */}
 
-      <View style={styles.horizontalLine}></View>
+      <View
+        style={[
+          styles.horizontalLine,
+          {marginTop: !widthEditBtn ? 158 : 184},
+        ]}></View>
 
-      <View style={styles.dashedline}></View>
+      <View
+        style={[styles.dashedline, {height: !widthEditBtn ? 44 : 73}]}></View>
 
       {/* passengers and suitcase and bags */}
-      <View style={styles.passengerDetailsBox}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 16,
-          }}>
-          <View style={styles.iconWithText}>
-            <View style={styles.svgSize2}>
-              <WhiteUser width={16} height={16} />
-            </View>
 
-            {/* <Text
+      {isInpayment === false ? (
+        <View style={styles.passengerDetailsBox}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginBottom: 16,
+            }}>
+            <View style={styles.iconWithText}>
+              <View style={styles.svgSize2}>
+                <WhiteUser width={16} height={16} />
+              </View>
+
+              {/* <Text
               style={
                 styles.passengerText
               }>{`${passengerCount} Passengers`}</Text> */}
-            <Text style={styles.passengerText}>2 Passengers</Text>
-          </View>
-          <View style={styles.iconWithText2}>
-            <View style={styles.svgSize}>
-              <WhiteSuitcase width={16} height={16} />
+              <Text style={styles.passengerText}>2 Passengers</Text>
             </View>
+            <View style={styles.iconWithText2}>
+              <View style={styles.svgSize}>
+                <WhiteSuitcase width={16} height={16} />
+              </View>
 
-            <Text style={styles.passengerText}>2 Suitcase</Text>
+              <Text style={styles.passengerText}>2 Suitcase</Text>
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <View style={styles.iconWithText2}>
+              <View style={styles.svgSize}>
+                <WhiteCabinbag width={16} height={16} />
+              </View>
+
+              <Text style={styles.passengerText}>2 Cabin Bag</Text>
+            </View>
+            <View style={styles.iconWithText2}>
+              <View style={styles.svgSize}>
+                <WhiteRoundtrip width={20} height={20} />
+              </View>
+
+              <Text style={styles.passengerText}>2 Round Trip</Text>
+            </View>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
-          <View style={styles.iconWithText2}>
-            <View style={styles.svgSize}>
-              <WhiteCabinbag width={16} height={16} />
-            </View>
+      ) : null}
 
-            <Text style={styles.passengerText}>2 Cabin Bag</Text>
-          </View>
-          <View style={styles.iconWithText2}>
-            <View style={styles.svgSize}>
-              <WhiteRoundtrip width={20} height={20} />
-            </View>
-
-            <Text style={styles.passengerText}>2 Round Trip</Text>
-          </View>
-        </View>
-      </View>
       {/* passengers and suitcase and bags  upto here*/}
     </View>
   );
@@ -151,6 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#292F3B',
     position: 'relative',
     marginBottom: 24,
+    
   },
 
   pickupAndDropBox: {
@@ -228,8 +246,8 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderStyle: 'dashed',
     borderRightWidth: 2,
-    left: 31.2,
-    height: 73,
+    left: 31,
+  
     top: 48,
   },
   dashedline2: {
