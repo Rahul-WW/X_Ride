@@ -37,7 +37,7 @@ const TrackTrip = ({navigation}) => {
   });
 
   const handleCallBtnPressed = () => {
-    Alert.alert('yes pressed');
+    Alert.alert('Make a call to driver');
   };
   
  
@@ -278,7 +278,7 @@ const TrackTrip = ({navigation}) => {
                   alignItems: 'center',
                   gap: 12,
                 }}
-                onPress={() => navigation.navigate('Email')}>
+                onPress={() => navigation.navigate('Email', {from: 'TrackTrip'})}>
                 <EmailIcon2 width={20} height={20} />
                 <View>
                   <Text style={styles.detailsListText}>Email Us</Text>

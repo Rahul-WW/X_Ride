@@ -1,4 +1,4 @@
-import {View, Text, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Text, Dimensions, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 const {width, height} = Dimensions.get('window');
@@ -23,12 +23,12 @@ import EditTrip from '../svgImages/EditTrip.svg';
 //     price;
 // }  these are the parameters to be passed in UpcomingTripComponent whose parent is Mybookings, 
 //    where we have to make an API call to get the selected cab
-const UpcomingTripComponent = ({widthEditBtn, isInpayment}) => {
+const UpcomingTripComponent = ({widthEditBtn, isInpayment, handleEditBtnPress}) => {
   return (
     <View
       style={[
         styles.container,
-       
+
         {height: isInpayment ? 158 : !widthEditBtn ? 259 : 285},
       ]}>
       {/* pickup and drop details, this box is upto horizontal line */}
@@ -49,10 +49,12 @@ const UpcomingTripComponent = ({widthEditBtn, isInpayment}) => {
         </View>
 
         {widthEditBtn === true ? (
-          <View style={styles.editBox}>
-            <EditTrip />
-            <Text style={styles.editText}>EDIT</Text>
-          </View>
+          <TouchableOpacity  onPress={handleEditBtnPress}>
+            <View style={styles.editBox}>
+              <EditTrip />
+              <Text style={styles.editText}>EDIT</Text>
+            </View>
+          </TouchableOpacity>
         ) : null}
 
         {/* this is Via icons and vai Location box */}
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#292F3B',
     position: 'relative',
     marginBottom: 24,
-    
+    elevation: 10,
   },
 
   pickupAndDropBox: {
@@ -247,7 +249,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderRightWidth: 2,
     left: 31,
-  
+
     top: 48,
   },
   dashedline2: {

@@ -2,7 +2,8 @@ import {View, Text, Dimensions, Image, StyleSheet, Pressable} from 'react-native
 import React from 'react';
 import MoneyIcon from "../svgImages/MoneyIcon.svg"
 import Name2 from "../svgImages/Name2.svg"
-
+import PickupIcon from "../svgImages/PickupIcon.svg"
+import DropIcon from "../svgImages/DropIcon.svg"
 
 const {width, height} = Dimensions.get('window');
 
@@ -14,36 +15,39 @@ const UpcomingBookings = ({handleGoToUpcoming, pickupLocation, pickupTime, picku
 
 
   return (
-    <Pressable style={{marginBottom: 16}} onPress={()=>handleGoToUpcoming(id)}>
+    <Pressable
+      style={{marginBottom: 16}}
+      onPress={() => handleGoToUpcoming(id)}>
       <View style={styles.container}>
         <View style={styles.pickupAndDropBox}>
           <View style={styles.pickupBox}>
-            <Image
+            {/* <Image
               style={{width: 24, height: 24}}
               source={require('../images/pickupIcon.png')}
-            />
+            /> */}
+            <PickupIcon width={24} height={24} />
 
             <View
               style={{
                 height: 39,
               }}>
-              <Text style={styles.pickupText}>
-                {pickupLocation}
+              <Text style={styles.pickupText}>{pickupLocation}</Text>
+              <Text style={styles.dateTimeOfpickup}>
+                {pickupDate + ' ' + pickupTime}
               </Text>
-              <Text style={styles.dateTimeOfpickup}>{pickupDate+" "+ pickupTime}</Text>
             </View>
           </View>
           <View style={styles.dropLocationBox}>
-            <Image source={require('../images/dropIcon.png')} />
-
+            {/* <Image source={require('../images/dropIcon.png')} /> */}
+            <DropIcon width={24} height={24} />
             <View
               style={{
                 height: 39,
               }}>
-              <Text style={styles.pickupText}>
-                {dropLocation}
+              <Text style={styles.pickupText}>{dropLocation}</Text>
+              <Text style={styles.dateTimeOfpickup}>
+                {dropDate + ' ' + dropTime}
               </Text>
-              <Text style={styles.dateTimeOfpickup}>{dropDate+" "+ dropTime}</Text>
             </View>
           </View>
         </View>

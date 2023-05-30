@@ -83,7 +83,7 @@ const AddDetails = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#F3F7FA', flex: 1}}>
       <Animated.View>
-        <Header headertext={'Trip Details'} />
+        <Header headertext={'Add Details'} />
       </Animated.View>
       <View style={styles.container}>
         <ScrollView automaticallyAdjustKeyboardInsets={true}>

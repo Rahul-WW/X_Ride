@@ -11,6 +11,7 @@ import {
   Dimensions,
   Animated,
   Modal,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import Header from '../components/Header';
@@ -24,28 +25,62 @@ import CallIcon from '../svgImages/CallIcon.svg';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 import DrawerCross from '../svgImages/DrawerCross.svg';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
+import Clock from '../svgImages/Clock.svg';
+import FadedClock from '../svgImages/FadedClock.svg';
 
 const UpcomingTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
-    const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
+  const [modalVisible4, setModalVisible4] = useState(false);
+  const [EditTimeValue, setEditTimeValue] = useState('07.15 AM');
 
   // const {selectedfromList} = route.params;
 
   // console.log(selectedfromList);
 
   const handleCallBtnPressed = () => {
-    
-    navigation.navigate("TrackTrip")
+    navigation.navigate('TrackTrip');
   };
-  const handlePressConfirmCancel=()=>{
-    setModalVisible(false)
-   setModalVisible2(true)
-  }
+  const handlePressConfirmCancel = () => {
+    setModalVisible(false);
+    setModalVisible2(true);
+  };
 
-  const handlePressGetNewQuotes=()=>{
-     setModalVisible2(false);
-    
-     navigation.navigate("Home")
+  const handlePressGetNewQuotes = () => {
+    setModalVisible2(false);
+    navigation.navigate('Home');
+  };
+
+  const handleEditBtnPress = () => {
+    const pickupTime = new Date(); // this will come from backend
+    pickupTime.setHours(17, 15, 0, 0); // take random time of 7.15 PM
+
+    let currentTime = new Date();
+     console.log(pickupTime, currentTime)
+    // currentTime.setHours(
+    //   parseInt(time.split(':')[0]),
+    //   parseInt(time.split(':')[1]),
+    //   0,
+    //   0,
+    // );
+
+    let timeDifference = (pickupTime - currentTime) / (1000 * 60 * 60);
+
+    if (timeDifference < 6) {
+      setModalVisible4(true);
+    } else {
+      setModalVisible3(true);
+    }
+  };
+
+  const handlePressSaveBtn = () => {
+    setModalVisible3(false);
+   
+  };
+
+  const handlePressGotItBtn=()=>{
+     setModalVisible4(false);
   }
 
   return (
@@ -70,6 +105,7 @@ const UpcomingTrip = ({navigation}) => {
             // dropDate={selectedfromList.dropDate}
             // passengerCount={selectedfromList.passengerCount}
             // price={selectedfromList.price}
+            handleEditBtnPress={handleEditBtnPress}
             widthEditBtn={true}
             isInpayment={false}
           />
@@ -114,7 +150,6 @@ const UpcomingTrip = ({navigation}) => {
             <View
               style={{
                 height: 128,
-
                 marginTop: 16,
                 marginHorizontal: 20,
               }}>
@@ -252,7 +287,9 @@ const UpcomingTrip = ({navigation}) => {
                   alignItems: 'center',
                   gap: 12,
                 }}
-                onPress={() => navigation.navigate('Email')}>
+                onPress={() =>
+                  navigation.navigate('Email', {from: 'UpcomingTrip'})
+                }>
                 <EmailIcon2 width={20} height={20} />
                 <View>
                   <Text style={styles.detailsListText}>Email Us</Text>
@@ -417,6 +454,7 @@ const UpcomingTrip = ({navigation}) => {
                       marginHorizontal: 20,
                       flexDirection: 'row',
                       justifyContent: 'space-between',
+                      gap: 16,
                       height: 48,
                     }}>
                     <Pressable style={{width: 124}}>
@@ -554,6 +592,276 @@ const UpcomingTrip = ({navigation}) => {
           </TouchableOpacity>
         </Modal>
       </View>
+
+      {/* edit pickuptime popup */}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible3}
+          onRequestClose={() => {
+            setModalVisible3(!modalVisible3);
+          }}>
+          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
+            <View style={styles.modalView3}>
+              <View
+                style={styles.headerBox} // header of the popup
+              >
+                <View style={styles.headerContent}>
+                  <View style={{width: 200, height: 28}}>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        letterSpacing: 0.32,
+                        lineHeight: 18 * 1.4,
+                      }}>
+                      Edit Pickup Time
+                    </Text>
+                  </View>
+                  <View style={{height: 24, width: 24}}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible3(!modalVisible3)}>
+                      <DrawerCross />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View //main container of popup with width 100%
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  flex: 1,
+                }}>
+                <View
+                  style={{
+                    top: 20,
+                    height: 44,
+                    marginHorizontal: 20,
+                  }}>
+                  <Text style={styles.detailsListText}>
+                    Note: Only you can edit the pickup time 6 hours before
+                    journey
+                  </Text>
+                </View>
+                {/* input box for Edit time */}
+                <View style={styles.inputContainer}>
+                  <View
+                    style={{
+                      borderRadius: 16,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: '#E3E9ED',
+                    }}>
+                    <View
+                      style={{
+                        marginLeft: 20,
+                        width: 24,
+                        height: 24,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Clock />
+                    </View>
+
+                    <TextInput
+                      style={styles.inputStyling}
+                      multiline={true}
+                      numberOfLines={4}
+                      scrollEnabled={true}
+                      placeholder={EditTimeValue}
+                      onChangeText={setEditTimeValue}
+                      value={EditTimeValue}></TextInput>
+                  </View>
+                </View>
+
+                <View
+                  style={styles.resetBox} //bottom part containing buttons
+                >
+                  <View
+                    style={{
+                      marginHorizontal: 20,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      gap: 16,
+                      height: 48,
+                    }}>
+                    <Pressable style={{width: 124}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 17, padding: 2}}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisible3(!modalVisible3)}>
+                          <View style={[styles.resetBtn]}>
+                            <View>
+                              <Text style={styles.resetText}>CANCEL</Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable>
+                    <Pressable style={{width: 195}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 16}}>
+                        <TouchableOpacity onPress={handlePressSaveBtn}>
+                          <View style={styles.applyFilter}>
+                            <Text style={styles.applyText}>SAVE</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </View>
+
+      {/* edit Timed Out popup */}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible4}
+          onRequestClose={() => {
+            setModalVisible4(!modalVisible4);
+          }}>
+          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
+            <View style={styles.modalView3}>
+              <View
+                style={styles.headerBox} // header of the popup
+              >
+                <View style={styles.headerContent}>
+                  <View style={{width: 200, height: 28}}>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        letterSpacing: 0.32,
+                        lineHeight: 18 * 1.4,
+                      }}>
+                      Edit Pickup Time
+                    </Text>
+                  </View>
+                  <View style={{height: 24, width: 24}}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible4(!modalVisible4)}>
+                      <DrawerCross />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View //main container of popup with width 100%
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  flex: 1,
+                }}>
+                <View
+                  style={{
+                    top: 20,
+                    height: 44,
+                    marginHorizontal: 20,
+                  }}>
+                  <Text style={styles.detailsListText}>
+                    Oops timed out, you can only edit before 6 hours of your
+                    journey
+                  </Text>
+                </View>
+                {/* input box for Edit time */}
+                <View style={styles.inputContainer}>
+                  <View
+                    style={{
+                      borderRadius: 16,
+                      borderWidth: 1,
+                      backgroundColor: '#E3E9ED',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: '#E3E9ED',
+                    }}>
+                    <View
+                      style={{
+                        marginLeft: 20,
+                        width: 24,
+                        height: 24,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <FadedClock />
+                    </View>
+
+                    <TextInput
+                      style={styles.inputStyling2}
+                      multiline={true}
+                      numberOfLines={4}
+                      scrollEnabled={true}
+                      placeholder={EditTimeValue}
+                      value={EditTimeValue}
+                      editable={false}></TextInput>
+                  </View>
+                </View>
+
+                <View
+                  style={styles.resetBox} //bottom part containing buttons
+                >
+                  <View
+                    style={{
+                      marginHorizontal: 20,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      gap: 16,
+                      height: 48,
+                    }}>
+                    {/* <Pressable style={{width: 124}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 17, padding: 2}}>
+                        <TouchableOpacity
+                          onPress={() => setModalVisible3(!modalVisible3)}>
+                          <View style={[styles.resetBtn]}>
+                            <View>
+                              <Text style={styles.resetText}>CANCEL</Text>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable> */}
+                    <Pressable style={{width: '100%'}}>
+                      <LinearGradient
+                        colors={['#00c96d', '#048ad7']}
+                        useAngle={true}
+                        angle={90}
+                        style={{borderRadius: 16}}>
+                        <TouchableOpacity onPress={handlePressGotItBtn}>
+                          <View style={styles.applyFilter}>
+                            <Text style={styles.applyText}>GOT IT</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </LinearGradient>
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 };
@@ -625,6 +933,32 @@ const GradientText = ({children}) => {
 };
 
 const styles = StyleSheet.create({
+  inputStyling: {
+    marginLeft: 12,
+    fontSize: 16,
+    fontFamily: 'ProximaNova-Regular',
+    flex: 1,
+    borderRadius: 16,
+    lineHeight: 16 * 1.4,
+    color: '#4F565E',
+  },
+  inputStyling2: {
+    marginLeft: 12,
+    fontSize: 16,
+    fontFamily: 'ProximaNova-Regular',
+    flex: 1,
+    borderRadius: 16,
+    lineHeight: 16 * 1.4,
+    color: '#C1CCD3',
+  },
+
+  inputContainer: {
+    height: 56,
+    position: 'absolute',
+    top: 80,
+    right: 20,
+    left: 20,
+  },
   resetBox: {
     width: '100%',
     backgroundColor: 'white',
@@ -937,6 +1271,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     height: 250,
   },
+  modalView3: {
+    width: Dimensions.get('window').width,
+    backgroundColor: '#F3F7FA',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5,
+    height: 288,
+  },
   headerBox: {
     height: 54,
     backgroundColor: '#292F3B',
@@ -948,7 +1290,6 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     flexDirection: 'row',
-
     marginHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',

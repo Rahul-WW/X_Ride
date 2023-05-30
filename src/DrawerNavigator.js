@@ -15,6 +15,8 @@ import TrackTrip from "./screens/TrackTrip"
 import ChatSupport from './screens/ChatSupport'
 import PaymentHistoryDetails from './screens/PaymentHistoryDetails'
 import FAQ from "./screens/FAQ"
+import CompletedTrip from './screens/CompletedTrip'
+import TripCompletion from './screens/TripCompletion'
 const Drawer= createDrawerNavigator()
 
 
@@ -50,6 +52,9 @@ const DrawerNavigator = ({navigation}) => {
         component={PaymentHistoryDetails}
       />
       <Drawer.Screen name="FAQ" component={FAQ} />
+      <Drawer.Screen name="CompletedTrip" component={CompletedTrip}/>
+      <Drawer.Screen name="TripCompletion" component={TripCompletion}/>
+      
     </Drawer.Navigator>
   );
 }

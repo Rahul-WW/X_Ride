@@ -1,86 +1,97 @@
 //CompletedBookings
 
-
-import {View, Text, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Text, Dimensions, Image, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
 import MaskedView from '@react-native-community/masked-view';
 
 import MoneyIcon from '../svgImages/MoneyIcon.svg';
 import Name2 from '../svgImages/Name2.svg';
 const {width, height} = Dimensions.get('window');
+import PickupIcon from '../svgImages/PickupIcon.svg';
+import DropIcon from '../svgImages/DropIcon.svg';
 
 import LinearGradient from 'react-native-linear-gradient';
 const passengers = 3,
   price = 1430; //pass this as a Prop in the Booking function
 
-
-
-
-const CompletedBookings = () => {
+const CompletedBookings = ({
+  handleGoToUpcoming,
+  pickupLocation,
+  pickupTime,
+  pickupDate,
+  dropLocation,
+  dropTime,
+  dropDate,
+  id,
+  passengerCount,
+  price,
+}) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.pickupAndDropBox}>
-        <View style={styles.pickupBox}>
-          <Image
-            style={{width: 24, height: 24}}
-            source={require('../images/pickupIcon.png')}
-          />
+    <Pressable onPress={() => handleGoToUpcoming(id)} // it is written as handleUpcoming but used to send the user to CompletedTrip
+    >
+      <View style={styles.container}>
+        <View style={styles.pickupAndDropBox}>
+          <View style={styles.pickupBox}>
+            <PickupIcon width={24} height={24} />
 
-          <View
-            style={{
-              height: 39,
-            }}>
-            <Text style={styles.pickupText}>Manchester Club Stadium (M16)</Text>
-            <Text style={styles.dateTimeOfpickup}>Wed 24 Feb, 12 PM</Text>
+            <View
+              style={{
+                height: 39,
+              }}>
+              <Text style={styles.pickupText}>{pickupLocation}</Text>
+              <Text style={styles.dateTimeOfpickup}>
+                {pickupDate + ' ' + pickupTime}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.dropLocationBox}>
+           
+            <DropIcon width={24} height={24} />
+
+            <View
+              style={{
+                height: 39,
+              }}>
+              <Text style={styles.pickupText}>{dropLocation}</Text>
+              <Text style={styles.dateTimeOfpickup}>
+                {dropDate + ' ' + dropTime}
+              </Text>
+            </View>
           </View>
         </View>
-        <View style={styles.dropLocationBox}>
-          <Image source={require('../images/dropIcon.png')} />
+        <View style={styles.horizontalLine}></View>
+        <View style={styles.dashedline}></View>
 
-          <View
-            style={{
-              height: 39,
-            }}>
-            <Text style={styles.pickupText}>
-              Elland Road Stadium, Leed United
+        <View style={styles.passengerAndPriceBox}>
+          <View style={styles.passengerBox}>
+            <View>
+              <Name2 width={20} height={20} />
+            </View>
+            <Text style={styles.passengerPriceText}>{passengerCount}</Text>
+            <Text style={styles.passengerPriceText}>
+              {passengers >= 2 ? (
+                <Text> Passengers</Text>
+              ) : (
+                <Text> Passenger</Text>
+              )}{' '}
             </Text>
-            <Text style={styles.dateTimeOfpickup}>Wed 22 Feb</Text>
           </View>
-        </View>
-      </View>
-      <View style={styles.horizontalLine}></View>
-      <View style={styles.dashedline}></View>
+          <View style={styles.priceBox}>
+            <View style={{alignSelf: 'center'}}>
+              <MoneyIcon width={20} height={15} />
+            </View>
 
-      <View style={styles.passengerAndPriceBox}>
-        <View style={styles.passengerBox}>
-          <View>
-            <Name2 width={20} height={20} />
+            <Text style={styles.passengerPriceText}>£ {price}</Text>
           </View>
-          <Text style={styles.passengerPriceText}>{passengers}</Text>
-          <Text style={styles.passengerPriceText}>
-            {passengers >= 2 ? (
-              <Text> Passengers</Text>
-            ) : (
-              <Text> Passenger</Text>
-            )}{' '}
-          </Text>
         </View>
-        <View style={styles.priceBox}>
-          <View style={{alignSelf: 'center'}}>
-            <MoneyIcon width={20} height={15} />
-          </View>
-
-          <Text style={styles.passengerPriceText}>£ {price}</Text>
-        </View>
-      </View>
-      {/* <View style={styles.horizontalLine2}></View>
+        {/* <View style={styles.horizontalLine2}></View>
       <View style={styles.rebookBox}>
         <GradientText>RE-BOOK</GradientText>
       </View> */}
-    </View>
+      </View>
+    </Pressable>
   );
 };
-
 
 const GradientText = ({children}) => {
   return (
@@ -91,8 +102,7 @@ const GradientText = ({children}) => {
         locations={[0, 1]}
         colors={['#00C96D', '#048AD7']}
         useAngle={true}
-        angle={90}
-        >
+        angle={90}>
         <Text style={[styles.text, styles.transparentText]}>{children}</Text>
       </LinearGradient>
     </MaskedView>

@@ -82,45 +82,70 @@ const UpcomingArray = [
 const CompletedArray = [
   {
     id: 1,
-    pickupLocation: 'Elland1 Road Stadium, Leed United',
+    pickupLocation: 'Manchester1 Club1 Stadium (M16)',
     pickupTime: '12 PM',
-    pickupDate: 'Wed 25 Feb',
-    passengerCount: 3,
+    pickupDate: 'Wed 24 Feb',
+    passengerCount: 1,
     price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
   },
   {
     id: 2,
-    pickupLocation: 'Elland2 Road Stadium, Leed United',
+    pickupLocation: 'Manchester2 Club1 Stadium (M16)',
     pickupTime: '12 PM',
-    pickupDate: 'Wed 25 Feb',
+    pickupDate: 'Wed 24 Feb',
     passengerCount: 3,
     price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
   },
   {
     id: 3,
-    pickupLocation: 'Elland3 Road Stadium, Leed United',
+    pickupLocation: 'Manchester3 Club1 Stadium (M16)',
     pickupTime: '12 PM',
-    pickupDate: 'Wed 25 Feb',
-    passengerCount: 3,
+    pickupDate: 'Wed 24 Feb',
+    passengerCount: 1,
     price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
   },
   {
     id: 4,
-    pickupLocation: 'Elland4 Road Stadium, Leed United',
+    pickupLocation: 'Manchester4 Club1 Stadium (M16)',
     pickupTime: '12 PM',
-    pickupDate: 'Wed 25 Feb',
+    pickupDate: 'Wed 24 Feb',
     passengerCount: 3,
     price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
   },
   {
     id: 5,
-    pickupLocation: 'Elland5 Road Stadium, Leed United',
+    pickupLocation: 'Manchester5 Club1 Stadium (M16)',
     pickupTime: '12 PM',
-    pickupDate: 'Wed 25 Feb',
+    pickupDate: 'Wed 24 Feb',
     passengerCount: 3,
     price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
   },
-
+  {
+    id: 6,
+    pickupLocation: 'Manchester6 Club1 Stadium (M16)',
+    pickupTime: '12 PM',
+    pickupDate: 'Wed 24 Feb',
+    passengerCount: 3,
+    price: 1432,
+    dropLocation: 'Elland1 Road Stadium, Leed United',
+    dropTime: '12 PM',
+    dropDate: 'Wed 25 Feb',
+  },
 ];
 
 
@@ -144,7 +169,7 @@ const Mybookings = ({navigation}) => {
         <Header headertext={'My Bookings'} />
       </Animated.View>
       <ScrollView style={{backgroundColor: '#F3F7FA'}}>
-        <View >
+        <View>
           <View>
             <View style={styles.container}>
               <View style={styles.togglingBtnsDiv}>
@@ -163,29 +188,26 @@ const Mybookings = ({navigation}) => {
               <View>
                 {bg === true ? (
                   <View>
-                    {
-                      UpcomingArray.map((e)=>{
-                        return (
-                          <View key={e.id}>
-                            <UpcomingBookings  // here we can also send some information to the UpcomingTrip using Params but creates lafda while using goback() 
-                              handleGoToUpcoming={() =>
-                                navigation.navigate('UpcomingTrip')
-                              }
-                              pickupLocation={e.pickupLocation}
-                              pickupDate={e.pickupDate}
-                              pickupTime={e.pickupTime}
-                              dropLocation={e.dropLocation}
-                              dropDate={e.dropDate}
-                              dropTime={e.dropTime}
-                              passengerCount={e.passengerCount}
-                              price={e.price}
-                              id={e.id}
-                            />
-                          </View>
-                        );
-                      })
-                    }
-
+                    {UpcomingArray.map(e => {
+                      return (
+                        <View key={e.id}>
+                          <UpcomingBookings // here we can also send some information to the UpcomingTrip using Params but creates lafda while using goback()
+                            handleGoToUpcoming={() =>
+                              navigation.navigate('UpcomingTrip')
+                            }
+                            pickupLocation={e.pickupLocation}
+                            pickupDate={e.pickupDate}
+                            pickupTime={e.pickupTime}
+                            dropLocation={e.dropLocation}
+                            dropDate={e.dropDate}
+                            dropTime={e.dropTime}
+                            passengerCount={e.passengerCount}
+                            price={e.price}
+                            id={e.id}
+                          />
+                        </View>
+                      );
+                    })}
 
                     {/* <View>
                       <UpcomingBookings handleGoToUpcoming={handleGoToUpcoming}/>
@@ -208,7 +230,27 @@ const Mybookings = ({navigation}) => {
                   </View>
                 ) : (
                   <View>
-                    <View>
+                    {CompletedArray.map(e => {
+                      return (
+                        <View key={e.id}>
+                          <CompletedBookings // here we can also send some information to the UpcomingTrip using Params but creates lafda while using goback()
+                            handleGoToUpcoming={() => //this func is to navigate to the Completed trip screen
+                              navigation.navigate('CompletedTrip')
+                            }
+                            pickupLocation={e.pickupLocation}
+                            pickupDate={e.pickupDate}
+                            pickupTime={e.pickupTime}
+                            dropLocation={e.dropLocation}
+                            dropDate={e.dropDate}
+                            dropTime={e.dropTime}
+                            passengerCount={e.passengerCount}
+                            price={e.price}
+                            id={e.id}
+                          />
+                        </View>
+                      );
+                    })}
+                    {/* <View>
                       <CompletedBookings />
                     </View>
                     <View>
@@ -219,7 +261,7 @@ const Mybookings = ({navigation}) => {
                     </View>
                     <View>
                       <CompletedBookings />
-                    </View>
+                    </View> */}
                   </View>
                 )}
               </View>

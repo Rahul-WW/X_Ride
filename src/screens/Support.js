@@ -75,34 +75,33 @@ const Support = ({navigation}) => {
 
             {/* FAQ section */}
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('FAQ', {from: 'Support'})
-              }></TouchableOpacity>
-            <View style={styles.singleSection}>
-              <View>
-                <FAQ />
+              onPress={() => navigation.navigate('FAQ', {from: 'Support'})}>
+              <View style={styles.singleSection}>
+                <View>
+                  <FAQ />
+                </View>
+                <View>
+                  <Text style={styles.text1}>FAQ's</Text>
+                  <Text style={styles.text2}>
+                    Find inteliigent answers instantly
+                  </Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.text1}>FAQ's</Text>
-                <Text style={styles.text2}>
-                  Find inteliigent answers instantly
-                </Text>
-              </View>
-            </View>
+            </TouchableOpacity>
+
             {/* Email section */}
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Email', {from: 'Support'})
-              }></TouchableOpacity>
-            <View style={styles.singleSection}>
-              <View>
-                <EmailSupport />
+              onPress={() => navigation.navigate('Email', {from: 'Support'})}>
+              <View style={styles.singleSection}>
+                <View>
+                  <EmailSupport />
+                </View>
+                <View>
+                  <Text style={styles.text1}>Email</Text>
+                  <Text style={styles.text2}>Get solutions to your inbox</Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.text1}>Email</Text>
-                <Text style={styles.text2}>Get solutions to your inbox</Text>
-              </View>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>

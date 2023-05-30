@@ -45,11 +45,13 @@ import MenuIcon from '../svgImages/MenuIcon.svg';
 import Xlogo from '../svgImages/Xlogo.svg';
 import Bell from '../svgImages/Bell.svg';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Notification2 from "../svgImages/Notification2.svg"
 
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [isNotication, setIsNotification]= useState(true)
   const [form, setForm] = useState({
     pickup: '',
     drop: '',
@@ -169,7 +171,14 @@ const Home = () => {
             <Xlogo width={84} height={28} />
           </View>
           <View style={styles.belllogo}>
-            <Bell width={24} height={24} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Notification')}>
+              {isNotication ? (
+                <Bell width={24} height={24} />
+              ) : (
+                <Notification2 width={24} height={24} />
+              )}
+            </TouchableOpacity>
           </View>
         </View>
       </Animated.View>

@@ -15,10 +15,18 @@ import {
 import React, {useState} from 'react';
 import Header from '../components/Header';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
-
+import LinearGradient from 'react-native-linear-gradient';
+import InputField from '../components/InputField';
+import MobileIcon from '../svgImages/MobileIcon.svg';
+import WhatsWrong from "../svgImages/WhatsWrong.svg"
+import Issue from "../svgImages/Issue.svg"
 const Email = ({navigation, route}) => {
 
   const {from} = route.params;
+
+  const handleSubmit=()=>{
+
+  }
   return (
     <SafeAreaView
       style={{backgroundColor: '#F3F7FA', flex: 1, position: 'relative'}}>
@@ -30,10 +38,52 @@ const Email = ({navigation, route}) => {
         />
       </Animated.View>
       <ScrollView style={{marginHorizontal: 20}}>
-        <View style={styles.container}></View>
+        <View style={styles.container}>
+          <View style={{height: 84, }}>
+            <View style={{marginBottom: 12}}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  color: '#292F3B',
+                  lineHeight: 20 * 1.4,
+                  letterSpacing: 0.32,
+                }}>
+                Tell us how can we help you ?
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 400,
+                  color: '#4F565E',
+                  lineHeight: 16 * 1.4,
+                  letterSpacing: 0.32,
+                }}>
+                Please let us know the necessary details as requested below
+              </Text>
+            </View>
+          </View>
+
+          <View style={{height: 302,  marginTop: 24}}>
+            <View style={{height: 56, marginBottom: 20}}>
+              <InputField
+                Icon={<MobileIcon />}
+                placeholder={'Contact Number'}
+              />
+            </View>
+            <View style={{height: 56, marginBottom: 20}}>
+              <InputField Icon={<WhatsWrong />} placeholder={"What's wrong?"} />
+            </View>
+            <View style={{height: 150, marginBottom: 20}}>
+              <InputField Icon={<Issue />} placeholder={"Issue Details"} />
+            </View>
+          </View>
+        </View>
       </ScrollView>
 
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <View style={styles.footerContainer}>
           <View
             style={{
@@ -43,266 +93,88 @@ const Email = ({navigation, route}) => {
               gap: 8,
             }}></View>
         </View>
+      </View> */}
+      <View style={styles.submitBtn}>
+        <SubmitBtn
+          Btnwidth={'100%'}
+          textInsideBtn="SUBMIT"
+          handleSubmit={handleSubmit}
+        />
       </View>
-      {/*First model  popup*/}
-      {/* <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}>
-          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
-            <View style={styles.modalView}>
-              <View
-                style={styles.headerBox} // header of the popup
-              >
-                <View style={styles.headerContent}>
-                  <View style={{width: 200, height: 28}}>
-                    <Text
-                      style={{
-                        color: '#FFFFFF',
-                        fontSize: 18,
-                        fontWeight: 500,
-                        letterSpacing: 0.32,
-                        lineHeight: 18 * 1.4,
-                      }}>
-                      Cancellation Policy
-                    </Text>
-                  </View>
-                  <View style={{height: 24, width: 24}}>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible(!modalVisible)}>
-                      <DrawerCross />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-
-              <View //main container of popup with width 100%
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  position: 'relative',
-                  flex: 1,
-                }}>
-                <View
-                  style={styles.popupContainer} // container with marginHorizontal 20
-                >
-                  <View style={styles.cancellationtimeBox}>
-                    <Text style={styles.cancellationText}>
-                      Cancellation Time
-                    </Text>
-                    <Text style={styles.cancellationText}>Refund Amount</Text>
-                  </View>
-                  <View style={styles.horizontal3}></View>
-                  <View style={styles.cancellationTimingAndPriceBox}>
-                    <View style={styles.timingAndPriceBox}>
-                      <View style={{width: '30%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 6 hours of travel
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>£ 40</Text>
-                      </View>
-                    </View>
-                    <View style={styles.timingAndPriceBox}>
-                      <View style={{width: '35%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 48 hours
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>£ 80</Text>
-                      </View>
-                    </View>
-                    <View style={styles.timingAndPriceBox2}>
-                      <View style={{width: '35%'}}>
-                        <Text style={styles.detailsListText}>
-                          Befor 5.30 hours of travel
-                        </Text>
-                      </View>
-                      <View style={styles.cancelPrice}>
-                        <Text style={styles.detailsListText}>No Refund</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.horizontal3}></View>
-                  <View style={styles.note}>
-                    <Text style={styles.noteText}>
-                      Note: You will get your refund in 5 business days.
-                    </Text>
-                  </View>
-                  <View style={styles.surityBox}>
-                    <View
-                      style={{
-                        borderColor: 'white',
-                        height: 44,
-                      }}>
-                      <Text style={styles.surityText}>
-                        Are you sure you want to cancel your ride?
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-
-                <View
-                  style={styles.resetBox} //bottom part containing buttons
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      height: 48,
-                    }}>
-                    <Pressable style={{width: 124}}>
-                      <LinearGradient
-                        colors={['#00c96d', '#048ad7']}
-                        useAngle={true}
-                        angle={90}
-                        style={{borderRadius: 16, padding: 2}}>
-                        <TouchableOpacity
-                          onPress={() => setModalVisible(!modalVisible)}>
-                          <View style={[styles.resetBtn]}>
-                            <View>
-                              <Text style={styles.resetText}>NO</Text>
-                            </View>
-                          </View>
-                        </TouchableOpacity>
-                      </LinearGradient>
-                    </Pressable>
-                    <Pressable style={{width: 195}}>
-                      <LinearGradient
-                        colors={['#00c96d', '#048ad7']}
-                        useAngle={true}
-                        angle={90}
-                        style={{borderRadius: 16}}>
-                        <TouchableOpacity onPress={handlePressConfirmCancel}>
-                          <View style={styles.applyFilter}>
-                            <Text style={styles.applyText}>Yes, Cancel</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </LinearGradient>
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      </View> */}
-
-      {/*second model  popup*/}
-      {/* <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible2}
-          onRequestClose={() => {
-            setModalVisible2(!modalVisible2);
-          }}>
-          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
-            <View style={styles.modalView2}>
-              <View
-                style={styles.headerBox} // header of the popup
-              >
-                <View style={styles.headerContent}>
-                  <View style={{width: 200, height: 28}}>
-                    <Text
-                      style={{
-                        color: '#FFFFFF',
-                        fontSize: 18,
-                        fontWeight: 500,
-                        letterSpacing: 0.32,
-                        lineHeight: 18 * 1.4,
-                      }}>
-                      Cancelled Successfully
-                    </Text>
-                  </View>
-                  <View style={{height: 24, width: 24}}>
-                    <TouchableOpacity
-                      onPress={() => setModalVisible2(!modalVisible2)}>
-                      <DrawerCross />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-
-              <View //main container of popup with width 100%
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  position: 'relative',
-                  flex: 1,
-                }}>
-                <View
-                  style={styles.popupContainer} // container with marginHorizontal 20
-                >
-                  <View style={{width: '100%', height: 22}}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        color: '#4F565E',
-                        lineHeight: 16 * 1.4,
-                        letterSpacing: 0.32,
-                      }}>
-                      Hey! Your ride has been cancelled{' '}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      width: '100%',
-                      height: 44,
-
-                      marginTop: 12,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 400,
-                        color: '#4F565E',
-                        lineHeight: 16 * 1.4,
-                        letterSpacing: 0.32,
-                      }}>
-                      £ 40 has been deducted for cancelling too late
-                    </Text>
-                  </View>
-                </View>
-
-                <View
-                  style={styles.resetBox} //bottom part containing buttons
-                >
-                  <View
-                    style={{
-                      marginHorizontal: 20,
-                      height: 48,
-                    }}>
-                    <CallBtn
-                      Btnwidth={'100%'}
-                      textInsideBtn={'GET NEW QUOTES'}
-                      handleCallBtnPressed={handlePressGetNewQuotes}
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Modal>
-      </View> */}
     </SafeAreaView>
+  );
+};
+const SubmitBtn = ({Btnwidth, textInsideBtn, handleSubmit}) => {
+  return (
+    <Pressable onPress={handleSubmit}>
+      <View
+        style={{
+          height: 48,
+
+          width: Btnwidth,
+        }}>
+        <LinearGradient
+          locations={[0, 1]}
+          colors={['#00c96d', '#048ad7']}
+          useAngle={true}
+          angle={90}
+          style={{borderRadius: 20}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              textAlign: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              borderRadius: 20,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginVertical: 14,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  fontFamily: 'ProximaNova-Regular',
+                  letterSpacing: 0.32,
+                  lineHeight: 18,
+                }}>
+                {textInsideBtn}
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </View>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
+  submitBtn: {
+    width: '100%',
+    backgroundColor: 'white',
+    height: 72,
+
+    paddingTop: 12,
+    paddingHorizontal: 20,
+
+    paddingBottom: 12,
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+  },
   container: {
     marginTop: 20,
 
     width: '100%',
     marginBottom: 209,
+   
+
   },
   footer: {
     position: 'absolute',
