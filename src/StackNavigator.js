@@ -15,6 +15,7 @@ import ForgotPassword from './screens/ForgotPassword';
 import CreatNewPass from './screens/CreatNewPass';
 import Quotes from './screens/Quotes';
 import Location from './screens/Location';
+import Location2 from './screens/Location';
 import DrawerNavigator from './DrawerNavigator';
 import OnboardingScreen1 from './screens/OnboardingScreen1';
 import OnboardingScreen2 from './screens/OnboardingScreen2';
@@ -80,7 +81,7 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="DrawerNavigator"
+      initialRouteName="OnboardingScreen1"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -167,6 +168,14 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Location"
         component={Location}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+
+      <Stack.Screen
+        name="Location2"
+        component={Location2}
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}

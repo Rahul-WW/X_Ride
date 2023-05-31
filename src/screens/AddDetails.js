@@ -86,7 +86,9 @@ const AddDetails = () => {
         <Header headertext={'Add Details'} />
       </Animated.View>
       <View style={styles.container}>
-        <ScrollView automaticallyAdjustKeyboardInsets={true}>
+        <ScrollView
+          automaticallyAdjustKeyboardInsets={true}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.contactInfo}>
             <View style={styles.upperTextBox}>
               <View style={{height: 25, marginBottom: 8}}>
@@ -116,7 +118,7 @@ const AddDetails = () => {
                 <InputFeildForDetails placeholder="Flight Number" />
               </View>
               <View style={styles.checkBoxDiv}>
-                <View >
+                <View>
                   <CheckBox
                     style={{width: 18}}
                     isChecked={isChecked}

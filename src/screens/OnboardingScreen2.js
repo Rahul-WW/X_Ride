@@ -12,62 +12,67 @@ import {
   Image,
   ImageBackground,
   Button,
+  ScrollView
 } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
 const COLORS = {primary: '#282534', white: '#fff'};
 import XBtn from '../components/XBtn';
+import Slider2 from "../svgImages/Slider2.svg"
 
 const OnboardingScreen2 = ({navigation}) => {
   return (
-    <View style={{alignItems: 'center'}}>
-      <ImageBackground
-        source={require('../images/OnboardingImage2.png')}
-        style={{resizeMode: 'cover', width, height, position: 'relative'}}>
-        {/* main container strts */}
-        <View style={styles.container}>
-          <View style={styles.titleBox}>
-            <Text style={styles.titleText}>
-              Search budget-friendly cabs for your travel destinations
-            </Text>
-          </View>
-
-          <View style={styles.CaptionBox}>
-            <Text style={styles.CaptionText}>
-              find theh convenient and budget friendly cabs to travel around
-              your destinations.
-            </Text>
-          </View>
-
-          <Image
-            style={styles.slideBtn}
-            source={require('../images/slide2.png')}
-          />
-
-          <View style={styles.lowerContainer}>
-            <Pressable
-              style={[styles.skip, styles.skipPosition]}
-              onPress={() => navigation.navigate('SignUp')}>
-              <Text style={styles.nextTypo}>Skip</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => navigation.navigate('OnboardingScreen3')}
-              style={[styles.skip, styles.skipPosition]}>
-              <View>
-                <XBtn
-                  Btnwidth={127}
-                  textInsideBtn="Next"
-                  goTo="OnboardingScreen3"
-                />
+    <SafeAreaView>
+      <ScrollView>
+        <View style={{alignItems: 'center'}}>
+          <ImageBackground
+            source={require('../images/OnboardingImage2.png')}
+            style={{resizeMode: 'cover', width, height, position: 'relative'}}>
+            {/* main container strts */}
+            <View style={styles.container}>
+              <View style={styles.titleBox}>
+                <Text style={styles.titleText}>
+                  Compare cabs to find the most preferable options
+                </Text>
               </View>
-            </Pressable>
-          </View>
-        </View>
 
-        {/* main container ends */}
-      </ImageBackground>
-    </View>
+              <View style={styles.CaptionBox}>
+                <Text style={styles.CaptionText}>
+                  Choose from the best cabs service providers based on rates,
+                  reviews, types and discounts.
+                </Text>
+              </View>
+
+              <View style={styles.slideBtn}>
+                <Slider2 />
+              </View>
+
+              <View style={styles.lowerContainer}>
+                <Pressable
+                  style={[styles.skip, styles.skipPosition]}
+                  onPress={() => navigation.navigate('SignUp')}>
+                  <Text style={styles.nextTypo}>Skip</Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => navigation.navigate('OnboardingScreen3')}
+                  style={[styles.skip, styles.skipPosition]}>
+                  <View>
+                    <XBtn
+                      Btnwidth={127}
+                      textInsideBtn="Next"
+                      goTo="OnboardingScreen3"
+                    />
+                  </View>
+                </Pressable>
+              </View>
+            </View>
+
+            {/* main container ends */}
+          </ImageBackground>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -84,6 +89,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'center',
+
+    alignItems: 'center',
+    height: 48,
+    
   },
   nextTypo: {
     color: 'white',

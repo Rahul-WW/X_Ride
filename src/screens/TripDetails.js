@@ -44,7 +44,9 @@ const TripDetails = ({navigation, route}) => {
       <Animated.View>
         <Header headertext={'Trip Details'} />
       </Animated.View>
-      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+      <ScrollView
+        style={{backgroundColor: '#F3F7FA'}}
+        showsVerticalScrollIndicator={false}>
         <View style={{backgroundColor: '#F3F7FA'}}>
           <View>
             <View style={styles.container}>
@@ -161,13 +163,13 @@ const PickupDetails = ({
       {/* second layer of pickup and drop locations */}
       <View style={styles.pickupDropText}>
         <View style={styles.pickuplocationTextBox}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.pickupAndDropText}>{PickupLocation}</Text>
           </ScrollView>
         </View>
 
         <View style={styles.droplocationTextBox}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.pickupAndDropText}>{DropLocation}</Text>
           </ScrollView>
         </View>
@@ -237,13 +239,13 @@ const ReturnDetails = ({
       {/* second layer of pickup and drop locations */}
       <View style={styles.pickupDropText}>
         <View style={styles.pickuplocationTextBox}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.pickupAndDropText}>{PickupLocation}</Text>
           </ScrollView>
         </View>
 
         <View style={styles.droplocationTextBox}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.pickupAndDropText}>{DropLocation}</Text>
           </ScrollView>
         </View>

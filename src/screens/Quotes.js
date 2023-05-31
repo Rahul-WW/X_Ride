@@ -241,7 +241,7 @@ const Quotes = ({navigation, route}) => {
       <Animated.View>
         <HeaderForQuotes />
       </Animated.View>
-      <ScrollView ref={scrollViewRef}>
+      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         <View style={{position: 'relative'}}>
           <View style={styles.container}>
             <View style={styles.togglingBtnsDiv}>
@@ -458,7 +458,9 @@ const Quotes = ({navigation, route}) => {
       {/* floating sort btn ends here */}
       <View style={styles.floatingBtn}>
         <TouchableOpacity
-          onPress={() =>  scrollViewRef.current.scrollTo({y: 0, animated: true})}>
+          onPress={() =>
+            scrollViewRef.current.scrollTo({y: 0, animated: true})
+          }>
           <View>
             <LinearGradient
               locations={[0, 1]}

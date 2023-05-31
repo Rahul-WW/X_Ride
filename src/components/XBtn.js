@@ -11,7 +11,8 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 const {width} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
-
+import OnboardArrow1 from "../svgImages/OnboardArrow1.svg"
+import OnboardArrow2 from '../svgImages/OnboardArrow2.svg';
 
 const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
   const navigation = useNavigation();
@@ -36,16 +37,16 @@ const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
           <View
             style={{
               flexDirection: 'row',
-              textAlign: 'center',
               justifyContent: 'center',
               gap: 8,
               borderRadius: 16,
+              alignItems: 'center',
             }}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: 14,
+                height: 48,
               }}>
               <Text
                 style={{
@@ -70,14 +71,10 @@ const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
                 alignItems: 'center',
                 marginVertical: 10,
               }}>
-              <Image
-                resizeMode="cover"
-                source={require('../images/leftforwardArrow.png')}
-              />
-              <Image
-                resizeMode="cover"
-                source={require('../images/forwardArrow.png')}
-              />
+             
+              <OnboardArrow1 />
+              <OnboardArrow2 />
+              
             </View>
           </View>
         </LinearGradient>

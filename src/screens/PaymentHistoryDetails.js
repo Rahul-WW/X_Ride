@@ -78,7 +78,9 @@ const PaymentHistoryDetails = ({navigation}) => {
           navigation={navigation}
         />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20}}>
+      <ScrollView
+        style={{marginHorizontal: 20}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <UpcomingTripComponent
             // pickupLocation={selectedfromList.pickupLocation}
@@ -94,7 +96,7 @@ const PaymentHistoryDetails = ({navigation}) => {
           />
 
           <View style={styles.transactionDetails}>
-            {PaymentTransactionDetails.map((e,i) => {
+            {PaymentTransactionDetails.map((e, i) => {
               return (
                 <View style={styles.singleList} key={i}>
                   <Text style={styles.singleListText}>{e.name}</Text>

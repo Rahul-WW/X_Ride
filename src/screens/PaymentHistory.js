@@ -72,7 +72,9 @@ const PaymentHistory = ({navigation}) => {
       <Animated.View>
         <Header headertext={'Payment History'} />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20, marginBottom: 55}}>
+      <ScrollView
+        style={{marginHorizontal: 20, marginBottom: 55}}
+        showsVerticalScrollIndicator={false}>
         <View
           style={{
             height: 27,
@@ -106,15 +108,13 @@ const PaymentHistory = ({navigation}) => {
           {data.map((e, i) => {
             return (
               <View key={i}>
-              
-                  <SinglePayment
-                    Tid={e.transactionId}
-                    date={e.date}
-                    time={e.time}
-                    price={e.price}
-                    navigation={navigation}
-                  />
-              
+                <SinglePayment
+                  Tid={e.transactionId}
+                  date={e.date}
+                  time={e.time}
+                  price={e.price}
+                  navigation={navigation}
+                />
               </View>
             );
           })}

@@ -19,18 +19,17 @@ import Header from '../components/Header';
 import Cross from '../svgImages/Cross.svg';
 import {Google_Api_Key} from '@env';
 import Pin from '../svgImages/Pin.svg';
+import GpsDot from '../svgImages/GpsDot.svg';
+import GpsCircle from '../svgImages/GpsCircle.svg';
+import Target from '../svgImages/Target.svg';
 
-import Target from "../svgImages/Target.svg"
-
-const Location = ({navigation}) => {
-
+const Location2 = ({navigation}) => {
   const [searchText, setSearchText] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
 
   const handleSearchTextChange = text => {
-    
     setSearchText(text);
     setShowSuggestions(true);
 
@@ -44,8 +43,8 @@ const Location = ({navigation}) => {
         .then(response => response.json())
         .then(data => {
           setPredictions(data.predictions);
-          console.log(data.predictions);
-       // Keyboard.dismiss();
+          //console.log(data.predictions);
+          Keyboard.dismiss();
         })
         .catch(error => {
           console.error('Error fetching predictions:', error);
@@ -53,44 +52,44 @@ const Location = ({navigation}) => {
     }, 1000);
 
     setTypingTimeout(newTypingTimeout);
-   
+
+    console.log(predictions.length)
   };
 
   const handlePredictionSelect = prediction => {
+    // console.log(
+    //   prediction.structured_formatting.main_text,
+    //   prediction.structured_formatting.secondary_text,
+    // );
 
-    console.log(
-      prediction.structured_formatting.main_text,
-      prediction.structured_formatting.secondary_text,
-    );
+    // console.log(prediction.structured_formatting.main_text.length);
 
-    console.log(prediction.structured_formatting.main_text.length);
+    let finalTextToDIsplay =
+      prediction.structured_formatting.main_text +
+      ' ' +
+      prediction.structured_formatting.secondary_text;
 
-    let finalTextToDIsplay=prediction.structured_formatting.main_text+" "+prediction.structured_formatting.secondary_text;
-
-    if(finalTextToDIsplay.length <= 35){
-        setSearchText(finalTextToDIsplay)
-    }else{
-      let subString=finalTextToDIsplay.substring(0, 35)
-      setSearchText(subString+"...")
+    if (finalTextToDIsplay.length <= 35) {
+      setSearchText(finalTextToDIsplay);
+    } else {
+      let subString = finalTextToDIsplay.substring(0, 35);
+      setSearchText(subString + '...');
     }
-    
+
     setShowSuggestions(false);
- 
-   navigation.goBack()
-    
+    navigation.goBack();
   };
 
-  const handlePressCrossBtn=()=>{
-    setShowSuggestions(false)
-    setSearchText("")
-  }
+  const handlePressCrossBtn = () => {
+    setShowSuggestions(false);
+    setSearchText('');
+  };
 
   useEffect(() => {
     // Clear the timeout when the component is unmounted
     return () => {
       clearTimeout(typingTimeout);
     };
-     
   }, [typingTimeout]);
 
   return (
@@ -123,18 +122,19 @@ const Location = ({navigation}) => {
               marginHorizontal: 20,
               marginTop: 20,
             }}>
-            <View>{predictions.length !== 0 ?  <TouchableOpacity style={styles.dropDownList1}>
-              <View>
-                <Target />
-              </View>
+            {predictions.length !== 0 ? (
+              <TouchableOpacity style={styles.dropDownList1}>
+                <View>
+                  <Target />
+                </View>
 
-              <View>
-                <Text style={styles.locationMainText}>Current Location</Text>
-                <Text style={styles.locationSecondaryText}>Using GPS</Text>
-              </View>
-            </TouchableOpacity> : null}</View>
+                <View>
+                  <Text style={styles.locationMainText}>Current Location</Text>
+                  <Text style={styles.locationSecondaryText}>Using GPS</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
 
-           
             {predictions?.map(prediction => {
               return (
                 <View key={prediction.place_id} horizontal>
@@ -146,41 +146,19 @@ const Location = ({navigation}) => {
                       <Pin />
                     </View>
 
-                    <ScrollView>
+                    <View
+                      style={{height: 55, borderWidth: 1, borderColor: 'red'}}>
                       <Text style={styles.locationMainText}>
                         {prediction.structured_formatting.main_text}
                       </Text>
                       <Text style={styles.locationSecondaryText}>
                         {prediction.structured_formatting.secondary_text}
                       </Text>
-                    </ScrollView>
+                    </View>
                   </TouchableOpacity>
                 </View>
               );
             })}
-
-            {/* <Modal
-          visible={showSuggestions}
-          animationType="slide"
-          transparent
-          onRequestClose={() => setShowSuggestions(false)}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}>
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              {predictions.map(prediction => (
-                <TouchableOpacity
-                  key={prediction.place_id}
-                  onPress={() => handlePredictionSelect(prediction)}>
-                  <Text>{prediction.description}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        </Modal> */}
           </View>
         </ScrollView>
       ) : null}
@@ -207,7 +185,6 @@ const styles = StyleSheet.create({
     borderColor: '#E3E9ED',
     marginTop: 20,
     marginHorizontal: 20,
-    
   },
 
   inputBox: {
@@ -216,6 +193,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova-Regular',
     flex: 1,
     lineHeight: 16 * 1.4,
+     
   },
   crossContainer: {
     width: 20,
@@ -223,17 +201,19 @@ const styles = StyleSheet.create({
     marginRight: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
 
   dropDownList1: {
     height: 55,
 
     width: '100%',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
 
     flexDirection: 'row',
     gap: 12,
     borderColor: '#E3E9ED',
+    borderColor: 'red',
   },
 
   dropDownList2: {
@@ -241,11 +221,12 @@ const styles = StyleSheet.create({
     borderColor: '#E3E9ED',
 
     width: '100%',
-    // borderWidth: 1,
+
     flexDirection: 'row',
     gap: 12,
     borderBottomWidth: 1,
     marginTop: 16,
+    paddingBottom: 10,
   },
 
   locationMainText: {
@@ -264,4 +245,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Location;
+export default Location2;

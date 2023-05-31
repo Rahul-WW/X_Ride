@@ -168,7 +168,9 @@ const Mybookings = ({navigation}) => {
       <Animated.View>
         <Header headertext={'My Bookings'} />
       </Animated.View>
-      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+      <ScrollView
+        style={{backgroundColor: '#F3F7FA'}}
+        showsVerticalScrollIndicator={false}>
         <View>
           <View>
             <View style={styles.container}>
@@ -208,25 +210,6 @@ const Mybookings = ({navigation}) => {
                         </View>
                       );
                     })}
-
-                    {/* <View>
-                      <UpcomingBookings handleGoToUpcoming={handleGoToUpcoming}/>
-                    </View>
-                    <View>
-                      <UpcomingBookings />
-                    </View>
-                    <View>
-                      <UpcomingBookings />
-                    </View>
-                    <View>
-                      <UpcomingBookings />
-                    </View>
-                    <View>
-                      <UpcomingBookings />
-                    </View>
-                    <View>
-                      <UpcomingBookings />
-                    </View> */}
                   </View>
                 ) : (
                   <View>
@@ -234,7 +217,8 @@ const Mybookings = ({navigation}) => {
                       return (
                         <View key={e.id}>
                           <CompletedBookings // here we can also send some information to the UpcomingTrip using Params but creates lafda while using goback()
-                            handleGoToUpcoming={() => //this func is to navigate to the Completed trip screen
+                            handleGoToUpcoming={() =>
+                              //this func is to navigate to the Completed trip screen
                               navigation.navigate('CompletedTrip')
                             }
                             pickupLocation={e.pickupLocation}

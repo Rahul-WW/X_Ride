@@ -24,6 +24,7 @@
     "react-native": "^0.71.7",
     "react-native-check-box": "^2.1.7",
     "react-native-config": "^1.5.1",
+    "react-native-document-picker": "^9.0.1",
     "react-native-dotenv": "^3.4.8",
     "react-native-elements": "^3.4.3",
     "react-native-file-viewer": "^2.1.5",

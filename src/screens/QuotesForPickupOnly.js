@@ -143,7 +143,7 @@ const QuotesForPickupOnly = ({navigation, route}) => {
       <Animated.View>
         <HeaderForQuotes />
       </Animated.View>
-      <ScrollView ref={scrollViewRef}>
+      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <View style={styles.togglingBtnsDiv}>
             <View style={{width: '83%'}}>

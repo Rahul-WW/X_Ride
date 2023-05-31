@@ -45,13 +45,13 @@ import MenuIcon from '../svgImages/MenuIcon.svg';
 import Xlogo from '../svgImages/Xlogo.svg';
 import Bell from '../svgImages/Bell.svg';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Notification2 from "../svgImages/Notification2.svg"
+import Notification2 from '../svgImages/Notification2.svg';
 
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [isNotication, setIsNotification]= useState(true)
+  const [isNotication, setIsNotification] = useState(true);
   const [form, setForm] = useState({
     pickup: '',
     drop: '',
@@ -65,8 +65,12 @@ const Home = () => {
   const [pickupDateInput, setPickupdateInput] = useState('');
   const [passengers, setPassengers] = useState(form.passengersCount);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
   const [pickupdate, setPickupdate] = useState(new Date());
+  const [pickupTime, setPickupTime] = useState(new Date());
+  const [time, setTime] = useState(new Date());
+
   const [count, setCount] = useState(0);
   const navigation = useNavigation();
 
@@ -94,14 +98,26 @@ const Home = () => {
     Keyboard.dismiss();
     navigation.navigate('Location');
   };
+  const handleInputDropLocation = () => {
+    Keyboard.dismiss();
+    navigation.navigate('Location2');
+  };
 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    //  setTimePickerVisibility(false);
+  };
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
 
   //this function is for choosing date
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDatePickerVisibility(Platform.OS === 'ios');
     setPickupdate(currentDate);
- 
+
     let DateWhichIsSelected = new Date(currentDate).getTime();
     let TodaysDate = new Date(Date.now()).getTime();
 
@@ -120,8 +136,32 @@ const Home = () => {
     });
 
     console.log(form);
+    console.log(pickupTime);
+    setTimePickerVisibility(true);
   };
 
+  const onTimeChange = (event, selectedTime) => {
+    const currentTime = selectedTime || time;
+    setTimePickerVisibility(Platform.OS === 'ios');
+    setTime(currentTime);
+    //let timestamp = '2023-05-31T15:25:57.755Z';
+    let fdate = new Date(currentTime);
+    
+
+    let hour = fdate.getHours();
+    let minute = String(fdate.getMinutes()).padStart(2, '0');
+    let ampm = hour >= 12 ? 'pm' : 'am';
+   
+   // hour = hour % 12;
+  //  console.log('currentTime', hour);
+    hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
+    let formattedDate = ` ${hour}:${minute} ${ampm}`;
+    //console.log('currentTime', formattedDate);
+    setForm({
+      ...form,
+      pickuptime: ` ${formattedDate}`,
+    });
+  };
 
   //this is for setting the form with the new changed data
   const handleInputChange = (field, value) => {
@@ -131,7 +171,7 @@ const Home = () => {
       [field]: value,
     });
   };
- 
+
   //this is for selecting the Passengers count and setting it to the Form
   const handleInputChangePassengers = (field, value) => {
     setPassengers(value);
@@ -142,7 +182,6 @@ const Home = () => {
 
     console.log(form);
   };
-
 
   //this function is for submitting the form where we have to collect all the input values and need to make a post request.
   const handleSubmit = () => {
@@ -182,7 +221,9 @@ const Home = () => {
           </View>
         </View>
       </Animated.View>
-      <ScrollView style={{backgroundColor: '#F3F7FA'}}>
+      <ScrollView
+        style={{backgroundColor: '#F3F7FA'}}
+        showsVerticalScrollIndicator={false}>
         <View
           style={{
             backgroundColor: '#F3F7FA',
@@ -260,10 +301,23 @@ const Home = () => {
                 {/* {count !== 0 ? <View style={styles.line2}></View> : null} */}
 
                 <View style={[styles.inputDivs, styles.inputDiv3]}>
-                  <InputField
-                    placeholder="Drop Location"
-                    Icon={<DropIcon width={20} height={24} />}
-                  />
+                  <Pressable onPress={() => navigation.navigate('Location2')}>
+                    <View style={styles.inputContainer}>
+                      <View style={styles.leftIconContainer}>
+                        <DropIcon width={20} height={24} />
+                      </View>
+
+                      <TextInput
+                        style={styles.inputBox}
+                        multiline={true}
+                        numberOfLines={4}
+                        scrollEnabled={true}
+                        placeholder="Drop Location"
+                        value={dropLocation}
+                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                        onPressIn={handleInputDropLocation}></TextInput>
+                    </View>
+                  </Pressable>
                 </View>
                 <View style={[styles.inputDivs, styles.inputDiv4]}>
                   {/* <InputField
@@ -282,14 +336,12 @@ const Home = () => {
                         numberOfLines={4}
                         scrollEnabled={true}
                         placeholder="Pickup Date and Time"
-                        value={form.pickupDate}
+                        value={form.pickupDate + '' + form.pickuptime}
                         caretHidden={true} //this will hide the Cursor
                         showSoftInputOnFocus={false} //this will disable the Keyboard to open
                         onChangeText={value => handleInputChange('date', value)}
                         keyboardType="numeric"
-                        onPressIn={() =>
-                          setDatePickerVisibility(true)
-                        }></TextInput>
+                        onPressIn={showDatePicker}></TextInput>
                     </View>
                   </Pressable>
                 </View>
@@ -400,6 +452,14 @@ const Home = () => {
             display="default"
             positiveButton={{label: 'OK', textColor: 'red'}}
             onChange={onDateChange}
+          />
+        )}
+        {isTimePickerVisible && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            onChange={onTimeChange}
           />
         )}
       </View>
@@ -585,14 +645,14 @@ const styles = StyleSheet.create({
   },
 
   line: {
-    height: 72,
+    height: 75,
     width: 0,
     borderColor: 'black',
     borderStyle: 'dashed',
     borderWidth: 1,
     position: 'absolute',
     left: 32,
-    top: 44,
+    top: 43,
     zIndex: 1,
     borderColor: '#4F565E',
   },

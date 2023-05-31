@@ -94,7 +94,9 @@ const UpcomingTrip = ({navigation}) => {
           backto={'Mybookings'}
         />
       </Animated.View>
-      <ScrollView style={{marginHorizontal: 20}}>
+      <ScrollView
+        style={{marginHorizontal: 20}}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <UpcomingTripComponent
             // pickupLocation={selectedfromList.pickupLocation}
@@ -473,7 +475,7 @@ const UpcomingTrip = ({navigation}) => {
                         </TouchableOpacity>
                       </LinearGradient>
                     </Pressable>
-                    <Pressable style={{width: 195}}>
+                    <Pressable style={{width: '52%'}}>
                       <LinearGradient
                         colors={['#00c96d', '#048ad7']}
                         useAngle={true}
@@ -966,6 +968,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     position: 'absolute',
     bottom: 0,
+    
   },
   resetBtn: {
     borderRadius: 15,

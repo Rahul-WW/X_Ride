@@ -67,7 +67,7 @@ const TrackTrip = ({navigation}) => {
           backto={'UpcomingTrip'}
         />
       </Animated.View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.mapContainer}>
           <MapView
             style={styles.map}
@@ -278,7 +278,9 @@ const TrackTrip = ({navigation}) => {
                   alignItems: 'center',
                   gap: 12,
                 }}
-                onPress={() => navigation.navigate('Email', {from: 'TrackTrip'})}>
+                onPress={() =>
+                  navigation.navigate('Email', {from: 'TrackTrip'})
+                }>
                 <EmailIcon2 width={20} height={20} />
                 <View>
                   <Text style={styles.detailsListText}>Email Us</Text>

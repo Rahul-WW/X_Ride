@@ -19,7 +19,7 @@ import UpArrow from '../svgImages/UpArrow.svg';
 
 const FAQ = ({navigation, route}) => {
   const {from} = route.params;
-  const [selectedView, setSelectedView] = useState(null);
+  const [selectedView, setSelectedView] = useState('Summary');
 
   const faqs = [
     'Summary',
@@ -113,9 +113,11 @@ const SummaryContent = () => {
       <Text>Summary content</Text>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              Can I book a cab from you without paying online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -157,9 +159,11 @@ const SummaryContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -179,9 +183,11 @@ const SummaryContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -201,7 +207,11 @@ const SummaryContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>What if the car doesn't show up?</Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What if the car doesn't show up?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -229,14 +239,15 @@ const PasswordContent = () => {
    const [forth, setFourth] = useState(false);
    const [fifth, setFifth] = useState(false);
   return (
-   
-     <View>
+    <View>
       <Text>Password content</Text>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              Can I book a cab from you without paying online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -278,9 +289,11 @@ const PasswordContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -300,9 +313,11 @@ const PasswordContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -322,9 +337,11 @@ const PasswordContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What if the car doesn't show up?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -342,7 +359,6 @@ const PasswordContent = () => {
           </View>
         ) : null}
       </View>
-    
     </View>
   );
 };
@@ -355,29 +371,8 @@ const AccountsContent = () => {
   return (
     <View>
       <Text>Accounts content</Text>
-     
-      <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
-        {first ? (
-          <View style={{marginHorizontal: 20, marginTop: 12}}>
-            <Text style={styles.answer}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. But also the leap into electronic typesetting, remaining
-              essentially unchanged Ipsum is simply dummy text of the printing
-            </Text>
-          </View>
-        ) : null}
-      </View>
+     
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
           <Text style={styles.question}>
@@ -402,9 +397,11 @@ const AccountsContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -424,9 +421,11 @@ const AccountsContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -446,9 +445,11 @@ const AccountsContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What if the car doesn't show up?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -481,9 +482,11 @@ const SystemContent = () => {
 
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              Can I book a cab from you without paying online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -525,9 +528,11 @@ const SystemContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -547,9 +552,11 @@ const SystemContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -567,11 +574,13 @@ const SystemContent = () => {
           </View>
         ) : null}
       </View>
-      {/* <View style={styles.singleFaq}>
+      <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What if the car doesn't show up?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -588,7 +597,7 @@ const SystemContent = () => {
             </Text>
           </View>
         ) : null}
-      </View> */}
+      </View>
     </View>
   );
 };
@@ -604,9 +613,11 @@ const ServiceContent = () => {
 
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              Can I book a cab from you without paying online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -648,9 +659,11 @@ const ServiceContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -670,9 +683,11 @@ const ServiceContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -692,9 +707,11 @@ const ServiceContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What if the car doesn't show up?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -727,9 +744,11 @@ const SecurityContent = () => {
 
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              Can I book a cab from you without paying online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -771,9 +790,11 @@ const SecurityContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            When will I receive the vehicle and driver details?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              When will I receive the vehicle and driver details?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -793,9 +814,11 @@ const SecurityContent = () => {
       </View>
       <View style={styles.singleFaq}>
         <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            What all payment options I have online?
-          </Text>
+          <View style={{width: '90%'}}>
+            <Text style={styles.question}>
+              What all payment options I have online?
+            </Text>
+          </View>
 
           <TouchableOpacity
             style={{marginTop: 7}}
@@ -813,28 +836,7 @@ const SecurityContent = () => {
           </View>
         ) : null}
       </View>
-      <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Can I book a cab from you without paying online?
-          </Text>
-
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
-        {fifth ? (
-          <View style={{marginHorizontal: 20, marginTop: 12}}>
-            <Text style={styles.answer}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. But also the leap into electronic typesetting, remaining
-              essentially unchanged Ipsum is simply dummy text of the printing
-            </Text>
-          </View>
-        ) : null}
-      </View>
+     
     </View>
   );
 };
