@@ -13,7 +13,7 @@ import {
   Modal,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-import Header from '../components/Header';
+import {Google_Map_Api_Key} from '@env';
 import MaskedView from '@react-native-community/masked-view';
 
 import UpcomingTripComponent from '../components/UpcomingTripComponent';
@@ -21,20 +21,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import EmailIcon2 from '../svgImages/EmailIcon2.svg';
 import ChatIcon from '../svgImages/ChatIcon.svg';
 import CallIcon from '../svgImages/CallIcon.svg';
-
+import LoaderIndicator from '../components/LoaderIndicator';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-//AIzaSyArB0gIEH4nZJtqJhjEpxHg8cXvlnZ4d7U
+//
 const TrackTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
-  const [position, setPosition] = useState({
-    latitude: 12.9716,
-    longitude: 77.5946,
-    latitudeDelta: 0.011,
-    longitudeDelta: 0.011,
-  });
+    const [location, setLocation] = useState(null);
 
   const handleCallBtnPressed = () => {
     Alert.alert('Make a call to driver');
@@ -42,25 +37,30 @@ const TrackTrip = ({navigation}) => {
   
  
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition(pos => {
-      const crd = pos.coords;
 
-      setPosition({
-        latitude: crd.latitude,
-        longitude: crd.longitude,
-        latitudeDelta: 0.0421,
-        longitudeDelta: 0.0421,
-      });
-      console.log(crd);
-    });
-  }, []);
+
+   useEffect(() => {
+     Geolocation.getCurrentPosition(
+       position => {
+         const {latitude, longitude} = position.coords;
+         setLocation({
+           latitude,
+           longitude,
+           latitudeDelta: 0.0922,
+           longitudeDelta: 0.0421,
+         });
+       },
+       error => console.log(error),
+       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+     );
+   }, []);
+
+   console.log(location)
 
   return (
     <SafeAreaView
       style={{backgroundColor: '#F3F7FA', flex: 1, position: 'relative'}}>
       <Animated.View>
-        {/* <Header headertext={'Upcoming Trip'} /> */}
         <HeaderDrawerScreens
           headertext={'Track Trip'}
           navigation={navigation}
@@ -68,25 +68,28 @@ const TrackTrip = ({navigation}) => {
         />
       </Animated.View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.mapContainer}>
-          <MapView
-            style={styles.map}
-            initialRegion={position}
-            showsUserLocation={true}
-            showsMyLocationButton={true}
-            followsUserLocation={true}
-            showsCompass={true}
-            scrollEnabled={true}
-            zoomEnabled={true}
-            pitchEnabled={true}
-            rotateEnabled={true}>
-            <Marker
-              title="Yor are here"
-              description="This is a description"
-              coordinate={position}
-            />
-          </MapView>
-        </View>
+        {location !== null ? (
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.map}
+              initialRegion={location}
+              showsUserLocation={true}
+              showsMyLocationButton={true}
+              followsUserLocation={true}
+              showsCompass={true}
+              scrollEnabled={true}
+              zoomEnabled={true}
+              pitchEnabled={true}
+              rotateEnabled={true}>
+              <Marker
+                title="Yor are here"
+                description="This is a description"
+                coordinate={location}
+              />
+            </MapView>
+          </View> 
+        ) : <LoaderIndicator/>}
+
         <View style={styles.container}>
           <UpcomingTripComponent
             // pickupLocation={selectedfromList.pickupLocation}
@@ -649,10 +652,10 @@ const styles = StyleSheet.create({
     height: 1,
   },
   mapContainer: {
-    width: '100%',
+    width: Dimensions.get("window").width,
     height: 508,
-    borderWidth: 1,
-    borderColor: 'red',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   map: {
     ...StyleSheet.absoluteFillObject,

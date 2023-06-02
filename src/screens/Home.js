@@ -50,6 +50,7 @@ import Notification2 from '../svgImages/Notification2.svg';
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
+  
   const [isChecked, setIsChecked] = useState(false);
   const [isNotication, setIsNotification] = useState(true);
   const [form, setForm] = useState({
@@ -100,7 +101,7 @@ const Home = () => {
   };
   const handleInputDropLocation = () => {
     Keyboard.dismiss();
-    navigation.navigate('Location2');
+    navigation.navigate('Location');
   };
 
   const showDatePicker = () => {
@@ -238,27 +239,30 @@ const Home = () => {
                   <Text style={styles.textOnImage}>Book Your Ride!</Text>
                 </ImageBackground>
               </View>
+          
+               
+            
               <View style={styles.lowercontainer}>
                 <View style={styles.inputDivs}>
-                  <Pressable onPress={() => navigation.navigate('Location')}>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.leftIconContainer}>
-                        <PickupIcon width={20} height={24} />
-                      </View>
-
-                      <TextInput
-                        style={styles.inputBox}
-                        multiline={true}
-                        numberOfLines={4}
-                        scrollEnabled={true}
-                        placeholder="Pickup Location"
-                        value={pickupLocation}
-                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
-                        onPressIn={handleInputPickupLocation}></TextInput>
+                  {/* this is pickup inputbox container */}
+                  <View style={styles.inputContainer}>
+                    <View style={styles.leftIconContainer}>
+                      <PickupIcon width={20} height={24} />
                     </View>
-                  </Pressable>
-                </View>
 
+                    <TextInput
+                      style={styles.inputBox}
+                      multiline={true}
+                      numberOfLines={4}
+                      scrollEnabled={true}
+                      placeholder="Pickup Location"
+                      onPressOut={() => navigation.navigate('Location')}
+                      value={pickupLocation}
+                      showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                      onPressIn={handleInputPickupLocation}></TextInput>
+                  </View>
+                </View>
+                {/* upto here pickup inputbox container */}
                 <View style={styles.line}></View>
 
                 <View style={styles.viaRouteBox}>
@@ -291,39 +295,28 @@ const Home = () => {
                       </View>
                     ))}
                 </View>
-
-                {/* {Array(count)
-                  .fill()
-                  .map((_, i) => (
-                    <View key={i} style={styles.line2}></View>
-                  ))} */}
-                {/* {showViaRouteInput && <View style={styles.line2}></View>} */}
-                {/* {count !== 0 ? <View style={styles.line2}></View> : null} */}
-
+                {/* this is Drop inputbox container */}
                 <View style={[styles.inputDivs, styles.inputDiv3]}>
-                  <Pressable onPress={() => navigation.navigate('Location2')}>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.leftIconContainer}>
-                        <DropIcon width={20} height={24} />
-                      </View>
-
-                      <TextInput
-                        style={styles.inputBox}
-                        multiline={true}
-                        numberOfLines={4}
-                        scrollEnabled={true}
-                        placeholder="Drop Location"
-                        value={dropLocation}
-                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
-                        onPressIn={handleInputDropLocation}></TextInput>
+                  <View style={styles.inputContainer}>
+                    <View style={styles.leftIconContainer}>
+                      <DropIcon width={20} height={24} />
                     </View>
-                  </Pressable>
+
+                    <TextInput
+                      style={styles.inputBox}
+                      multiline={true}
+                      numberOfLines={4}
+                      scrollEnabled={true}
+                      placeholder="Drop Location"
+                      onPressOut={() => navigation.navigate('Location')}
+                      value={dropLocation}
+                      showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                      onPressIn={handleInputDropLocation}></TextInput>
+                  </View>
                 </View>
+                {/* upto here drop inputbox container */}
+                {/* this is Date and Time inputbox container */}
                 <View style={[styles.inputDivs, styles.inputDiv4]}>
-                  {/* <InputField
-                    placeholder="Pickup Date and Time"
-                    Icon={<TimePicker width={24} height={24} />}
-                  /> */}
                   <Pressable onPress={() => setDatePickerVisibility(true)}>
                     <View style={styles.inputContainer}>
                       <View style={styles.leftIconContainer}>
@@ -396,36 +389,14 @@ const Home = () => {
                     />
                   </View>
                 )}
-
-                {/* <View>
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      height: 50,
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                    }}>
-                    <Button
-                      onPress={() => navigation.navigate('Mybookings')}
-                      title="Go to my bookings"
-                    />
-                    <Button
-                      onPress={() => navigation.navigate('Profile')}
-                      title="go to profile"
-                    />
-                    
-                  </View>
-                </View> */}
               </View>
             </View>
           </View>
-
-          {/* <View style={{height:500, width:100, borderWidth:1, marginHorizontal:40 }}></View> */}
         </View>
       </ScrollView>
 
       <View style={styles.getQuotesDiv}>
-        <Pressable
+        <Pressable //here I am sending the information of IsReturn journey or not through params but actually we need to use redux to make a global state of IsReturn or not
           onPress={() => {
             if (isChecked) {
               navigation.navigate('Quotes', {showReturnJourney: isChecked});
@@ -517,6 +488,10 @@ const GetQuotesBtn = ({Btnwidth, textInsideBtn, onSubmit}) => {
   );
 };
 const styles = StyleSheet.create({
+  gif: {
+    width: 50,
+    height: 50,
+  },
   inputContainer: {
     width: '100%',
     height: '100%',

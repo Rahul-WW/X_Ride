@@ -35,9 +35,10 @@ import Facebook from '../svgImages/Facebook.svg';
 import Instagram from '../svgImages/Instagram.svg';
 import Twitter from '../svgImages/Twitter.svg';
 import Youtube from '../svgImages/Youtube.svg';
-
+import LoaderIndicator from '../components/LoaderIndicator';
 
 const CustomDrawer = props => {
+   const [isloading, setIsloading] = useState(false);
    const [modalVisible, setModalVisible] = useState(false);
    const translateY = useState(new Animated.Value(300))[0]; // this is to slide the modal slowly
 

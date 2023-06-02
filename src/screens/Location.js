@@ -12,25 +12,31 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+ Image,
+  Platform,
 } from 'react-native';
+import {PermissionsAndroid} from 'react-native';
 import GoBackBtn from '../components/GoBackBtn';
 import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import Cross from '../svgImages/Cross.svg';
 import {Google_Api_Key} from '@env';
 import Pin from '../svgImages/Pin.svg';
+import LoaderIndicator from '../components/LoaderIndicator';
+import Target from '../svgImages/Target.svg';
+import Geolocation from '@react-native-community/geolocation';
 
-import Target from "../svgImages/Target.svg"
-
+import axios from 'axios';
 const Location = ({navigation}) => {
-
+  const [isloading, setIsloading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState('');
+  const [getCurrentAddress, setGetCurrentAddress]= useState("")
 
   const handleSearchTextChange = text => {
-    
     setSearchText(text);
     setShowSuggestions(true);
 
@@ -45,52 +51,107 @@ const Location = ({navigation}) => {
         .then(data => {
           setPredictions(data.predictions);
           console.log(data.predictions);
-       // Keyboard.dismiss();
+           //Keyboard.dismiss();
         })
         .catch(error => {
           console.error('Error fetching predictions:', error);
         });
-    }, 1000);
+    }, 400);
 
     setTypingTimeout(newTypingTimeout);
-   
   };
 
   const handlePredictionSelect = prediction => {
+   
 
-    console.log(
-      prediction.structured_formatting.main_text,
-      prediction.structured_formatting.secondary_text,
-    );
+    let finalTextToDIsplay =
+      prediction.structured_formatting.main_text +
+      ' ' +
+      prediction.structured_formatting.secondary_text;
 
-    console.log(prediction.structured_formatting.main_text.length);
-
-    let finalTextToDIsplay=prediction.structured_formatting.main_text+" "+prediction.structured_formatting.secondary_text;
-
-    if(finalTextToDIsplay.length <= 35){
-        setSearchText(finalTextToDIsplay)
-    }else{
-      let subString=finalTextToDIsplay.substring(0, 35)
-      setSearchText(subString+"...")
+    if (finalTextToDIsplay.length <= 35) {
+      setSearchText(finalTextToDIsplay);
+    } else {
+      let subString = finalTextToDIsplay.substring(0, 35);
+      setSearchText(subString + '...');
     }
-    
     setShowSuggestions(false);
- 
-   navigation.goBack()
-    
+    //navigation.goBack();
   };
 
-  const handlePressCrossBtn=()=>{
-    setShowSuggestions(false)
-    setSearchText("")
-  }
+  const handlePressCrossBtn = () => {
+    setShowSuggestions(false);
+    setSearchText('');
+  };
 
+   const requestLocationPermission = async () => {
+    setIsloading(true)
+     if (Platform.OS === 'android') {
+       try {
+         const granted = await PermissionsAndroid.request(
+           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+           {
+             title: 'Location Permission',
+             message: 'MyApp needs access to your location',
+           },
+         );
+         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+           console.log('You can use the location');
+           fetchLocation();
+         } else {
+           console.log('Location permission denied');
+         }
+       } catch (err) {
+         console.warn(err);
+       }
+     } else {
+       fetchLocation();
+     }
+   };
+
+
+
+   const fetchLocation = () => {
+     Geolocation.getCurrentPosition(
+       
+       position => {
+         const {latitude, longitude} = position.coords;
+         console.log(latitude, longitude);
+         setCurrentLocation({latitude, longitude});
+         console.log(latitude, longitude);
+          getAddress(latitude, longitude);
+       },
+       error => console.log(error),
+       {enableHighAccuracy: false, timeout: 30000, maximumAge: 1000},
+     );
+    
+   };
+
+    const getAddress = async (lat, lng) => {
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Api_Key}`;
+
+      try {
+        const response = await axios.get(url);
+      //  console.log(response)
+        console.log("End")
+        if (response.data.results.length > 0) {
+          setGetCurrentAddress(response.data.results[0].formatted_address);
+          setSearchText(response.data.results[0].formatted_address + ' ');
+          console.log(response.data.results[0].formatted_address);
+        } else {
+          console.log('No address found');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      setIsloading(false)
+    };
+ 
   useEffect(() => {
     // Clear the timeout when the component is unmounted
     return () => {
       clearTimeout(typingTimeout);
     };
-     
   }, [typingTimeout]);
 
   return (
@@ -100,12 +161,13 @@ const Location = ({navigation}) => {
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputBox}
-            multiline={true}
+            // multiline={true}
             numberOfLines={1}
-            // scrollEnabled={true}
+            scrollEnabled={true}
             maxLength={43}
             placeholder="Search"
             value={searchText}
+            horizontal
             onChangeText={handleSearchTextChange}></TextInput>
           <TouchableOpacity
             style={styles.crossContainer}
@@ -114,7 +176,68 @@ const Location = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-      {showSuggestions ? (
+
+      {isloading ? (
+        <LoaderIndicator />
+      ) : (
+        showSuggestions && (
+          <ScrollView>
+            <View
+              style={{
+                height: 481,
+                marginTop: 4,
+                marginHorizontal: 20,
+                marginTop: 20,
+              }}>
+              <View>
+                {predictions.length !== 0 ? (
+                  <TouchableOpacity
+                    style={styles.dropDownList1}
+                    onPress={requestLocationPermission}>
+                    <View>
+                      <Target />
+                    </View>
+
+                    <View>
+                      <Text style={styles.locationMainText}>
+                        Current Location
+                      </Text>
+                      <Text style={styles.locationSecondaryText}>
+                        Using GPS
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+
+              {predictions?.map(prediction => {
+                return (
+                  <View key={prediction.place_id} horizontal>
+                    <TouchableOpacity
+                      style={styles.dropDownList2}
+                      key={prediction.place_id}
+                      onPress={() => handlePredictionSelect(prediction)}>
+                      <View>
+                        <Pin />
+                      </View>
+
+                      <ScrollView>
+                        <Text style={styles.locationMainText}>
+                          {prediction.structured_formatting.main_text}
+                        </Text>
+                        <Text style={styles.locationSecondaryText}>
+                          {prediction.structured_formatting.secondary_text}
+                        </Text>
+                      </ScrollView>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )
+      )}
+      {/* {showSuggestions && (
         <ScrollView>
           <View
             style={{
@@ -123,18 +246,25 @@ const Location = ({navigation}) => {
               marginHorizontal: 20,
               marginTop: 20,
             }}>
-            <View>{predictions.length !== 0 ?  <TouchableOpacity style={styles.dropDownList1}>
-              <View>
-                <Target />
-              </View>
+            <View>
+              {predictions.length !== 0 ? (
+                <TouchableOpacity
+                  style={styles.dropDownList1}
+                  onPress={requestLocationPermission}>
+                  <View>
+                    <Target />
+                  </View>
 
-              <View>
-                <Text style={styles.locationMainText}>Current Location</Text>
-                <Text style={styles.locationSecondaryText}>Using GPS</Text>
-              </View>
-            </TouchableOpacity> : null}</View>
+                  <View>
+                    <Text style={styles.locationMainText}>
+                      Current Location
+                    </Text>
+                    <Text style={styles.locationSecondaryText}>Using GPS</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : null}
+            </View>
 
-           
             {predictions?.map(prediction => {
               return (
                 <View key={prediction.place_id} horizontal>
@@ -158,32 +288,9 @@ const Location = ({navigation}) => {
                 </View>
               );
             })}
-
-            {/* <Modal
-          visible={showSuggestions}
-          animationType="slide"
-          transparent
-          onRequestClose={() => setShowSuggestions(false)}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            }}>
-            <View style={{backgroundColor: 'white', padding: 10}}>
-              {predictions.map(prediction => (
-                <TouchableOpacity
-                  key={prediction.place_id}
-                  onPress={() => handlePredictionSelect(prediction)}>
-                  <Text>{prediction.description}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        </Modal> */}
           </View>
         </ScrollView>
-      ) : null}
+      )} */}
     </SafeAreaView>
   );
 };
@@ -207,7 +314,6 @@ const styles = StyleSheet.create({
     borderColor: '#E3E9ED',
     marginTop: 20,
     marginHorizontal: 20,
-    
   },
 
   inputBox: {
