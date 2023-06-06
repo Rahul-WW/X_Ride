@@ -33,6 +33,10 @@ import PrivacyPolicy from './screens/PrivacyPolicy';
 import Filter from './screens/Filter';
 import UpcomingTrip from './screens/UpcomingTrip';
 import Notification from './screens/Notification';
+import NoInternet from './screens/NoInternet';
+import UnderMaintainance from './screens/UnderMaintainance';
+import PageNotFound from './screens/PageNotFound';
+
 import {Animated} from 'react-native';
 
 
@@ -81,7 +85,8 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName="DrawerNavigator"
+      // initialRouteName="DrawerNavigator"
+      initialRouteName="PageNotFound"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -97,6 +102,27 @@ const StackNavigator = () => {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+      <Stack.Screen
+        name="NoInternet"
+        component={NoInternet}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+      <Stack.Screen
+        name="UnderMaintainance"
+        component={UnderMaintainance}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+      <Stack.Screen
+        name="PageNotFound"
+        component={PageNotFound}
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}

@@ -22,6 +22,7 @@ import {
   Alert,
   Animated,
   Keyboard,
+  Modal
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -46,13 +47,15 @@ import Xlogo from '../svgImages/Xlogo.svg';
 import Bell from '../svgImages/Bell.svg';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Notification2 from '../svgImages/Notification2.svg';
-
+import DrawerCross from '../svgImages/DrawerCross.svg';
+import Exclemation from "../svgImages/Exclemation.svg"
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
   
   const [isChecked, setIsChecked] = useState(false);
   const [isNotication, setIsNotification] = useState(true);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [form, setForm] = useState({
     pickup: '',
     drop: '',
@@ -162,6 +165,7 @@ const Home = () => {
       ...form,
       pickuptime: ` ${formattedDate}`,
     });
+    setModalVisible2(true)
   };
 
   //this is for setting the form with the new changed data
@@ -239,9 +243,7 @@ const Home = () => {
                   <Text style={styles.textOnImage}>Book Your Ride!</Text>
                 </ImageBackground>
               </View>
-          
-               
-            
+
               <View style={styles.lowercontainer}>
                 <View style={styles.inputDivs}>
                   {/* this is pickup inputbox container */}
@@ -433,6 +435,82 @@ const Home = () => {
             onChange={onTimeChange}
           />
         )}
+      </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            setModalVisible2(!modalVisible2);
+          }}>
+          <TouchableOpacity style={styles.centeredView2} activeOpacity={1}>
+            <View style={styles.modalView}>
+              <View
+                style={styles.headerBox} // header of the popup
+              >
+                <View style={styles.headerContent}>
+                  <View style={{width: 200, height: 28}}>
+                    <Text
+                      style={{
+                        color: '#FFFFFF',
+                        fontSize: 18,
+                        fontWeight: 500,
+                        letterSpacing: 0.32,
+                        lineHeight: 18 * 1.4,
+                      }}>
+                      Cancelled Successfully
+                    </Text>
+                  </View>
+                  <View style={{height: 24, width: 24}}>
+                    <TouchableOpacity
+                      onPress={() => setModalVisible2(!modalVisible2)}>
+                      <DrawerCross />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+
+              <View //main container of popup with width 100%
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  position: 'relative',
+                  flex: 1,
+                }}>
+                <View
+                  style={styles.popupContainer} // container with marginHorizontal 20
+                >
+                  <View
+                    style={{
+                      height: 32,
+                      flexDirection: 'row',
+                      gap: 8,
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                    }}>
+                    <Exclemation />
+                    <Text
+                      style={{fontWeight: 600, fontSize: 20, color: '#292F3B'}}>
+                      Note
+                    </Text>
+                  </View>
+
+                  <View style={{marginTop: 16,  height: 132}}>
+                    <Text style={styles.popupText1}>
+                      Please note that for cab reservations, the advance booking
+                      window is limited to a maximum of 365 days.
+                    </Text>
+                    <Text style={styles.popupText2}>
+                      Reservations beyond this timeframe cannot be accommodated
+                      at the moment.
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
       </View>
     </SafeAreaView>
   );
@@ -678,6 +756,60 @@ const styles = StyleSheet.create({
     borderColor: '#4F565E',
     width: 0,
     zIndex: 1000,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  centeredView2: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  modalView: {
+    width: Dimensions.get('window').width,
+    backgroundColor: '#F3F7FA',
+    shadowColor: '#000',
+    shadowOpacity: 0.25,
+    elevation: 5,
+    height: 301,
+  },
+  headerBox: {
+    height: 54,
+    backgroundColor: '#292F3B',
+    width: '100%',
+
+    paddingVertical: 13,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  popupContainer: {
+    marginTop: 24,
+    marginHorizontal: 20,
+    
+  },
+  popupText1: {
+    color: '#4F565E',
+    fontSize: 16,
+    fontWeight: 400,
+    letterSpacing: 0.32,
+    lineHeight: 16 * 1.4,
+    marginBottom: 20,
+  },
+  popupText2: {
+    color: '#4F565E',
+    fontSize: 16,
+    fontWeight: 400,
+    letterSpacing: 0.32,
+    lineHeight: 16 * 1.4,
+    
   },
 });
 
