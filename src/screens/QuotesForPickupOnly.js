@@ -390,8 +390,9 @@ const styles = StyleSheet.create({
     width,
 
     backgroundColor: 'white',
-    borderRadius: 20,
-
+    // borderRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderTopRightRadius: 20,
     shadowColor: '#000',
     shadowOpacity: 0.25,
     shadowRadius: 4,

@@ -222,9 +222,9 @@ const Filter = ({navigation}) => {
       <View style={styles.resetBox}>
         <View
           style={{
-            marginHorizontal: 20,
+            // marginHorizontal: 20,
             flexDirection: 'row',
-            justifyContent: 'space-between',
+             justifyContent: 'space-between',
             height: 48,
           }}>
           <Pressable style={{width: '37%'}} onPress={handlePressReset}>

@@ -3,9 +3,13 @@ import React from 'react';
 import BadScreenComponent from '../components/BadScreenComponent';
 import NoInternetImage from '../svgImages/NoInternetImage.svg';
 import UnderMaintainanceImage from "../svgImages/UnderMaintainanceImage.svg"
+import GoBackBtn from '../components/GoBackBtn';
 const UnderMaintainance = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+      <Animated.View style={{marginHorizontal: 20}}>
+        <GoBackBtn />
+      </Animated.View>
       <ScrollView>
         <BadScreenComponent
           svgImage={<UnderMaintainanceImage />}

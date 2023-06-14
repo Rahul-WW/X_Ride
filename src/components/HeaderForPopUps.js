@@ -17,28 +17,26 @@ const HeaderForPopUps = ({headertitle}) => {
     </View>
   );
 };
-const styles= StyleSheet.create({
-    header:{
+const styles = StyleSheet.create({
+  header: {
+    height: 56,
+    width,
+    backgroundColor: '#292F3B',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
 
-        height: 56,
-        width,
-        backgroundColor: '#292F3B',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        flexDirection: 'row',
-        paddingHorizontal: 20,
-        
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      
-    },
-    sortText:{
-        color:"white",
-        fontSize:18,
-        fontWeight:500,
-        letterSpacing: .32,
-        lineHeight: 18* 1.4
-        
-    }
-})
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sortText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 500,
+    letterSpacing: 0.32,
+    lineHeight: 18 * 1.4,
+    fontFamily: 'ProximaNova',
+  },
+});
 export default HeaderForPopUps;

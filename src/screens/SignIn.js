@@ -9,7 +9,10 @@ import {
   Dimensions,
   ImageBackground,
   ScrollView,
-  TextInput, Pressable, Alert
+  TextInput,
+  Pressable,
+  Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import XBtn from '../components/XBtn';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
@@ -76,124 +79,136 @@ const SignIn = ({navigation}) => {
       return;
     }
 //Instead of making an Alert down there, make an API call to signIn
-    Alert.alert(
-      'Form Submitted',
-      'Your form has been submitted successfully!',
-      [
-        {
-          text: 'OK',
-          onPress: () => navigation.navigate('DrawerNavigator'),
-        },
-      ],
-      {cancelable: false},
-    );
+    // Alert.alert(
+    //   'Form Submitted',
+    //   'Your form has been submitted successfully!',
+    //   [
+    //     {
+    //       text: 'OK',
+    //       onPress: () => navigation.navigate('DrawerNavigator'),
+    //     },
+    //   ],
+    //   {cancelable: false},
+    // );
+    navigation.navigate('DrawerNavigator');
   };
   return (
     <SafeAreaView style={styles.background}>
-      <ScrollView>
-        <View style={{marginBottom: 40}}>
-          <ImageBackground
-            source={require('../images/signInPic.png')}
-            style={styles.bgImage}>
-            <View style={styles.bgText}>
-              <Text style={styles.signInText}>Sign In</Text>
-              <Text style={styles.captionText}>
-                We are happy to see you again! You can continue where you left
-                by logging in.
-              </Text>
-            </View>
-          </ImageBackground>
-
-          <View style={styles.belowImgBox}>
-            <View style={styles.inputDivs}>
-              <View
-                style={[
-                  styles.inputBox,
-                  {
-                    borderColor:
-                      activeField === 'mobile' && errors.email
-                        ? 'red'
-                        : '#E3E9ED',
-                  },
-                ]}>
-                <View style={styles.iconBox}>
-                  <EmailIcon width={24} height={18} />
-                </View>
-                <TextInput
-                  style={styles.textInput}
-                  multiline={true}
-                  numberOfLines={4}
-                  scrollEnabled={true}
-                  placeholder="Email id"
-                  value={form.email}
-                  onChangeText={value => handleInputChange('email', value)}
-                  onFocus={() => setActiveField('email')}
-                />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 10} // Adjust the offset here
+      >
+        <ScrollView>
+          <View>
+            <ImageBackground
+              source={require('../images/signInPic.png')}
+              style={styles.bgImage}>
+              <View style={styles.bgText}>
+                <Text style={styles.signInText}>Sign In</Text>
+                <Text style={styles.captionText}>
+                  We are happy to see you again! You can continue where you left
+                  by logging in.
+                </Text>
               </View>
-             
-            </View>
+            </ImageBackground>
 
-            <View style={[styles.inputDivs, styles.inputDivs2]}>
-              <View
-                style={[
-                  styles.inputBox,
-                  {borderColor: errors.password ? 'red' : '#E3E9ED'},
-                ]}>
-                <View style={styles.iconBox}>
-                  <PasswordIcon width={24} height={14} />
+            <View style={styles.belowImgBox}>
+              <View style={styles.inputDivs}>
+                <View
+                  style={[
+                    styles.inputBox,
+                    {
+                      borderColor:
+                        activeField === 'mobile' && errors.email
+                          ? 'red'
+                          : '#E3E9ED',
+                    },
+                  ]}>
+                  <View style={styles.iconBox}>
+                    <EmailIcon width={24} height={18} />
+                  </View>
+
+                  <TextInput
+                    style={styles.textInput}
+                    multiline={true}
+                    numberOfLines={4}
+                    scrollEnabled={true}
+                    placeholder="Email id"
+                    value={form.email}
+                    onChangeText={value => handleInputChange('email', value)}
+                    onFocus={() => setActiveField('email')}
+                  />
                 </View>
-                <TextInput
-                  secureTextEntry
-                  style={styles.textInput}
-                  placeholder="Password"
-                  value={form.password}
-                  onChangeText={value => handleInputChange('password', value)}
-                  onFocus={() => setActiveField('password')}
-                />
               </View>
-            </View>
+              <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+                <View style={[styles.inputDivs, styles.inputDivs2]}>
+                  <View
+                    style={[
+                      styles.inputBox,
+                      {borderColor: errors.password ? 'red' : '#E3E9ED'},
+                    ]}>
+                    <View style={styles.iconBox}>
+                      <PasswordIcon width={24} height={14} />
+                    </View>
 
-            {/* <View style={styles.forgetTextDiv}>
+                    <TextInput
+                      secureTextEntry
+                      style={styles.textInput}
+                      placeholder="Password"
+                      value={form.password}
+                      onChangeText={value =>
+                        handleInputChange('password', value)
+                      }
+                      onFocus={() => setActiveField('password')}
+                    />
+                  </View>
+                </View>
+              </KeyboardAvoidingView>
+
+              {/* <View style={styles.forgetTextDiv}>
           <Text>Forget Password</Text>
         </View> */}
-            <View style={styles.forgotTextDiv}>
-              <Text
-                style={styles.forgotText}
-                onPress={() => navigation.navigate('ForgotPassword')}>
-                Forgot password?
-              </Text>
-            </View>
-
-            <View>
-              <SubmitSignInBtn onSubmit={handleSubmit} />
-            </View>
-
-            <View style={styles.newUser}>
-              <Text style={styles.newUserText}>
-                New User?
+              <View style={styles.forgotTextDiv}>
                 <Text
-                  style={styles.newUserRegisterText}
-                  onPress={() => navigation.navigate('SignUp')}>
-                  {' '}
-                  Register
+                  style={styles.forgotText}
+                  onPress={() => navigation.navigate('ForgotPassword')}>
+                  Forgot password?
                 </Text>
-              </Text>
+              </View>
+
+              <View>
+                <SubmitSignInBtn onSubmit={handleSubmit} />
+              </View>
+
+              <View style={styles.newUser}>
+                <Text style={styles.newUserText}>
+                  New User?
+                  <Text
+                    style={styles.newUserRegisterText}
+                    onPress={() => navigation.navigate('SignUp')}>
+                    {' '}
+                    Register
+                  </Text>
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 const SubmitSignInBtn = ({onSubmit}) => {
   return (
-    <Pressable onPress={onSubmit} >
+    <Pressable onPress={onSubmit}>
       <View
         style={{
           height: 48,
 
-          width:"100%",
+          width: '100%',
         }}>
         <LinearGradient
           locations={[0, 1]}
@@ -222,7 +237,7 @@ const SubmitSignInBtn = ({onSubmit}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>
@@ -239,7 +254,9 @@ const SubmitSignInBtn = ({onSubmit}) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#F3F7FA',
-    flex: 1,
+     height
+    
+  
   },
   inputBox: {
     width: '100%',
@@ -250,6 +267,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderColor: '#E3E9ED',
+    
+    
   },
   iconBox: {
     marginLeft: 20,
@@ -261,8 +280,7 @@ const styles = StyleSheet.create({
   textInput: {
     marginLeft: 12,
     fontSize: 16,
-    fontFamily: 'ProximaNova-Regular',
-    flex: 1,
+    fontFamily: 'ProximaNova',
     borderRadius: 16,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
@@ -283,7 +301,7 @@ const styles = StyleSheet.create({
     fontWeight: FontWeight.for_title,
     color: 'white',
     letterSpacing: LetterSpacing.letterSpacing,
-    fontFamily: 'Proxima Nova Rg',
+     fontFamily: 'ProximaNova5',
     lineHeight: 20 * 1.4,
   },
   captionText: {
@@ -293,7 +311,7 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: LetterSpacing.letterSpacing,
     lineHeight: LineHeight.lineHeight,
-    fontFamily: 'Proxima Nova Rg',
+    fontFamily: 'ProximaNova',
   },
   belowImgBox: {
     marginHorizontal: 20,
@@ -306,6 +324,7 @@ const styles = StyleSheet.create({
   },
   inputDivs2: {
     marginTop: 20,
+  
   },
   forgotTextDiv: {
     flexDirection: 'row',
@@ -319,7 +338,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.for_caption,
     color: Color.for_caption,
     fontWeight: FontWeight.for_caption,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     letterSpacing: 0.32,
 
     lineHeight: 16 * 1.4,
@@ -335,7 +354,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.for_caption,
     color: Color.for_caption,
     fontWeight: FontWeight.for_caption,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     letterSpacing: 0.32,
 
     lineHeight: 16 * 1.4,
@@ -345,6 +364,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.for_caption,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   nextTypo: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 
   slideBtn: {
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 32.2,
     fontWeight: 600,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 
   CaptionBox: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 });
 

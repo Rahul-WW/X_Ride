@@ -40,7 +40,7 @@ const UpcomingBtn = ({color, handlepress, text}) => {
                   textAlign: 'center',
                   fontSize: 18,
                   fontWeight: 500,
-
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18 * 1.4,
                   color: '#FFFFFF',
@@ -71,7 +71,7 @@ const UpcomingBtn = ({color, handlepress, text}) => {
                 textAlign: 'center',
                 fontSize: 18,
                 fontWeight: 500,
-
+                fontFamily: 'ProximaNova',
                 letterSpacing: 0.32,
                 lineHeight: 18 * 1.3,
                 color: '#4F565E',

@@ -309,7 +309,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
     marginTop: 20,
-    
   },
 
   PickBox: {
@@ -354,11 +353,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
   },
   horizontalLine: {
-    borderColor: '#E3E9ED',
-    borderWidth: 1,
-    borderRadius: 2,
+   
+   
+     
     marginHorizontal: 20,
     marginBottom: 16,
+    borderRadius: 2,
+    height: 1,
+    backgroundColor: '#E3E9ED',
   },
   pickupDropText: {
     marginHorizontal: 20,

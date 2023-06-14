@@ -355,9 +355,15 @@ const Quotes = ({navigation, route}) => {
                         fontWeight: 600,
                         fontSize: 18,
                         color: '#048AD7',
+                        fontFamily: 'ProximaNova',
                       }}>{`${selectedPickupCab.type}`}</Text>
                     <Text
-                      style={{color: '#4F565E', fontWeight: 400, fontSize: 14}}>
+                      style={{
+                        color: '#4F565E',
+                        fontWeight: 400,
+                        fontSize: 14,
+                        fontFamily: 'ProximaNova',
+                      }}>
                       For Pickup
                     </Text>
                   </View>
@@ -403,9 +409,15 @@ const Quotes = ({navigation, route}) => {
                         fontWeight: 600,
                         fontSize: 18,
                         color: '#048AD7',
+                        fontFamily: 'ProximaNova',
                       }}>{`${selectedDropCab.type}`}</Text>
                     <Text
-                      style={{color: '#4F565E', fontWeight: 400, fontSize: 14}}>
+                      style={{
+                        color: '#4F565E',
+                        fontWeight: 400,
+                        fontSize: 14,
+                        fontFamily: 'ProximaNova',
+                      }}>
                       For Return
                     </Text>
                   </View>
@@ -563,7 +575,7 @@ const NextBtn = ({Btnwidth, textInsideBtn}) => {
                 textAlign: 'center',
                 fontSize: 16,
                 fontWeight: 600,
-                fontFamily: 'ProximaNova-Regular',
+                fontFamily: 'ProximaNova',
                 letterSpacing: 0.32,
                 lineHeight: 18,
               }}>

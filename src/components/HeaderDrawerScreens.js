@@ -45,7 +45,7 @@ const HeaderDrawerScreens = ({headertext, navigation, backto}) => {
               color: '#FFFFFF',
               fontSize: 18,
               fontWeight: 500,
-              fontFamily: 'ProximaNova-Regular',
+              fontFamily: 'ProximaNova',
               letterSpacing: 0.32,
 
               lineHeight: 18 * 1.4,

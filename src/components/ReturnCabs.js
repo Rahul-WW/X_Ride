@@ -173,12 +173,14 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     lineHeight: 18 * 1.4,
     marginBottom: 4,
+    fontFamily: 'ProximaNova',
   },
   carName: {
     color: '#4F565E',
     fontSize: 16,
     fontWeight: 400,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   priceBox: {
     backgroundColor: '#048AD7',
@@ -194,6 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 600,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   cabDetails: {
     marginTop: 16,
@@ -229,6 +232,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

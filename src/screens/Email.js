@@ -26,6 +26,7 @@ import InputFieldWithCross from '../components/InputFieldWithCross';
 import DownArrow from '../svgImages/DownArrow.svg';
 import UpArrow from '../svgImages/UpArrow.svg';
 import Attachment from '../svgImages/Attachment.svg';
+import GradientText from '../components/GradientText';
 import DocumentPicker from 'react-native-document-picker';
 const Email = ({navigation, route}) => {
   const {from} = route.params;
@@ -118,7 +119,7 @@ const Email = ({navigation, route}) => {
                   multiline={true}
                   scrollEnabled={true}
                   numberOfLines={4}
-                  placeholder={"Contact Number"}
+                  placeholder={'Contact Number'}
                   value={contactnumber}
                   keyboardType="numeric"
                   onChangeText={value => setContactnumber(value)}></TextInput>
@@ -179,16 +180,18 @@ const Email = ({navigation, route}) => {
                   onChangeText={value => setIssue(value)}></TextInput>
               </View>
             </View>
-            <TouchableOpacity>
-              <View>
+           
+              <View >
                 <TouchableOpacity
                   onPress={handleAttachFile}
                   style={styles.attachment}>
                   <Attachment />
-                  <GradientText>Add Attachment</GradientText>
+                  <GradientText style={styles.attachmentText}>
+                    Add Attachment
+                  </GradientText>
                 </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+       
           </View>
         </View>
       </ScrollView>
@@ -253,21 +256,7 @@ const SubmitBtn = ({Btnwidth, textInsideBtn, handleSubmit}) => {
   );
 };
 
-const GradientText = ({children}) => {
-  return (
-    <MaskedView
-      style={styles.maskedView}
-      maskElement={<Text style={styles.text}>{children}</Text>}>
-      <LinearGradient
-        locations={[0, 1]}
-        colors={['#00C96D', '#048AD7']}
-        useAngle={true}
-        angle={90}>
-        <Text style={[styles.text, styles.transparentText]}>{children}</Text>
-      </LinearGradient>
-    </MaskedView>
-  );
-};
+
 
 const styles = StyleSheet.create({
   optionText: {
@@ -281,7 +270,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     textAlign: 'center',
   },
-  text: {
+  attachmentText: {
     fontSize: 16,
     fontWeight: 400,
 
@@ -298,6 +287,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+  
   },
   inputContainer: {
     height: 150,

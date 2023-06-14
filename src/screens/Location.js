@@ -33,6 +33,7 @@ const Location = ({navigation}) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const [error, setError] = useState(false)
   const [currentLocation, setCurrentLocation] = useState('');
   const [getCurrentAddress, setGetCurrentAddress]= useState("")
 
@@ -42,6 +43,7 @@ const Location = ({navigation}) => {
 
     // Clear the previous timeout
     clearTimeout(typingTimeout);
+    
 
     const newTypingTimeout = setTimeout(() => {
       fetch(
@@ -54,16 +56,20 @@ const Location = ({navigation}) => {
            //Keyboard.dismiss();
         })
         .catch(error => {
-          console.error('Error fetching predictions:', error);
+         console.error('Error fetching predictions:', error);
+          if (error.message){
+            navigation.navigate('NoInternet');
+          }
         });
     }, 400);
-
+    
     setTypingTimeout(newTypingTimeout);
   };
 
-  const handlePredictionSelect = prediction => {
-   
 
+
+
+  const handlePredictionSelect = prediction => {
     let finalTextToDIsplay =
       prediction.structured_formatting.main_text +
       ' ' +
@@ -76,13 +82,19 @@ const Location = ({navigation}) => {
       setSearchText(subString + '...');
     }
     setShowSuggestions(false);
-    //navigation.goBack();
+    navigation.goBack();
   };
+
+
+
 
   const handlePressCrossBtn = () => {
     setShowSuggestions(false);
     setSearchText('');
   };
+
+
+
 
    const requestLocationPermission = async () => {
     setIsloading(true)
@@ -112,8 +124,7 @@ const Location = ({navigation}) => {
 
 
    const fetchLocation = () => {
-     Geolocation.getCurrentPosition(
-       
+     Geolocation.getCurrentPosition(    
        position => {
          const {latitude, longitude} = position.coords;
          console.log(latitude, longitude);
@@ -127,9 +138,10 @@ const Location = ({navigation}) => {
     
    };
 
+
+
     const getAddress = async (lat, lng) => {
       const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Api_Key}`;
-
       try {
         const response = await axios.get(url);
       //  console.log(response)
@@ -145,8 +157,11 @@ const Location = ({navigation}) => {
         console.log(error);
       }
       setIsloading(false)
+      navigation.goBack();
     };
  
+
+
   useEffect(() => {
     // Clear the timeout when the component is unmounted
     return () => {
@@ -154,6 +169,10 @@ const Location = ({navigation}) => {
     };
   }, [typingTimeout]);
 
+
+
+
+   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F3F7FA'}}>
       <Animated.View>
@@ -172,7 +191,7 @@ const Location = ({navigation}) => {
           <TouchableOpacity
             style={styles.crossContainer}
             onPress={handlePressCrossBtn}>
-            <Cross />
+            <Cross width={11} height={11} />
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -180,62 +199,61 @@ const Location = ({navigation}) => {
       {isloading ? (
         <LoaderIndicator />
       ) : (
-        showSuggestions && (
-          <ScrollView>
-            <View
-              style={{
-                height: 481,
-                marginTop: 4,
-                marginHorizontal: 20,
-                marginTop: 20,
-              }}>
-              <View>
-                {predictions.length !== 0 ? (
+        <ScrollView keyboardShouldPersistTaps="always">
+          <View
+            style={{
+              height: 481,
+              marginTop: 4,
+              marginHorizontal: 20,
+              marginTop: 20,
+            }}>
+            <View>
+              <TouchableOpacity
+                style={styles.dropDownList1}
+                onPress={requestLocationPermission}>
+                <View>
+                  <Target />
+                </View>
+
+                <View>
+                  <Text style={styles.locationMainText}>Current Location</Text>
+                  <Text style={styles.locationSecondaryText}>Using GPS</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            {predictions?.map(prediction => {
+              return (
+                <View key={prediction.place_id} horizontal>
                   <TouchableOpacity
-                    style={styles.dropDownList1}
-                    onPress={requestLocationPermission}>
+                    style={styles.dropDownList2}
+                    key={prediction.place_id}
+                    onPress={() => handlePredictionSelect(prediction)}>
                     <View>
-                      <Target />
+                      <Pin />
                     </View>
 
-                    <View>
+                    <ScrollView keyboardShouldPersistTaps="always">
                       <Text style={styles.locationMainText}>
-                        Current Location
+                        {prediction.structured_formatting.main_text}
                       </Text>
                       <Text style={styles.locationSecondaryText}>
-                        Using GPS
+                        {prediction.structured_formatting.secondary_text}
                       </Text>
-                    </View>
+                    </ScrollView>
                   </TouchableOpacity>
-                ) : null}
-              </View>
+                </View>
+              );
+            })}
 
-              {predictions?.map(prediction => {
-                return (
-                  <View key={prediction.place_id} horizontal>
-                    <TouchableOpacity
-                      style={styles.dropDownList2}
-                      key={prediction.place_id}
-                      onPress={() => handlePredictionSelect(prediction)}>
-                      <View>
-                        <Pin />
-                      </View>
-
-                      <ScrollView>
-                        <Text style={styles.locationMainText}>
-                          {prediction.structured_formatting.main_text}
-                        </Text>
-                        <Text style={styles.locationSecondaryText}>
-                          {prediction.structured_formatting.secondary_text}
-                        </Text>
-                      </ScrollView>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </View>
-          </ScrollView>
-        )
+            {/* when no results found */}
+            {predictions.length === 0 &&
+            searchText.length > 3 &&
+            getCurrentAddress === '' ? (
+              <Text style={styles.locationSecondaryText}>No Results found</Text>
+            ) : null}
+          </View>
+        </ScrollView>
       )}
       {/* {showSuggestions && (
         <ScrollView>
@@ -324,19 +342,18 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
   },
   crossContainer: {
-    width: 20,
-    height: 20,
-    marginRight: 20,
+    width: 30,
+    height: 30,
+    marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  
   },
 
   dropDownList1: {
     height: 55,
-
     width: '100%',
     borderBottomWidth: 1,
-
     flexDirection: 'row',
     gap: 12,
     borderColor: '#E3E9ED',

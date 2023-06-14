@@ -10,10 +10,7 @@ import WhiteUser from '../svgImages/WhiteUser.svg';
 import WhiteSuitcase from '../svgImages/WhiteSuitcase.svg';
 import WhiteRoundtrip from '../svgImages/WhiteRoundtrip.svg';
 import WhiteCabinbag from '../svgImages/WhiteCabinbag.svg';
-import ViaRouteIcon from "../svgImages/ViaRouteIcon.svg"
-
-
-
+import ViaRouteIcon from '../svgImages/ViaRouteIcon.svg';
 
 const TripDetailsComponent = ({
   PickupLocation,
@@ -27,7 +24,7 @@ const TripDetailsComponent = ({
       {/* pickup and drop details, this box is upto horizontal line */}
       <View style={styles.pickupAndDropBox}>
         <View style={styles.pickupBox}>
-          <WhitePickup />
+          <WhitePickup width={24} height={24} />
 
           <View
             style={{
@@ -55,7 +52,7 @@ const TripDetailsComponent = ({
         {/* this is Via icons and vai Location box upto here */}
 
         <View style={styles.dropLocationBox}>
-          <WhiteDrop />
+          <WhiteDrop width={24} height={24} />
 
           <View
             style={{
@@ -78,7 +75,7 @@ const TripDetailsComponent = ({
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
             marginBottom: 16,
           }}>
           <View style={styles.iconWithText}>
@@ -100,6 +97,7 @@ const TripDetailsComponent = ({
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            // gap: 83
           }}>
           <View style={styles.iconWithText2}>
             <View style={styles.svgSize}>
@@ -121,9 +119,6 @@ const TripDetailsComponent = ({
     </View>
   );
 };
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -149,13 +144,13 @@ const styles = StyleSheet.create({
 
     color: 'white',
     letterSpacing: 0.32,
-
+    fontFamily: 'ProximaNova',
     lineHeight: 16 * 1.4,
   },
   dateTimeOfpickup: {
     fontSize: 13,
     fontWeight: 400,
-
+    fontFamily: 'ProximaNova',
     color: '#ffffff',
     letterSpacing: 0.32,
 
@@ -201,9 +196,9 @@ const styles = StyleSheet.create({
 
     borderColor: 'white',
     borderStyle: 'dashed',
-    borderRightWidth: 2,
-    left: 31.2,
-    height: 35,
+    borderRightWidth: 1,
+    left: 32,
+    height: 30,
     top: 48,
   },
   dashedline2: {
@@ -211,11 +206,11 @@ const styles = StyleSheet.create({
 
     borderColor: 'white',
     borderStyle: 'dashed',
-    borderRightWidth: 2,
-    left: 31.2,
-    height: 35,
+    borderRightWidth: 1,
+    left: 32,
+    height: 28,
     top: 97,
-    zIndex:1000
+    zIndex: 1000,
   },
   passengerDetailsBox: {
     marginHorizontal: 20,
@@ -227,11 +222,12 @@ const styles = StyleSheet.create({
 
     height: 22,
     alignItems: 'center',
+    width: '50%',
   },
   iconWithText2: {
     flexDirection: 'row',
     gap: 8,
-
+    width: '50%',
     height: 22,
   },
   svgSize: {
@@ -250,6 +246,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

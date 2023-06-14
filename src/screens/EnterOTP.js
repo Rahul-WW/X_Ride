@@ -1,4 +1,4 @@
-import React,{useState, useRef} from 'react';
+import React,{useState, useRef, useEffect} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Dimensions, TextInput, Alert} from 'react-native';
 import GoBackBtn from '../components/GoBackBtn';
 
@@ -15,8 +15,10 @@ import {
 
 const {width, height} = Dimensions.get('window');
 
-const EnterOTP = () => {
+const EnterOTP = ({navigation}) => {
     const [code, setCode] = React.useState(['', '', '', '']);
+    const [seconds, setSeconds] = useState(60);
+
     const inputRefs = useRef([
       React.createRef(),
       React.createRef(),
@@ -34,9 +36,7 @@ const EnterOTP = () => {
 
         if (index < 3) {
           inputRefs.current[index + 1].focus();
-        } else {
-          Alert.alert('Code', code.join(''));
-        }
+        } 
       }
     };
      const handleBackspace = (index, nativeEvent) => {
@@ -51,6 +51,37 @@ const EnterOTP = () => {
            inputRefs.current[index - 1].focus();
          }
        }
+     };
+
+        useEffect(() => {
+          const interval = setInterval(() => {
+            setSeconds(prevSeconds => {
+              if (prevSeconds > 0) {
+                return prevSeconds - 1;
+              } else {
+                clearInterval(interval); // Stop the counter when it reaches 0
+                return 0;
+              }
+            });
+          }, 1000);
+
+          return () => {
+            clearInterval(interval);
+          };
+        }, []);
+
+       useEffect(() => {
+         if (seconds === 0) {
+          setSeconds("00")
+           Alert.alert('Time is over');
+         }
+       }, [seconds]);
+
+     const handleSubmit = () => {
+       // Perform form submission logic here
+        Alert.alert(code.toString());
+       console.log('Form submitted with value:', code.toString());
+       navigation.navigate("Home")
      };
   return (
     <SafeAreaView style={styles.backGround}>
@@ -76,12 +107,13 @@ const EnterOTP = () => {
                   maxLength={1}
                   onChangeText={value => handleInputChange(i, value)}
                   onKeyPress={nativeEvent => handleBackspace(i, nativeEvent)}
+                  onSubmitEditing={handleSubmit}
                 />
               </View>
             ))}
           </View>
 
-          <Text style={styles.timer}>0:38</Text>
+          <Text style={styles.timer}>0:{seconds}</Text>
           <Text style={styles.didntRecieveText}>
             Didn’t receive the e-mail?
             <Text style={styles.resendText}> Resend Now</Text>
@@ -98,7 +130,6 @@ const styles = StyleSheet.create({
   backGround: {
     backgroundColor: '#F3F7FA',
     height,
-   
   },
   inputBox: {
     width: 56,
@@ -108,14 +139,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'white',
     alignSelf: 'center',
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:"center"
   },
   input: {
-    marginLeft: 15,
+   flexDirection:"row",
     fontSize: 20,
+    marginLeft: 10,
+   
+   
   },
   container: {
     marginHorizontal: 20,
-    
   },
   VerifyEmailBox: {
     marginTop: 58,
@@ -124,7 +160,7 @@ const styles = StyleSheet.create({
   VerifyEmailTextTitle: {
     fontSize: FontSize.for_title,
     color: Color.for_title,
-    fontFamily: FontFamily.fontFamily,
+
     fontWeight: FontWeight.for_title,
     textAlign: 'center',
     letterSpacing: LetterSpacing.letterSpacing,
@@ -133,7 +169,7 @@ const styles = StyleSheet.create({
   VerifyEmailTextCaption: {
     textAlign: 'center',
     marginTop: 12,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     fontSize: FontSize.for_caption,
     fontWeight: FontWeight.for_caption,
     color: Color.for_caption,
@@ -144,21 +180,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 24,
     height: 270,
-   
+    borderWidth:1,
+    borderColor:"transparent"
   },
   FourBoxCombine: {
     height: 56,
     flexDirection: 'row',
 
     justifyContent: 'space-between',
-    
   },
   timer: {
     marginTop: 162,
     color: '#292F3B',
     fontFamily: 'ProximaNova-Regular',
     fontSize: FontSize.for_caption,
-    fontWeight: FontWeight.for_caption,
+    fontFamily: 'ProximaNova3',
     textAlign: 'center',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
@@ -169,12 +205,14 @@ const styles = StyleSheet.create({
     fontSize: FontSize.for_caption,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   resendText: {
     color: '#00C96D',
     fontSize: FontSize.for_caption,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

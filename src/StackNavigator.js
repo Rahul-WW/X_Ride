@@ -25,7 +25,6 @@ import Profile from './screens/Profile';
 import QuotesForPickupOnly from './screens/QuotesForPickupOnly';
 import TripDetails from './screens/TripDetails';
 import AddDetails from './screens/AddDetails';
-import DrawerButton from './components/DrawerButton';
 import Payment from './screens/Payment';
 import About from './screens/About';
 import RefundPolicy from './screens/RefundPolicy';
@@ -36,8 +35,10 @@ import Notification from './screens/Notification';
 import NoInternet from './screens/NoInternet';
 import UnderMaintainance from './screens/UnderMaintainance';
 import PageNotFound from './screens/PageNotFound';
-
+import ServiceUnavailable from './screens/ServiceUnavailable';
+import CabsUnavailable from "./screens/CabsUnavailable"
 import {Animated} from 'react-native';
+import OnboardingScreens from './screens/OnboardingScreens';
 
 
 const Stack = createStackNavigator();
@@ -85,13 +86,22 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      // initialRouteName="DrawerNavigator"
-      initialRouteName="PageNotFound"
+      initialRouteName="OnboardingScreens"
+      //  initialRouteName="PageNotFound"
+      //   initialRouteName="DrawerNavigator"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
         gestureDirection: 'horizontal',
       }}>
+      <Stack.Screen
+        name="OnboardingScreens"
+        component={OnboardingScreens}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+
       <Stack.Screen
         name="SignUp"
         component={SignUp}
@@ -123,6 +133,20 @@ const StackNavigator = () => {
       <Stack.Screen
         name="PageNotFound"
         component={PageNotFound}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+      <Stack.Screen
+        name="ServiceUnavailable"
+        component={ServiceUnavailable}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
+        }}
+      />
+      <Stack.Screen
+        name="CabsUnavailable"
+        component={CabsUnavailable}
         options={{
           ...TransitionPresets.SlideFromRightIOS, // This transition preset includes the transitionSpec and cardStyleInterpolator to slide the screen in from the right
         }}

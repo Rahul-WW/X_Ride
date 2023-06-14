@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     bottom: 48,
     left: 20,
     right: 20,
+    fontFamily: 'ProximaNova',
   },
 
   lowerContainer: {
@@ -92,12 +93,11 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     height: 48,
-    
   },
   nextTypo: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 
   slideBtn: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 32.2,
     fontWeight: 600,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 
   CaptionBox: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 });
 

@@ -54,7 +54,7 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal,Icon, onDate
         style={{
           marginLeft: 12,
           fontSize: FontSize.for_caption,
-          fontFamily: 'ProximaNova-Regular',
+          fontFamily: 'ProximaNova',
           flex: 1,
           borderRadius: 16,
           lineHeight: 16 * 1.4,

@@ -28,12 +28,12 @@ const InputFieldWithoutIcon = ({
         style={{
           marginLeft: 12,
           fontSize: FontSize.for_caption,
-          fontFamily: 'ProximaNova-Regular',
+          fontFamily: 'ProximaNova',
 
           flex: 1,
 
           lineHeight: 16 * 1.4,
-          letterSpacing: 0.32
+          letterSpacing: 0.32,
         }}
         multiline={true}
         numberOfLines={4}

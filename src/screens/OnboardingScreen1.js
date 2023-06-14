@@ -33,27 +33,28 @@ const OnboardingScreen1 = ({navigation}) => {
         <View
           style={{
             height,
+            width
           }}>
           <ImageBackground
             source={require('../images/OnboardingImage1.png')}
-            style={{resizeMode: 'cover', width, height}}>
+            style={{resizeMode: 'contain', width, height}}>
             {/* main container strts */}
             <View style={styles.container}>
               <View style={styles.titleBox}>
                 <Text style={styles.titleText}>
-                  Search budget-friendly cabs for your travel destinations
+                  Search budget - friendly cabs for your travel destinations
                 </Text>
               </View>
 
               <View style={styles.CaptionBox}>
                 <Text style={styles.CaptionText}>
-                  find theh convenient and budget friendly cabs to travel around
+                  Find the convenient and budget friendly cabs to travel around
                   your destinations.
                 </Text>
               </View>
 
               <View style={styles.slideBtn}>
-                <Slider1/>
+                <Slider1 />
               </View>
 
               <View style={styles.lowerContainer}>
@@ -97,14 +98,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     textAlign: 'center',
-    
-    alignItems:"center",
-    height: 48
+    alignItems: 'center',
+    height: 48,
   },
   nextTypo: {
     color: 'white',
     fontSize: 16,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 
   slideBtn: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 32.2,
     fontWeight: 600,
-    fontFamily: 'Proxima Nova_regular',
+    fontFamily: 'ProximaNova',
   },
 
   CaptionBox: {
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
   },
 });
 

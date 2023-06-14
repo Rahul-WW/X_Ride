@@ -128,12 +128,9 @@ const GradientBorder = ({children, condition}) => {
 
 const styles = StyleSheet.create({
   container1: {
-    
-    
     borderRadius: 24,
-   
+
     backgroundColor: 'white',
-    
   },
   picBox: {
     marginHorizontal: 20,
@@ -148,7 +145,7 @@ const styles = StyleSheet.create({
   },
   priceCabDetails: {
     borderColor: '#E3E9ED',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
 
     marginHorizontal: 20,
     height: 68,
@@ -161,6 +158,7 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     lineHeight: 18 * 1.4,
     marginBottom: 4,
+    fontFamily: 'ProximaNova',
   },
   carName: {
     color: '#4F565E',
@@ -182,6 +180,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 600,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   cabDetails: {
     marginTop: 16,
@@ -217,6 +216,8 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
+    color: '#4F565E',
   },
   elevated: {
     ...Platform.select({

@@ -9,7 +9,10 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Dimensions, Modal, Pressable, Alert
+  Dimensions,
+  Modal,
+  Pressable,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import Xlogo from '../svgImages/Xlogo.svg';
@@ -21,14 +24,14 @@ import {
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-const {width}= Dimensions.get("window")
-import Home from "../svgImages/Home.svg"
-import Mybooking from "../svgImages/Mybooking.svg"
-import PaymentHistory from "../svgImages/PaymentHistory.svg"
-import Support from "../svgImages/Support.svg"
-import About from "../svgImages/About.svg"
-import Logout from "../svgImages/Logout.svg"
-import ArrowSidebar from "../svgImages/ArrowSidebar.svg"
+const {width} = Dimensions.get('window');
+import Home from '../svgImages/Home.svg';
+import Mybooking from '../svgImages/Mybooking.svg';
+import PaymentHistory from '../svgImages/PaymentHistory.svg';
+import Support from '../svgImages/Support.svg';
+import About from '../svgImages/About.svg';
+import Logout from '../svgImages/Logout.svg';
+import ArrowSidebar from '../svgImages/ArrowSidebar.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import LinkedIn from '../svgImages/LinkedIn.svg';
 import Facebook from '../svgImages/Facebook.svg';
@@ -38,28 +41,28 @@ import Youtube from '../svgImages/Youtube.svg';
 import LoaderIndicator from '../components/LoaderIndicator';
 
 const CustomDrawer = props => {
-   const [isloading, setIsloading] = useState(false);
-   const [modalVisible, setModalVisible] = useState(false);
-   const translateY = useState(new Animated.Value(300))[0]; // this is to slide the modal slowly
+  const [isloading, setIsloading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const translateY = useState(new Animated.Value(300))[0]; // this is to slide the modal slowly
 
-   const openModalPopup=()=>{
-     setModalVisible(true)
-     Animated.timing(translateY, {
-       toValue: 0,
-       duration: 600, // Animation duration (1000 ms = 1 sec)
-       useNativeDriver: true,
-     }).start();
-   }
-   
-    const handlePressLogoutBtn = () => {  
-      Animated.timing(translateY, {
-        toValue: 300,
-        duration: 600, // Animation duration (1000 ms = 1 sec)
-        useNativeDriver: true,
-      }).start(() => setModalVisible(false)); // Hide the modal in the end of the animation
+  const openModalPopup = () => {
+    setModalVisible(true);
+    Animated.timing(translateY, {
+      toValue: 0,
+      duration: 600, // Animation duration (1000 ms = 1 sec)
+      useNativeDriver: true,
+    }).start();
+  };
 
-      Alert.alert('You are logged out ');
-    };
+  const handlePressLogoutBtn = () => {
+    Animated.timing(translateY, {
+      toValue: 300,
+      duration: 600, // Animation duration (1000 ms = 1 sec)
+      useNativeDriver: true,
+    }).start(() => setModalVisible(false)); // Hide the modal in the end of the animation
+
+    Alert.alert('You are logged out ');
+  };
   return (
     <SafeAreaView style={{flex: 1, width: '100%'}}>
       <Animated.View>
@@ -98,7 +101,7 @@ const CustomDrawer = props => {
                     <Text style={styles.text3}>9738025545</Text>
                   </ScrollView>
                 </View>
-                <View>
+                <View >
                   <ProfileEdit />
                 </View>
               </View>
@@ -208,7 +211,7 @@ const CustomDrawer = props => {
               style={styles.socialMedSingle}
               onPress={() =>
                 Linking.openURL(
-                  'https://www.linkedin.com/company/thewilsonwings',  // change the url with the websites respective url
+                  'https://www.linkedin.com/company/thewilsonwings', // change the url with the websites respective url
                 )
               }>
               <LinkedIn width={40} height={40} />
@@ -372,7 +375,6 @@ const CustomDrawer = props => {
 
 const styles = StyleSheet.create({
   followUsBox: {
-   
     marginTop: 193,
     height: 77,
     marginHorizontal: 20,
@@ -408,7 +410,7 @@ const styles = StyleSheet.create({
   profileBox: {
     width: '100%',
     height: 66,
-
+   
     marginTop: 24,
     flexDirection: 'row',
     alignItems: 'center',
@@ -417,9 +419,10 @@ const styles = StyleSheet.create({
   profileImage: {width: 60, height: 60, borderRadius: 40},
   nameAndCross: {
     height: '100%',
-    width: '72%',
+    width: '76%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+   
   },
   text1: {
     fontSize: 16,
@@ -565,7 +568,6 @@ const styles = StyleSheet.create({
   socialMedSingle: {
     height: 40,
     width: 40,
-    
   },
 });
 

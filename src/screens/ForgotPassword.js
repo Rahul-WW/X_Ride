@@ -69,36 +69,34 @@ const styles = StyleSheet.create({
   },
   container: {
     marginHorizontal: 20,
-
   },
   forgotPasswordBox: {
     marginTop: 58,
     height: 84,
-   
+
     marginBottom: 32,
   },
   forgotPasswordTextTitle: {
     fontSize: FontSize.for_title,
     color: Color.for_title,
-    fontFamily: FontFamily.fontFamily,
-    fontWeight: FontWeight.for_title,
-
+    fontWeight: 600,
+    fontFamily: 'ProximaNova ',
     letterSpacing: LetterSpacing.letterSpacing,
     lineHeight: LineHeight.lineHeight,
   },
   forgotPasswordTextCaption: {
     marginTop: 12,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     fontSize: FontSize.for_caption,
     fontWeight: FontWeight.for_caption,
     color: Color.for_caption,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
   },
-  
+
   inputDivs: {
     height: 56,
-    marginBottom:20
+    marginBottom: 20,
   },
 });
 

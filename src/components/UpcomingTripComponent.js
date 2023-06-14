@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 
     color: 'white',
     letterSpacing: 0.32,
-    fontFamily: 'Proxima Nova_regular',
+    fontFamily: 'ProximaNova',
     lineHeight: 16 * 1.4,
   },
   dateTimeOfpickup: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 
     color: '#ffffff',
     letterSpacing: 0.32,
-
+    fontFamily: 'ProximaNova',
     lineHeight: 16 * 1,
   },
   pickupBox: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: '#FFFFFF',
     letterSpacing: 0.32,
-    fontFamily: 'Proxima Nova_regular',
+    fontFamily: 'ProximaNova',
     lineHeight: 16 * 1.4,
   },
 
@@ -296,6 +296,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

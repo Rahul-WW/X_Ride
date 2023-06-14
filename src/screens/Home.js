@@ -22,7 +22,8 @@ import {
   Alert,
   Animated,
   Keyboard,
-  Modal
+  Modal,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -48,13 +49,12 @@ import Bell from '../svgImages/Bell.svg';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Notification2 from '../svgImages/Notification2.svg';
 import DrawerCross from '../svgImages/DrawerCross.svg';
-import Exclemation from "../svgImages/Exclemation.svg"
+import Exclemation from '../svgImages/Exclemation.svg';
 import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
-  
   const [isChecked, setIsChecked] = useState(false);
-  const [isNotication, setIsNotification] = useState(true);
+  const [isNotication, setIsNotification] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [form, setForm] = useState({
     pickup: '',
@@ -63,16 +63,31 @@ const Home = () => {
     pickupDate: '',
     pickuptime: '',
     passengersCount: '',
+    returnDate:"",
+    returnTime:""
+  });
+
+  const [errors, setErrors] = useState({
+    pickupDateTime: '',
+    passengerCount: '',
+    returnDateTime:""
   });
   const [pickupLocation, setPickupLocation] = useState('');
   const [dropLocation, setDropLocation] = useState('');
-  const [pickupDateInput, setPickupdateInput] = useState('');
-  const [passengers, setPassengers] = useState(form.passengersCount);
+  
+  
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [isDatePickerVisibleForReturn, setDatePickerVisibilityForReturn] =
+    useState(false);
+  const [isTimePickerVisibleForReturn, setTimePickerVisibilityForReturn] =
+    useState(false);
 
   const [pickupdate, setPickupdate] = useState(new Date());
   const [pickupTime, setPickupTime] = useState(new Date());
+
+  const [returndate, setReturndate] = useState(new Date());
+  const [returnTime, setReturnTime] = useState(new Date());
   const [time, setTime] = useState(new Date());
 
   const [count, setCount] = useState(0);
@@ -111,9 +126,17 @@ const Home = () => {
     setDatePickerVisibility(true);
     //  setTimePickerVisibility(false);
   };
+  const showDatePicker2 = () => {
+    setDatePickerVisibilityForReturn(true);
+    //  setTimePickerVisibility(false);
+  };
 
   const showTimePicker = () => {
     setTimePickerVisibility(true);
+  };
+
+  const handleGoToLocation = () => {
+    navigation.navigate('Location');
   };
 
   //this function is for choosing date
@@ -124,12 +147,22 @@ const Home = () => {
 
     let DateWhichIsSelected = new Date(currentDate).getTime();
     let TodaysDate = new Date(Date.now()).getTime();
+    //let dateAfter365days = new Date(new Date.getTime());
+
+    console.log(TodaysDate - DateWhichIsSelected, 'today');
 
     let day = currentDate.getDate();
     let month = currentDate.getMonth() + 1;
     let year = currentDate.getFullYear();
     if (DateWhichIsSelected < TodaysDate) {
-      Alert.alert('Select a valid Date');
+      setErrors(errors => ({
+        ...errors,
+        pickupDateTime: 'Enter valid Upcoming date and time',
+      }));
+      return;
+    }
+    if (DateWhichIsSelected > TodaysDate + 31536000000) {
+      setModalVisible2(true);
       return;
     }
     setForm({
@@ -141,23 +174,65 @@ const Home = () => {
 
     console.log(form);
     console.log(pickupTime);
+    setErrors(errors => ({...errors, pickupDateTime: ''}));
     setTimePickerVisibility(true);
   };
+ const onDateChange2 = (event, selectedDate) => {
+   const currentDate = selectedDate || date;
+   setDatePickerVisibilityForReturn(Platform.OS === 'ios');
+   setReturndate(currentDate);
+
+   let DateWhichIsSelected = new Date(currentDate).getTime();
+   let TodaysDate = new Date(Date.now()).getTime();
+   //let dateAfter365days = new Date(new Date.getTime());
+
+   console.log(TodaysDate - DateWhichIsSelected, 'today');
+
+   let day = currentDate.getDate();
+   let month = currentDate.getMonth() + 1;
+   let year = currentDate.getFullYear();
+   if (DateWhichIsSelected < TodaysDate) {
+     setErrors(errors => ({
+       ...errors,
+       returnDateTime: 'Enter valid Upcoming return date and time',
+     }));
+     return;
+   }
+   if (DateWhichIsSelected > TodaysDate + 31536000000) {
+     setModalVisible2(true);
+     return;
+   }
+   setForm({
+     ...form,
+     returnDate: `${day < 10 ? '0' + day : day}/${
+       month < 10 ? '0' + month : month
+     }/${year}`,
+   });
+
+   
+   setErrors(errors => ({...errors, returnDateTime: ''}));
+   setTimePickerVisibilityForReturn(true);
+ };
+
+
+
+
+
 
   const onTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || time;
     setTimePickerVisibility(Platform.OS === 'ios');
     setTime(currentTime);
+    
     //let timestamp = '2023-05-31T15:25:57.755Z';
     let fdate = new Date(currentTime);
-    
 
     let hour = fdate.getHours();
     let minute = String(fdate.getMinutes()).padStart(2, '0');
     let ampm = hour >= 12 ? 'pm' : 'am';
-   
-   // hour = hour % 12;
-  //  console.log('currentTime', hour);
+
+    // hour = hour % 12;
+    //  console.log('currentTime', hour);
     hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
     let formattedDate = ` ${hour}:${minute} ${ampm}`;
     //console.log('currentTime', formattedDate);
@@ -165,8 +240,30 @@ const Home = () => {
       ...form,
       pickuptime: ` ${formattedDate}`,
     });
-    setModalVisible2(true)
   };
+
+   const onTimeChange2 = (event, selectedTime) => {
+     const currentTime = selectedTime || time;
+     setTimePickerVisibilityForReturn(Platform.OS === 'ios');
+     setTime(currentTime);
+
+     //let timestamp = '2023-05-31T15:25:57.755Z';
+     let fdate = new Date(currentTime);
+
+     let hour = fdate.getHours();
+     let minute = String(fdate.getMinutes()).padStart(2, '0');
+     let ampm = hour >= 12 ? 'pm' : 'am';
+
+     // hour = hour % 12;
+     //  console.log('currentTime', hour);
+     hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
+     let formattedDate = ` ${hour}:${minute} ${ampm}`;
+     //console.log('currentTime', formattedDate);
+     setForm({
+       ...form,
+       returnTime: ` ${formattedDate}`,
+     });
+   };
 
   //this is for setting the form with the new changed data
   const handleInputChange = (field, value) => {
@@ -177,25 +274,46 @@ const Home = () => {
     });
   };
 
-  //this is for selecting the Passengers count and setting it to the Form
-  const handleInputChangePassengers = (field, value) => {
-    setPassengers(value);
+  const handleInputChange2 = (field, value) => {
+    console.log(field);
     setForm({
       ...form,
       [field]: value,
     });
-
-    console.log(form);
   };
 
+  //this is for selecting the Passengers count and setting it to the Form
+  const handleInputChangePassengers = (field, value) => {
+    console.log('pass', value, field);
+    if (value > 15) {
+      setErrors(errors => ({
+        ...errors,
+        passengerCount: 'Passengers should be less than or equal  15',
+      }));
+    }else{
+      setErrors(errors => ({
+        ...errors,
+        passengerCount: '',
+      }));
+    }
+
+    setForm({
+      ...form,
+      [field]: value,
+    });
+    console.log(form);
+  };
+console.log(errors)
   //this function is for submitting the form where we have to collect all the input values and need to make a post request.
   const handleSubmit = () => {
     Alert.alert('Form Submitted');
 
     console.log(form);
-    if (isChecked) {
+    if (isChecked === true) {
+      console.log('Bothonly', isChecked);
       navigation.navigate('Quotes', {showReturnJourney: isChecked});
     } else {
+      console.log('only', isChecked);
       navigation.navigate('QuotesForPickupOnly', {
         showReturnJourney: isChecked,
       });
@@ -203,7 +321,13 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, position: 'relative'}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        position: 'relative',
+        backgroundColor: '#F3F7FA',
+        height,
+      }}>
       <Animated.View>
         <View style={styles.logoBox}>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
@@ -226,103 +350,35 @@ const Home = () => {
           </View>
         </View>
       </Animated.View>
-      <ScrollView
-        style={{backgroundColor: '#F3F7FA'}}
-        showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            backgroundColor: '#F3F7FA',
-          }}>
-          <View style={styles.backGround}>
-            <View style={styles.container}>
-              <View style={styles.imageContainer}>
-                <ImageBackground
-                  style={styles.imageOnHome}
-                  resizeMode="cover"
-                  source={require('../images/imageOnHome.png')}>
-                  <Text style={styles.textOnImage}>Book Your Ride!</Text>
-                </ImageBackground>
-              </View>
-
-              <View style={styles.lowercontainer}>
-                <View style={styles.inputDivs}>
-                  {/* this is pickup inputbox container */}
-                  <View style={styles.inputContainer}>
-                    <View style={styles.leftIconContainer}>
-                      <PickupIcon width={20} height={24} />
-                    </View>
-
-                    <TextInput
-                      style={styles.inputBox}
-                      multiline={true}
-                      numberOfLines={4}
-                      scrollEnabled={true}
-                      placeholder="Pickup Location"
-                      onPressOut={() => navigation.navigate('Location')}
-                      value={pickupLocation}
-                      showSoftInputOnFocus={false} //this will disable the Keyboard to open
-                      onPressIn={handleInputPickupLocation}></TextInput>
-                  </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container1}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 10} // Adjust the offset here
+      >
+        <ScrollView
+          style={{backgroundColor: '#F3F7FA'}}
+          showsVerticalScrollIndicator={false}>
+          <View
+            style={{
+              backgroundColor: '#F3F7FA',
+            }}>
+            <View style={styles.backGround}>
+              <View style={styles.container}>
+                <View style={styles.imageContainer}>
+                  <ImageBackground
+                    style={styles.imageOnHome}
+                    resizeMode="cover"
+                    source={require('../images/imageOnHome.png')}>
+                    <Text style={styles.textOnImage}>Book Your Ride!</Text>
+                  </ImageBackground>
                 </View>
-                {/* upto here pickup inputbox container */}
-                <View style={styles.line}></View>
 
-                <View style={styles.viaRouteBox}>
-                  <View style={styles.viaSmallbox}>
-                    <TouchableOpacity onPress={incrementCount}>
-                      <Via width={16} height={16} />
-                    </TouchableOpacity>
-
-                    <Text style={styles.viaText}>Via</Text>
-                  </View>
-
-                  {Array(count)
-                    .fill()
-                    .map((_, i) => (
-                      <View
-                        key={i}
-                        style={[
-                          styles.inputDivs,
-                          styles.inputDiv2,
-                          styles.inputDivforLine,
-                        ]}>
-                        <InputFieldWithCross
-                          placeholder="Via Route"
-                          Icon={<ViaRouteIcon width={20} height={24} />}
-                          Icon2={<Cross width={11} height={11} />}
-                          handleHideRouteInput={handleHideRouteInput}
-                        />
-
-                        <View style={styles.dashedLine2}></View>
-                      </View>
-                    ))}
-                </View>
-                {/* this is Drop inputbox container */}
-                <View style={[styles.inputDivs, styles.inputDiv3]}>
-                  <View style={styles.inputContainer}>
-                    <View style={styles.leftIconContainer}>
-                      <DropIcon width={20} height={24} />
-                    </View>
-
-                    <TextInput
-                      style={styles.inputBox}
-                      multiline={true}
-                      numberOfLines={4}
-                      scrollEnabled={true}
-                      placeholder="Drop Location"
-                      onPressOut={() => navigation.navigate('Location')}
-                      value={dropLocation}
-                      showSoftInputOnFocus={false} //this will disable the Keyboard to open
-                      onPressIn={handleInputDropLocation}></TextInput>
-                  </View>
-                </View>
-                {/* upto here drop inputbox container */}
-                {/* this is Date and Time inputbox container */}
-                <View style={[styles.inputDivs, styles.inputDiv4]}>
-                  <Pressable onPress={() => setDatePickerVisibility(true)}>
+                <View style={styles.lowercontainer}>
+                  <View style={styles.inputDivs}>
+                    {/* this is pickup inputbox container */}
                     <View style={styles.inputContainer}>
                       <View style={styles.leftIconContainer}>
-                        <TimePicker width={24} height={24} />
+                        <PickupIcon width={20} height={24} />
                       </View>
 
                       <TextInput
@@ -330,112 +386,188 @@ const Home = () => {
                         multiline={true}
                         numberOfLines={4}
                         scrollEnabled={true}
-                        placeholder="Pickup Date and Time"
-                        value={form.pickupDate + '' + form.pickuptime}
-                        caretHidden={true} //this will hide the Cursor
+                        placeholder="Pickup Location"
+                        onPressOut={() => navigation.navigate('Location')}
+                        value={pickupLocation}
                         showSoftInputOnFocus={false} //this will disable the Keyboard to open
-                        onChangeText={value => handleInputChange('date', value)}
-                        keyboardType="numeric"
-                        onPressIn={showDatePicker}></TextInput>
+                        onPressIn={handleInputPickupLocation}></TextInput>
                     </View>
-                  </Pressable>
-                </View>
-                <View style={[styles.inputDivs, styles.inputDiv5]}>
-                  {/* <InputField
+                  </View>
+                  {/* upto here pickup inputbox container */}
+                  <View style={styles.line}></View>
+
+                  <View style={styles.viaRouteBox}>
+                    <View style={styles.viaSmallbox}>
+                      <TouchableOpacity onPress={incrementCount}>
+                        <Via width={16} height={16} />
+                      </TouchableOpacity>
+
+                      <Text style={styles.viaText}>Via</Text>
+                    </View>
+
+                    {Array(count)
+                      .fill()
+                      .map((_, i) => (
+                        <View
+                          key={i}
+                          style={[
+                            styles.inputDivs,
+                            styles.inputDiv2,
+                            styles.inputDivforLine,
+                          ]}>
+                          <InputFieldWithCross
+                            placeholder="Via Route"
+                            Icon={<ViaRouteIcon width={20} height={24} />}
+                            Icon2={<Cross width={11} height={11} />}
+                            handleHideRouteInput={handleHideRouteInput}
+                            value={form.vai[i]}
+                            handleGoToLocation={handleGoToLocation}
+                          />
+
+                          <View style={styles.dashedLine2}></View>
+                        </View>
+                      ))}
+                  </View>
+                  {/* this is Drop inputbox container */}
+                  <View style={[styles.inputDivs, styles.inputDiv3]}>
+                    <View style={styles.inputContainer}>
+                      <View style={styles.leftIconContainer}>
+                        <DropIcon width={20} height={24} />
+                      </View>
+
+                      <TextInput
+                        style={styles.inputBox}
+                        multiline={true}
+                        numberOfLines={4}
+                        scrollEnabled={true}
+                        placeholder="Drop Location"
+                        onPressOut={() => navigation.navigate('Location')}
+                        value={dropLocation}
+                        showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                        onPressIn={handleInputDropLocation}></TextInput>
+                    </View>
+                  </View>
+                  {/* upto here drop inputbox container */}
+                  {/* this is Date and Time inputbox container */}
+                  <View style={[styles.inputDivs, styles.inputDiv4]}>
+                    <Pressable onPress={() => setDatePickerVisibility(true)}>
+                      <View style={styles.inputContainer}>
+                        <View style={styles.leftIconContainer}>
+                          <TimePicker width={24} height={24} />
+                        </View>
+
+                        <TextInput
+                          style={styles.inputBox}
+                          multiline={true}
+                          numberOfLines={4}
+                          scrollEnabled={true}
+                          placeholder="Pickup Date and Time"
+                          value={form.pickupDate + '' + form.pickuptime}
+                          caretHidden={true} //this will hide the Cursor
+                          showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                          onChangeText={value =>
+                            handleInputChange('date', value)
+                          }
+                          keyboardType="numeric"
+                          onPressIn={showDatePicker}></TextInput>
+                      </View>
+                    </Pressable>
+                    {errors.pickupDateTime !== '' && (
+                      <Text style={styles.errorText}>
+                        {errors.pickupDateTime}
+                      </Text>
+                    )}
+                  </View>
+                  <View style={[styles.inputDivs, styles.inputDiv5]}>
+                    {/* <InputField
                     placeholder="Passengers"
                     Icon={<Name2 width={20} height={20} />}
                   /> */}
-                  <View style={styles.inputContainer}>
-                    <View style={styles.leftIconContainer}>
-                      <Name2 width={20} height={20} />
+                    <View style={styles.inputContainer}>
+                      <View style={styles.leftIconContainer}>
+                        <Name2 width={20} height={20} />
+                      </View>
+
+                      <TextInput
+                        style={styles.inputBox}
+                        multiline={true}
+                        numberOfLines={4}
+                        scrollEnabled={true}
+                        placeholder="Passengers"
+                        value={form.passengersCount}
+                        onChangeText={value =>
+                          handleInputChangePassengers('passengersCount', value)
+                        }
+                        keyboardType="numeric"></TextInput>
                     </View>
-
-                    <TextInput
-                      style={styles.inputBox}
-                      multiline={true}
-                      numberOfLines={4}
-                      scrollEnabled={true}
-                      placeholder="Passengers"
-                      value={form.passengersCount}
-                      onChangeText={value =>
-                        handleInputChangePassengers('passengersCount', value)
-                      }
-                      keyboardType="numeric"></TextInput>
+                    {errors.passengerCount !== '' && (
+                      <Text style={styles.errorText}>
+                        {errors.passengerCount}
+                      </Text>
+                    )}
                   </View>
-                </View>
 
-                <View style={styles.checkBoxDiv}>
-                  <CheckBox
-                    style={{
-                      width: 20,
-                      height: 20,
-                      borderColor: 'red',
-                      marginTop: 2,
-                      marginLeft: 2,
-                    }}
-                    isChecked={isChecked}
-                    onClick={handleCheckBox}
-                    // onClick={setIsChecked}
-                    checkedImage={<CheckedCB width={18} height={18} />}
-                    unCheckedImage={<UncheckBox width={19} height={19} />}
-                  />
-                  <View style={styles.checkboxTextDiv}>
-                    <Text style={styles.checkboxText}>Need Return Booking</Text>
-                  </View>
-                </View>
-                {isChecked && (
-                  <View style={[styles.inputDivs, styles.inputDiv6]}>
-                    <InputField
-                      placeholder="Return Date and Time"
-                      Icon={<TimePicker width={24} height={24} />}
+                  <View style={styles.checkBoxDiv}>
+                    <CheckBox
+                      style={{
+                        width: 20,
+                        height: 20,
+                        borderColor: 'red',
+                        marginTop: 2,
+                        marginLeft: 2,
+                      }}
+                      isChecked={isChecked}
+                      onClick={handleCheckBox}
+                      // onClick={setIsChecked}
+                      checkedImage={<CheckedCB width={18} height={18} />}
+                      unCheckedImage={<UncheckBox width={19} height={19} />}
                     />
+                    <View style={styles.checkboxTextDiv}>
+                      <Text style={styles.checkboxText}>
+                        Need Return Booking
+                      </Text>
+                    </View>
                   </View>
-                )}
+                  {isChecked && (
+                    <View style={[styles.inputDivs, styles.inputDiv6]}>
+                      <Pressable
+                        onPress={() => setDatePickerVisibilityForReturn(true)}>
+                        <View style={styles.inputContainer}>
+                          <View style={styles.leftIconContainer}>
+                            <TimePicker width={24} height={24} />
+                          </View>
+
+                          <TextInput
+                            style={styles.inputBox}
+                            multiline={true}
+                            numberOfLines={4}
+                            scrollEnabled={true}
+                            placeholder="Return Date and Time"
+                            value={form.returnDate + '' + form.returnTime}
+                            caretHidden={true} //this will hide the Cursor
+                            showSoftInputOnFocus={false} //this will disable the Keyboard to open
+                            onChangeText={value =>
+                              handleInputChange2('date', value)
+                            }
+                            keyboardType="numeric"
+                            onPressIn={showDatePicker2}></TextInput>
+                        </View>
+                      </Pressable>
+                      {errors.returnDateTime !== '' && (
+                        <Text style={styles.errorText}>
+                          {errors.returnDateTime}
+                        </Text>
+                      )}
+                    </View>
+                  )}
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
 
-      <View style={styles.getQuotesDiv}>
-        <Pressable //here I am sending the information of IsReturn journey or not through params but actually we need to use redux to make a global state of IsReturn or not
-          onPress={() => {
-            if (isChecked) {
-              navigation.navigate('Quotes', {showReturnJourney: isChecked});
-            } else {
-              navigation.navigate('QuotesForPickupOnly', {
-                showReturnJourney: isChecked,
-              });
-            }
-          }}>
-          <GetQuotesBtn
-            Btnwidth={'100%'}
-            textInsideBtn="GET QUOTES"
-            onSubmit={handleSubmit}
-          />
-        </Pressable>
-      </View>
-      <View>
-        {isDatePickerVisible && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={pickupdate}
-            mode="date"
-            is24Hour={true}
-            display="default"
-            positiveButton={{label: 'OK', textColor: 'red'}}
-            onChange={onDateChange}
-          />
-        )}
-        {isTimePickerVisible && (
-          <DateTimePicker
-            value={time}
-            mode="time"
-            display="default"
-            onChange={onTimeChange}
-          />
-        )}
-      </View>
+      {/* pop up for invalid date choosen */}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -459,7 +591,7 @@ const Home = () => {
                         letterSpacing: 0.32,
                         lineHeight: 18 * 1.4,
                       }}>
-                      Cancelled Successfully
+                      Schedule
                     </Text>
                   </View>
                   <View style={{height: 24, width: 24}}>
@@ -496,7 +628,7 @@ const Home = () => {
                     </Text>
                   </View>
 
-                  <View style={{marginTop: 16,  height: 132}}>
+                  <View style={{marginTop: 16, height: 132}}>
                     <Text style={styles.popupText1}>
                       Please note that for cab reservations, the advance booking
                       window is limited to a maximum of 365 days.
@@ -512,17 +644,67 @@ const Home = () => {
           </TouchableOpacity>
         </Modal>
       </View>
+
+      {/* lower button box */}
+      <View style={styles.getQuotesDiv}>
+        <GetQuotesBtn
+          Btnwidth={'100%'}
+          textInsideBtn="GET QUOTES"
+          onSubmit={handleSubmit}
+        />
+      </View>
+
+      {/* date and time picker popups */}
+      <View>
+        {isDatePickerVisible && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={pickupdate}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            positiveButton={{label: 'OK', textColor: 'red'}}
+            onChange={onDateChange}
+          />
+        )}
+        {isDatePickerVisibleForReturn && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={returndate}
+            mode="date"
+            is24Hour={true}
+            display="default"
+            positiveButton={{label: 'OK', textColor: 'red'}}
+            onChange={onDateChange2}
+          />
+        )}
+        {isTimePickerVisible && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            onChange={onTimeChange}
+          />
+        )}
+        {isTimePickerVisibleForReturn && (
+          <DateTimePicker
+            value={time}
+            mode="time"
+            display="default"
+            onChange={onTimeChange2}
+          />
+        )}
+      </View>
     </SafeAreaView>
   );
 };
 
 const GetQuotesBtn = ({Btnwidth, textInsideBtn, onSubmit}) => {
   return (
-    <Pressable onPress={onSubmit}>
+    <TouchableOpacity onPress={onSubmit}>
       <View
         style={{
           height: 48,
-
           width: Btnwidth,
         }}>
         <LinearGradient
@@ -562,10 +744,17 @@ const GetQuotesBtn = ({Btnwidth, textInsideBtn, onSubmit}) => {
           </View>
         </LinearGradient>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
+  errorText: {
+    fontSize: 12,
+    color: 'red',
+    fontWeight: 400,
+    fontFamily: 'ProximaNova',
+    marginLeft: 10,
+  },
   gif: {
     width: 50,
     height: 50,
@@ -637,6 +826,9 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
     marginTop: 20,
+  },
+  container1: {
+    backgroundColor: '#F3F7FA',
   },
   lowercontainer: {
     marginTop: 20,
@@ -793,7 +985,6 @@ const styles = StyleSheet.create({
   popupContainer: {
     marginTop: 24,
     marginHorizontal: 20,
-    
   },
   popupText1: {
     color: '#4F565E',
@@ -809,7 +1000,6 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
-    
   },
 });
 

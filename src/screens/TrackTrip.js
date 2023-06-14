@@ -11,6 +11,7 @@ import {
   Dimensions,
   Animated,
   Modal,
+  BackHandler
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Google_Map_Api_Key} from '@env';
@@ -56,6 +57,20 @@ const TrackTrip = ({navigation}) => {
    }, []);
 
    console.log(location)
+
+    useEffect(() => {
+      const backAction = () => {
+        console.log("I am in Tracktrip")
+        navigation.navigate('UpcomingTrip');
+       
+        return true; // This will prevent the event from bubbling up and the default back button functionality from happening.
+      };
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+      return () => backHandler.remove(); // Don't forget to remove the listener when the component is unmounted.
+    }, [navigation]);
 
   return (
     <SafeAreaView

@@ -12,8 +12,9 @@ import {
   Animated,
   Modal,
   TextInput,
+  BackHandler
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import MaskedView from '@react-native-community/masked-view';
 
@@ -27,6 +28,7 @@ import DrawerCross from '../svgImages/DrawerCross.svg';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 import Clock from '../svgImages/Clock.svg';
 import FadedClock from '../svgImages/FadedClock.svg';
+import GradientText from '../components/GradientText';
 
 const UpcomingTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -82,6 +84,22 @@ const UpcomingTrip = ({navigation}) => {
   const handlePressGotItBtn=()=>{
      setModalVisible4(false);
   }
+
+  
+ useEffect(() => {
+   const backAction = () => {
+     navigation.navigate('Mybookings');
+    
+     console.log("back")
+     return true; // This will prevent the event from bubbling up and the default back button functionality from happening.
+   };
+   const backHandler = BackHandler.addEventListener(
+     'hardwareBackPress',
+     backAction,
+   )
+    return () => backHandler.remove(); // Don't forget to remove the listener when the component is unmounted.
+ }, [navigation]);
+
 
   return (
     <SafeAreaView
@@ -307,7 +325,9 @@ const UpcomingTrip = ({navigation}) => {
               justifyContent: 'center',
             }}>
             <TouchableOpacity onPressOut={() => setModalVisible(true)}>
-              <GradientText>Cancel Ride</GradientText>
+              <GradientText style={styles.CancelRidetext}>
+                Cancel Ride
+              </GradientText>
             </TouchableOpacity>
           </View>
         </View>
@@ -918,21 +938,7 @@ const CallBtn = ({textInsideBtn, Btnwidth, handleCallBtnPressed}) => {
   );
 };
 
-const GradientText = ({children}) => {
-  return (
-    <MaskedView
-      style={styles.maskedView}
-      maskElement={<Text style={styles.text}>{children}</Text>}>
-      <LinearGradient
-        locations={[0, 1]}
-        colors={['#00C96D', '#048AD7']}
-        useAngle={true}
-        angle={90}>
-        <Text style={[styles.text, styles.transparentText]}>{children}</Text>
-      </LinearGradient>
-    </MaskedView>
-  );
-};
+
 
 const styles = StyleSheet.create({
   inputStyling: {
@@ -1080,7 +1086,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     textAlign: 'center',
   },
-  text: {
+  CancelRidetext: {
     fontSize: 18,
     fontWeight: 600,
     fontWeight: 'bold',

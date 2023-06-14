@@ -24,7 +24,8 @@ const InputFieldWithCross = ({
   handleHideRouteInput,
   editablity,
   Icon,
-  Icon2
+  Icon2,
+  handleGoToLocation
   
 }) => {
   return (
@@ -54,7 +55,7 @@ const InputFieldWithCross = ({
         style={{
           marginLeft: 12,
           fontSize: FontSize.for_caption,
-          fontFamily: 'ProximaNova-Regular',
+          fontFamily: 'ProximaNova',
 
           flex: 1,
 
@@ -67,7 +68,9 @@ const InputFieldWithCross = ({
         value={value}
         caretHidden={true}
         showSoftInputOnFocus={false}
-        editable={editablity}></TextInput>
+        editable={editablity}
+        onPressOut={handleGoToLocation}
+        ></TextInput>
       <TouchableOpacity
         onPress={handleHideRouteInput}
         style={{

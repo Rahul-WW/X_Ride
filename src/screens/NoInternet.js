@@ -2,11 +2,14 @@ import { View, Text, ScrollView, SafeAreaView, Animated } from 'react-native'
 import React from 'react'
 import BadScreenComponent from '../components/BadScreenComponent'
 import NoInternetImage from "../svgImages/NoInternetImage.svg"
-
+import GoBackBtn from '../components/GoBackBtn';
 const NoInternet = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
-      <ScrollView>
+      <Animated.View style={{marginHorizontal: 20}}>
+        <GoBackBtn />
+      </Animated.View>
+      <ScrollView style={{marginHorizontal: 20}}>
         <BadScreenComponent
           svgImage={<NoInternetImage />}
           text1={'Oh No!'}

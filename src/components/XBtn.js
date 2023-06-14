@@ -55,7 +55,7 @@ const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNova3',
                   letterSpacing: 0.32,
                   lineHeight: 16,
                 }}>
@@ -71,10 +71,8 @@ const XBtn = ({Btnwidth, textInsideBtn, goTo, disability}) => {
                 alignItems: 'center',
                 marginVertical: 10,
               }}>
-             
               <OnboardArrow1 />
               <OnboardArrow2 />
-              
             </View>
           </View>
         </LinearGradient>
