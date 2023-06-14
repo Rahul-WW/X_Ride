@@ -153,11 +153,16 @@ const CompletedArray = [
 const Mybookings = ({navigation}) => {
   
   const [bg, setBg]= useState(true)
-  const handlepress=()=>{
-    
-    setBg(!bg)
-  }
-
+   const handlepress1 = () => {
+     if (bg === false) {
+       setBg(true);
+     }
+   };
+   const handlepress2 = () => {
+     if (bg === true) {
+       setBg(false);
+     }
+   };
  
 
 
@@ -176,12 +181,12 @@ const Mybookings = ({navigation}) => {
             <View style={styles.container}>
               <View style={styles.togglingBtnsDiv}>
                 <UpcomingBtn
-                  handlepress={handlepress}
+                  handlepress={handlepress1}
                   color={bg}
                   text={'Upcoming'}
                 />
                 <CompletedBtn
-                  handlepress={handlepress}
+                  handlepress={handlepress2}
                   color={bg}
                   text={'Completed'}
                 />

@@ -27,7 +27,7 @@ import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 import HeaderForPopUps from '../components/HeaderForPopUps';
 import Filter from '../svgImages/Filter.svg';
 import RadioForm from 'react-native-simple-radio-button';
-
+import GoTop from "../svgImages/GoTop.svg"
 const Cabs = [
   {
     id: 1,
@@ -270,7 +270,7 @@ const QuotesForPickupOnly = ({navigation, route}) => {
                     left: 10,
                     top: 10,
                   }}>
-                  <Sort1 width={20} height={20} />
+                  <GoTop width={20} height={20} />
                 </View>
               </View>
             </LinearGradient>

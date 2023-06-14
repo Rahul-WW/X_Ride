@@ -56,7 +56,7 @@ const slides = [
     image: require('../images/OnboardingImage3.png'),
     title: 'Schedule and enjoy a hassle free travel experience',
     subtitle:
-      'Plan your trip and book via XRide for a stress-free journey & support every step of the way.',
+      'Plan your trip via XRide for a stress-free journey & support every step of the way.',
     slidImg: require('../images/slide3.png'),
     nextbutton: require('../images/getStartedBtn.png'),
     buttonWidth: 177,

@@ -110,21 +110,22 @@ const SummaryContent = () => {
 
   return (
     <View>
-      <Text>Summary content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>Summary content</Text>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              Can I book a cab from you without paying online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFirst(!first)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                Can I book a cab from you without paying online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {first ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {first ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -136,17 +137,18 @@ const SummaryContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -158,19 +160,20 @@ const SummaryContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -182,19 +185,20 @@ const SummaryContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -206,19 +210,20 @@ const SummaryContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What if the car doesn't show up?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFifth(!fifth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What if the car doesn't show up?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {fifth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {fifth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -240,21 +245,22 @@ const PasswordContent = () => {
    const [fifth, setFifth] = useState(false);
   return (
     <View>
-      <Text>Password content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>Password content</Text>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              Can I book a cab from you without paying online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFirst(!first)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                Can I book a cab from you without paying online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {first ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {first ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -266,17 +272,18 @@ const PasswordContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -288,19 +295,20 @@ const PasswordContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -312,19 +320,20 @@ const PasswordContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -336,19 +345,20 @@ const PasswordContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What if the car doesn't show up?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFifth(!fifth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What if the car doesn't show up?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {fifth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {fifth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -370,21 +380,21 @@ const AccountsContent = () => {
      const [fifth, setFifth] = useState(false);
   return (
     <View>
-      <Text>Accounts content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>Accounts content</Text>
 
-     
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -396,19 +406,20 @@ const AccountsContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -420,19 +431,20 @@ const AccountsContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -444,19 +456,20 @@ const AccountsContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What if the car doesn't show up?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFifth(!fifth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What if the car doesn't show up?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {fifth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {fifth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -478,22 +491,23 @@ const SystemContent = () => {
    const [fifth, setFifth] = useState(false);
   return (
     <View>
-      <Text>System content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>System content</Text>
 
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              Can I book a cab from you without paying online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFirst(!first)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                Can I book a cab from you without paying online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {first ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {first ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -505,17 +519,18 @@ const SystemContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -527,19 +542,20 @@ const SystemContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -551,19 +567,20 @@ const SystemContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -575,19 +592,20 @@ const SystemContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What if the car doesn't show up?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFifth(!fifth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What if the car doesn't show up?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {fifth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {fifth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -609,22 +627,23 @@ const ServiceContent = () => {
   const [fifth, setFifth] = useState(false);
   return (
     <View>
-      <Text>Services content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>Services content</Text>
 
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              Can I book a cab from you without paying online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFirst(!first)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                Can I book a cab from you without paying online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {first ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {first ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -636,17 +655,18 @@ const ServiceContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -658,19 +678,20 @@ const ServiceContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -682,19 +703,20 @@ const ServiceContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -706,19 +728,20 @@ const ServiceContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What if the car doesn't show up?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFifth(!fifth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What if the car doesn't show up?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFifth(!fifth)}>
-            {fifth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {fifth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {fifth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -740,22 +763,23 @@ const SecurityContent = () => {
   const [fifth, setFifth] = useState(false);
   return (
     <View>
-      <Text>Security content</Text>
+      <Text style={{marginBottom: 16, color: '#4F565E'}}>Security content</Text>
 
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              Can I book a cab from you without paying online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFirst(!first)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                Can I book a cab from you without paying online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFirst(!first)}>
-            {first ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {first ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {first ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -767,17 +791,18 @@ const SecurityContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <Text style={styles.question}>
-            Do I need to register on your site to book tickets?
-          </Text>
+        <TouchableOpacity onPress={() => setSecond(!second)}>
+          <View style={styles.singleFaqContentBox}>
+            <Text style={styles.question}>
+              Do I need to register on your site to book tickets?
+            </Text>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setSecond(!second)}>
-            {second ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {second ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {second ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -789,19 +814,20 @@ const SecurityContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              When will I receive the vehicle and driver details?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setThird(!third)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                When will I receive the vehicle and driver details?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setThird(!third)}>
-            {third ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {third ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {third ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -813,19 +839,20 @@ const SecurityContent = () => {
         ) : null}
       </View>
       <View style={styles.singleFaq}>
-        <View style={styles.singleFaqContentBox}>
-          <View style={{width: '90%'}}>
-            <Text style={styles.question}>
-              What all payment options I have online?
-            </Text>
-          </View>
+        <TouchableOpacity onPress={() => setFourth(!forth)}>
+          <View style={styles.singleFaqContentBox}>
+            <View style={{width: '90%'}}>
+              <Text style={styles.question}>
+                What all payment options I have online?
+              </Text>
+            </View>
 
-          <TouchableOpacity
-            style={{marginTop: 7}}
-            onPress={() => setFourth(!forth)}>
-            {forth ? <UpArrow /> : <DownArrow />}
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={{marginTop: 7}}>
+              {forth ? <UpArrow /> : <DownArrow />}
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+
         {forth ? (
           <View style={{marginHorizontal: 20, marginTop: 12}}>
             <Text style={styles.answer}>
@@ -836,7 +863,6 @@ const SecurityContent = () => {
           </View>
         ) : null}
       </View>
-     
     </View>
   );
 };
@@ -850,7 +876,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderWidth:1,
-    borderColor:"transparent"
+    
+     borderColor:"transparent"
   },
   tabText: {
     fontSize: 16,

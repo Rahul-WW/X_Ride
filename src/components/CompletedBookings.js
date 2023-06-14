@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   pickupText: {
     fontSize: 16,
     fontWeight: 400,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     color: '#292F3B',
     letterSpacing: 0.32,
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   dateTimeOfpickup: {
     fontSize: 13,
     fontWeight: 400,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     color: '#4F565E',
     letterSpacing: 0.32,
 
@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   dashedline: {
     position: 'absolute',

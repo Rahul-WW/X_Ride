@@ -15,6 +15,7 @@ const CompletedBtn = ({color, handlepress, text}) => {
               borderBottomRightRadius: 16,
               borderTopRightRadius: 16,
               borderWidth: 1,
+              borderColor: '#E3E9ED',
             }}>
             <View
               style={{
@@ -28,7 +29,7 @@ const CompletedBtn = ({color, handlepress, text}) => {
                   textAlign: 'center',
                   fontSize: 18,
                   fontWeight: 500,
-
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18 * 1.3,
                   color: '#4F565E',
@@ -47,6 +48,7 @@ const CompletedBtn = ({color, handlepress, text}) => {
           style={{
             borderBottomRightRadius: 16,
             borderTopRightRadius: 16,
+            
           }}>
           <View
             style={{
@@ -60,7 +62,7 @@ const CompletedBtn = ({color, handlepress, text}) => {
                 textAlign: 'center',
                 fontSize: 18,
                 fontWeight: 500,
-                fontFamily: 'ProximaNova-Regular',
+                fontFamily: 'ProximaNova',
                 letterSpacing: 0.32,
                 lineHeight: 18 * 1.4,
                 color: '#FFFFFF',

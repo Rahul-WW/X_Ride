@@ -14,7 +14,7 @@ import {
   TouchableHighlight,
   Pressable,
   Alert,
-  Animated
+  Animated,
 } from 'react-native';
 
 import GoBackWhiteBtn from '../components/GoBackWhiteBtn';
@@ -27,7 +27,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Sort1 from '../svgImages/Sort1.svg';
 import HeaderForPopUps from '../components/HeaderForPopUps';
 import RadioForm from 'react-native-simple-radio-button';
-
+import GoTop from '../svgImages/GoTop.svg';
 
 const Cabs = [
   {
@@ -186,14 +186,19 @@ const Quotes = ({navigation, route}) => {
   const [car2, setCar2] = useState(null);
   const scrollViewRef = useRef();
 
-
-  //this function is for toggling the pickup and return cab list and the btn on top
-  const handlepress = () => {
-    setBg(!bg);
+  //these two function is for toggling the pickup and return cab list and the btn on top
+  const handlepress1 = () => {
+    if (bg === false) {
+      setBg(true);
+    }
+  };
+  const handlepress2 = () => {
+      if (bg === true) {
+        setBg(false);
+      }
   };
 
-
-  //this function will select the pickup cab and open the popup 
+  //this function will select the pickup cab and open the popup
   const handlePress = cab_no => {
     console.log(cab_no);
     setModalVisible(true);
@@ -205,8 +210,7 @@ const Quotes = ({navigation, route}) => {
     });
   };
 
-
-  //this function will select the return cab and open the popup 
+  //this function will select the return cab and open the popup
   const handlePress2 = cab_no => {
     console.log(cab_no);
     setModalVisible2(true);
@@ -218,24 +222,21 @@ const Quotes = ({navigation, route}) => {
     });
   };
 
-
   //this function will close the popup and change the tab to pickup cab list and scroll to the top of the screen
-  const handlePressNext=()=>{
-    setBg(false)
-     setModalVisible(false);
-      scrollViewRef.current.scrollTo({y: 0, animated: true});
-  }
-
+  const handlePressNext = () => {
+    setBg(false);
+    setModalVisible(false);
+    scrollViewRef.current.scrollTo({y: 0, animated: true});
+  };
 
   //this function will close the popup and redirect to the Trip details
-  const handlePressContinue=()=>{
-     setModalVisible(false);
-     navigation.navigate('TripDetails', {
-       showReturnJourney: route.params.showReturnJourney,
-     });
-  }
+  const handlePressContinue = () => {
+    setModalVisible(false);
+    navigation.navigate('TripDetails', {
+      showReturnJourney: route.params.showReturnJourney,
+    });
+  };
 
- 
   return (
     <SafeAreaView style={styles.mainContainer}>
       <Animated.View>
@@ -246,12 +247,12 @@ const Quotes = ({navigation, route}) => {
           <View style={styles.container}>
             <View style={styles.togglingBtnsDiv}>
               <UpcomingBtn
-                handlepress={handlepress}
+                handlepress={handlepress1}
                 color={bg}
                 text={'For Pickup'}
               />
               <CompletedBtn
-                handlepress={handlepress}
+                handlepress={handlepress2}
                 color={bg}
                 text={'For Return'}
               />
@@ -265,7 +266,6 @@ const Quotes = ({navigation, route}) => {
 
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: 'red',
                     paddingHorizontal: 10,
                     borderRadius: 16,
                     borderColor: '#E3E9ED',
@@ -488,7 +488,7 @@ const Quotes = ({navigation, route}) => {
                     left: 10,
                     top: 10,
                   }}>
-                  <Sort1 width={20} height={20} />
+                  <GoTop width={20} height={20} />
                 </View>
               </View>
             </LinearGradient>
@@ -513,7 +513,7 @@ const HeaderForQuotes = () => {
           marginHorizontal: 20,
           marginTop: 13,
           alignItems: 'center',
-          gap: 8,
+          
         }}>
         <View style={{paddingLeft: 8}}>
           <GoBackWhiteBtn />

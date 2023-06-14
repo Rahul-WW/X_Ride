@@ -19,7 +19,7 @@ const Header = ({headertext}) => {
             marginHorizontal: 16,
             marginTop: 13,
             alignItems: 'center',
-            gap: 12,
+           
           }}>
           <View style={{padding: 8}}>
             <GoBackWhiteBtn />

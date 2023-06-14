@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 400,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   priceBox: {
     backgroundColor: '#048AD7',
@@ -190,6 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexWrap: 'wrap',
     marginBottom: 20,
+    
   },
   passengerBox: {
     flexDirection: 'row',

@@ -70,6 +70,8 @@ const ReturnCabs = ({
               </View>
             </View>
 
+
+           {/* <View style={{borderWidth:1}}></View> */}
             <View // 3rd ie pasengers nd ratings
               style={styles.cabDetails}>
               <View style={styles.passengerBox}>
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
   },
   priceCabDetails: {
     borderColor: '#E3E9ED',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
 
     marginHorizontal: 20,
     height: 68,
@@ -185,11 +187,13 @@ const styles = StyleSheet.create({
   priceBox: {
     backgroundColor: '#048AD7',
     paddingLeft: 12,
-    paddingTop: 3,
     paddingRight: 12,
-    paddingBottom: 3,
+   
     height: 31,
     borderRadius: 12,
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:"center"
   },
   priceText: {
     color: 'white',
@@ -233,6 +237,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     fontFamily: 'ProximaNova',
+    color: '#4F565E',
   },
 });
 

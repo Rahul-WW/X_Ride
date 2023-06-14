@@ -169,7 +169,7 @@ const SignUp = ({navigation}) => {
       </Animated.View>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
+        style={styles.container1}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 10} // Adjust the offset here
       >
        
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 400,
     fontFamily: 'ProximaNova',
-    marginLeft: 10
+    marginLeft: 10,
   },
   inputBox: {
     width: '100%',
@@ -506,13 +506,15 @@ const styles = StyleSheet.create({
     color: '#4F565E',
   },
   mainContainer: {
-    height,
     backgroundColor: '#F3F7FA',
+    flex:1
   },
   container: {
     marginHorizontal: 20,
   },
-
+  container1: {
+   flex:1
+  },
   logoBox: {
     width,
     height: 68,

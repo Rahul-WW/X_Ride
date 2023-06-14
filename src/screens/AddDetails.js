@@ -22,7 +22,7 @@ import Header from '../components/Header';
 import CheckedRadio from '../svgImages/CheckedRadio.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
-import CheckedCB from "../svgImages/CheckedCB.svg"
+import CheckedCB from '../svgImages/CheckedCB.svg';
 
 const PriceList = [
   {name: 'Ride-Id', value: '#4502500121'},
@@ -32,7 +32,6 @@ const PriceList = [
   {name: 'Service Charges', value: 19},
   {name: 'Taxes', value: 34},
   {name: 'Coupon', value: -5},
- 
 ];
 
 const AddDetails = () => {
@@ -41,7 +40,7 @@ const AddDetails = () => {
   const [radio1, setRadio1] = useState(false);
   const [radio2, setRadio2] = useState(false);
   const [radio3, setRadio3] = useState(false);
-  const [data, setData] = useState([]);  // data willl come from API response as of now PriceList is used Hard Coded. 
+  const [data, setData] = useState([]); // data willl come from API response as of now PriceList is used Hard Coded.
   const [totalPrice, setTotalPrice] = useState(0);
 
   const handleCheckBox = () => {
@@ -68,18 +67,17 @@ const AddDetails = () => {
     Alert.alert('yes pressed');
   };
 
-   useEffect(() => {
-     calculateTotalPrice();
-   }, [data]);
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [data]);
 
-
-   const calculateTotalPrice = () => {
-     const total = PriceList.slice(2).reduce(
-       (accumulator, item) => accumulator + item.value,
-       0,
-     );
-     setTotalPrice(total);
-   };
+  const calculateTotalPrice = () => {
+    const total = PriceList.slice(2).reduce(
+      (accumulator, item) => accumulator + item.value,
+      0,
+    );
+    setTotalPrice(total);
+  };
   return (
     <SafeAreaView style={{backgroundColor: '#F3F7FA', flex: 1}}>
       <Animated.View>
@@ -119,7 +117,7 @@ const AddDetails = () => {
               </View>
               <View style={styles.checkBoxDiv}>
                 <View>
-                  <CheckBox
+                  {/* <CheckBox
                     style={{width: 18}}
                     isChecked={isChecked}
                     onClick={handleCheckBox}
@@ -127,7 +125,21 @@ const AddDetails = () => {
                       // <Image source={require('../images/checkedCheckBox.png')} />
                       <CheckedCB width={20} height={20} />
                     }
-                  />
+                  /> */}
+                  {!isChecked ? (
+                    <TouchableOpacity
+                      onPress={handleCheckBox}
+                      style={{
+                        borderWidth: 1,
+                        width: 18,
+                        height: 18,
+                        borderColor: '#4F565E',
+                      }}></TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity onPress={handleCheckBox}>
+                      <CheckedCB width={20} height={20} />
+                    </TouchableOpacity>
+                  )}
                 </View>
 
                 <View>
@@ -155,20 +167,32 @@ const AddDetails = () => {
                   {height: dropdownHidden === false ? 56 : 636},
                 ]}>
                 <View style={styles.offerAndIconBox}>
-                  <View>
-                    <Text style={styles.viewAndOfferText}>
-                      View & Apply Offers
-                    </Text>
-                  </View>
-
                   <TouchableOpacity
-                    onPress={openDropDown}
-                    style={{
-                      width: 20,
-                      height: 20,
-                      padding: 4,
-                    }}>
-                    <DownArrow />
+                    style={{width: '100%'}}
+                    onPress={openDropDown}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        alignItems: 'center',
+                        height: 56,
+                      }}>
+                      <View>
+                        <Text style={styles.viewAndOfferText}>
+                          View & Apply Offers
+                        </Text>
+                      </View>
+
+                      <View
+                        style={{
+                          width: 20,
+                          height: 20,
+                          padding: 4,
+                        }}>
+                        <DownArrow />
+                      </View>
+                    </View>
                   </TouchableOpacity>
                 </View>
                 {dropdownHidden && (
@@ -459,10 +483,10 @@ const InputFeildForDetails = ({placeholder}) => {
         style={{
           marginLeft: 20,
           fontSize: 16,
-          fontFamily: 'ProximaNova-Regular',
+          fontFamily: 'ProximaNova',
 
           flex: 1,
-       
+
           lineHeight: 16 * 1.4,
           letterSpacing: 0.32,
         }}
@@ -554,6 +578,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   secondText: {
     fontSize: 16,
@@ -561,6 +586,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   inputBoxContainer: {
     marginTop: 16,
@@ -575,9 +601,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     marginBottom: 20,
+    alignItems: 'center',
   },
   checkboxText: {
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     fontSize: 16,
     fontWeight: 400,
     letterSpacing: 0.32,
@@ -588,7 +615,7 @@ const styles = StyleSheet.create({
 
     marginTop: 20,
     marginBottom: 40,
-    marginBottom:118,
+    marginBottom: 118,
   },
 
   dropDownBox: {
@@ -598,7 +625,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#E3E9ED',
     borderWidth: 1,
-    
   },
   offerAndIconBox: {
     height: 56 - 24,
@@ -613,6 +639,7 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     fontSize: 18,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
 
   unChecked: {
@@ -643,6 +670,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   offerDetails: {
     fontWeight: 400,
@@ -650,6 +678,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
 
   orderSummaryText: {
@@ -658,6 +687,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#292F3B',
+    fontFamily: 'ProximaNova',
   },
 
   totalCostDetails: {
@@ -671,6 +701,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   priceName: {
     fontSize: 16,
@@ -678,6 +709,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   totalFairText: {
     fontSize: 18,
@@ -685,6 +717,7 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
 
   horizontalLinebelowApplyOffers: {
@@ -705,6 +738,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
   couponRelatedBox: {
     marginHorizontal: 20,
@@ -723,6 +757,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
 
   orderTextBox: {

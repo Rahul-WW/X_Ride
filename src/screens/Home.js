@@ -326,11 +326,11 @@ console.log(errors)
         flex: 1,
         position: 'relative',
         backgroundColor: '#F3F7FA',
-        height,
       }}>
       <Animated.View>
         <View style={styles.logoBox}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity
+            onPress={() => navigation.openDrawer()}>
             <View style={styles.menulogo}>
               <MenuIcon width={24} height={24} />
             </View>
@@ -734,7 +734,7 @@ const GetQuotesBtn = ({Btnwidth, textInsideBtn, onSubmit}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>
@@ -778,6 +778,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
   leftIconContainer: {
     marginLeft: 20,
@@ -796,6 +797,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: 16,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   logoBox: {
     width,
@@ -812,10 +814,15 @@ const styles = StyleSheet.create({
   },
   menulogo: {
     position: 'absolute',
-    left: 20,
-    top: 15,
-    width: 24,
-    height: 24,
+    // left: 20,
+    // top: 10,
+    width: 54,
+    height:54,
+    
+    borderColor: 'white',
+    paddingTop: 15,
+    paddingLeft: 20
+    
   },
   belllogo: {
     position: 'absolute',
@@ -852,7 +859,7 @@ const styles = StyleSheet.create({
     top: '77.87%',
     fontSize: 18,
     color: 'white',
-    fontFamily: 'Proxima Nova_regular',
+    fontFamily: 'ProximaNova',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
     fontWeight: 600,
@@ -886,7 +893,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   inputDiv6: {
-    marginBottom: 20,
+    marginBottom: 60,
   },
 
   line: {
@@ -912,7 +919,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   checkboxText: {
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     fontSize: FontSize.for_caption,
     fontWeight: FontWeight.for_caption,
     color: Color.for_caption,
@@ -993,6 +1000,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     marginBottom: 20,
+    fontFamily: 'ProximaNova',
   },
   popupText2: {
     color: '#4F565E',
@@ -1000,6 +1008,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

@@ -55,7 +55,7 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova3',
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>

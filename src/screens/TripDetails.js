@@ -8,11 +8,15 @@ import {
   Pressable,
   Dimensions,
   Animated,
+  TouchableOpacity,
+  Modal, TextInput
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
-
+import DrawerCross from "../svgImages/DrawerCross.svg"
 import Header from '../components/Header';
 import Star2 from '../svgImages/Star2.svg';
+import Clock from '../svgImages/Clock.svg';
+import FadedClock from '../svgImages/FadedClock.svg';
 
 import CabIcon from '../svgImages/CabIcon.svg';
 import CabType from '../svgImages/CabType.svg';
@@ -22,22 +26,61 @@ const {height, width} = Dimensions.get('window');
 import TripDetailsComponent from '../components/TripDetailsComponent';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import WhitePickup from '../svgImages/WhitePickup.svg';
+import EditTrip from '../svgImages/EditTrip.svg';
+import WhiteVia from '../svgImages/WhiteVia.svg';
+import WhiteDrop from '../svgImages/WhiteDrop.svg';
+import LinearGradient from 'react-native-linear-gradient';
+
+
 
 const TripDetails = ({navigation, route}) => {
- 
- const {showReturnJourney} = route.params;
- console.log('trip', showReturnJourney);
+  const {showReturnJourney} = route.params;
+  console.log('trip', showReturnJourney);
   const PickupLocation = 'Manchester Club Stadium (M16)';
   const PickupDateTime = 'Wed 24 Feb, 12 PM';
   const DropLocation = 'Elland Road Stadium, Leed United';
   const DropDateTime = 'Wed 22 Feb';
-  const VaiRoute = 'BackSide Road Stadium';
+  const VaiRoute = 'Great Ancoats Street';
   const PricePickupJourney = 280;
   const PriceReturnJourney = 240;
- 
 
-  
- 
+  const [modalVisible3, setModalVisible3] = useState(false);
+  const [modalVisible4, setModalVisible4] = useState(false);
+
+  const [EditTimeValue, setEditTimeValue] = useState('03.15 PM');
+
+
+  const handleEditBtnPress = () => {
+    const pickupTime = new Date(); // this will come from backend
+    pickupTime.setHours(17, 15, 0, 0); // take random time of 7.15 PM
+
+    let currentTime = new Date();
+    console.log(pickupTime, currentTime);
+    // currentTime.setHours(
+    //   parseInt(time.split(':')[0]),
+    //   parseInt(time.split(':')[1]),
+    //   0,
+    //   0,
+    // );
+
+    let timeDifference = (pickupTime - currentTime) / (1000 * 60 * 60);
+
+    if (timeDifference < 6) {
+      setModalVisible4(true);
+    } else {
+      setModalVisible3(true);
+    }
+  };
+
+  const handlePressSaveBtn = () => {
+    setModalVisible3(false);
+  };
+
+  const handlePressGotItBtn = () => {
+    setModalVisible4(false);
+  };
+
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -50,12 +93,21 @@ const TripDetails = ({navigation, route}) => {
         <View style={{backgroundColor: '#F3F7FA'}}>
           <View>
             <View style={styles.container}>
-              <TripDetailsComponent
+              {/* <TripDetailsComponent
                 PickupLocation={PickupLocation}
                 PickupDateTime={PickupDateTime}
                 DropLocation={DropLocation}
                 DropDateTime={DropDateTime}
                 VaiRoute={VaiRoute}
+              /> */}
+
+              <TripDetailsIncludingViaRoutes
+                PickupLocation={PickupLocation}
+                PickupDateTime={PickupDateTime}
+                DropLocation={DropLocation}
+                DropDateTime={DropDateTime}
+                VaiRoute={VaiRoute}
+                handleEditBtnPress={handleEditBtnPress}
               />
               <PickupDetails
                 PickupLocation={PickupLocation}
@@ -133,6 +185,8 @@ const TripDetails = ({navigation, route}) => {
           </View>
         </View>
       </View>
+
+     
     </SafeAreaView>
   );
 };
@@ -292,7 +346,151 @@ const ReturnDetails = ({
   );
 };
 
+const TripDetailsIncludingViaRoutes = ({
+  PickupLocation,
+  PickupDateTime,
+  DropLocation,
+  DropDateTime,
+  VaiRoute,
+  handleEditBtnPress,
+}) => {
+  return (
+    <View
+      style={{
+        height: 263,
+        borderWidth: 1,
+        borderRadius: 20,
+        backgroundColor: '#292F3B',
+        position: 'relative',
+        marginBottom: 32,
+      }}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 20,
+          left: 20,
+          right: 20,
+          bottom: 20,
+          backgroundColor: '#292F3B',
+        }}>
+        <View style={styles.pickupBox}>
+          <WhitePickup width={24} height={24} />
+
+          <View
+            style={{
+              height: 39,
+            }}>
+            <Text style={styles.pickupText}>{PickupLocation}</Text>
+            <Text style={styles.dateTimeOfpickup}>{PickupDateTime}</Text>
+          </View>
+        </View>
+
+       
+
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 12,
+            marginTop: 30+22+12,
+          }}>
+          <WhiteVia width={24} height={24} />
+
+          <View>
+            <Text style={styles.pickupText}>{VaiRoute}</Text>
+          </View>
+        </View>
+
+        <View style={styles.dropLocationBox}>
+          <View style={{marginTop: 16}}>
+            <WhiteDrop width={24} height={24} />
+          </View>
+
+          <View
+            style={{
+              height: 39,
+              marginTop: 5,
+            }}>
+            <Text style={styles.pickupText}>{DropLocation}</Text>
+            <Text style={styles.dateTimeOfpickup}>{DropDateTime}</Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            height: 73,
+            width: 1,
+            position: 'absolute',
+
+            borderLeftWidth: 1,
+            borderColor: 'white',
+            borderStyle: 'dashed',
+            left: 11.75,
+            top: 28,
+          }}></View>
+        <View
+          style={{
+            height: 73,
+            width: 1,
+            position: 'absolute',
+            borderLeftWidth: 1,
+            borderColor: 'white',
+            borderStyle: 'dashed',
+            left: 11.75,
+            top: 126,
+          }}></View>
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
+
+  dropLocationBox: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 54,
+  },
+  editBox: {
+    height: 22,
+    marginTop: 12,
+    left: 36,
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'center',
+    width: 100,
+  },
+
+  editText: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#FFFFFF',
+    letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
+    lineHeight: 16 * 1.4,
+  },
+  pickupText: {
+    fontSize: 16,
+    fontWeight: 400,
+
+    color: 'white',
+    letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
+    lineHeight: 16 * 1.4,
+  },
+  dateTimeOfpickup: {
+    fontSize: 13,
+    fontWeight: 400,
+    fontFamily: 'ProximaNova',
+    color: '#ffffff',
+    letterSpacing: 0.32,
+
+    lineHeight: 16 * 1,
+  },
+  pickupBox: {
+    flexDirection: 'row',
+    gap: 12,
+    height: 39,
+  },
   mainContainer: {
     flex: 1,
     justifyContent: 'space-between',
@@ -353,9 +551,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
   },
   horizontalLine: {
-   
-   
-     
     marginHorizontal: 20,
     marginBottom: 16,
     borderRadius: 2,

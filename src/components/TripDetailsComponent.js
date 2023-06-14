@@ -1,4 +1,4 @@
-import {View, Text, Dimensions, Image, StyleSheet} from 'react-native';
+import {View, Text, Dimensions, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 
 const {width, height} = Dimensions.get('window');
@@ -34,6 +34,12 @@ const TripDetailsComponent = ({
             <Text style={styles.dateTimeOfpickup}>{PickupDateTime}</Text>
           </View>
         </View>
+        {/* <TouchableOpacity onPress={handleEditBtnPress}>
+          <View style={styles.editBox}>
+            <EditTrip />
+            <Text style={styles.editText}>EDIT</Text>
+          </View>
+        </TouchableOpacity> */}
 
         {/* this is Via icons and vai Location box */}
 
@@ -203,11 +209,11 @@ const styles = StyleSheet.create({
   },
   dashedline2: {
     position: 'absolute',
-
+     width:1,
     borderColor: 'white',
     borderStyle: 'dashed',
-    borderRightWidth: 1,
-    left: 32,
+    borderWidth: 1,
+    left: 31,
     height: 28,
     top: 97,
     zIndex: 1000,

@@ -29,7 +29,7 @@ import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 import Clock from '../svgImages/Clock.svg';
 import FadedClock from '../svgImages/FadedClock.svg';
 import GradientText from '../components/GradientText';
-
+import {Linking} from 'react-native';
 const UpcomingTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
@@ -41,13 +41,21 @@ const UpcomingTrip = ({navigation}) => {
 
   // console.log(selectedfromList);
 
-  const handleCallBtnPressed = () => {
-    navigation.navigate('TrackTrip');
+
+  //this function is for making a call
+  const handleCallBtnPressed = phoneNumber => {
+   const phoneUrl = `tel:${phoneNumber}`;
+   Linking.openURL(phoneUrl);    
   };
+
+
+
   const handlePressConfirmCancel = () => {
     setModalVisible(false);
     setModalVisible2(true);
   };
+
+
 
   const handlePressGetNewQuotes = () => {
     setModalVisible2(false);
@@ -214,7 +222,9 @@ const UpcomingTrip = ({navigation}) => {
                       textInsideBtn={'CALL DRIVER'}
                       Btnwidth={'100%'}
                       handleCallBtnPressed={handleCallBtnPressed}
+                      phoneNumber={'9973764333'}
                     />
+
                   </View>
                 </View>
               </LinearGradient>
@@ -359,7 +369,7 @@ const UpcomingTrip = ({navigation}) => {
             <XBtnWithoutArrow
               Btnwidth={129}
               textInsideBtn={'TRACK'}
-              goTo={'Payment'}
+              goTo={'TrackTrip'}
             />
           </View>
         </View>
@@ -888,9 +898,9 @@ const UpcomingTrip = ({navigation}) => {
   );
 };
 
-const CallBtn = ({textInsideBtn, Btnwidth, handleCallBtnPressed}) => {
+const CallBtn = ({textInsideBtn, Btnwidth, handleCallBtnPressed, phoneNumber}) => {
   return (
-    <Pressable onPress={handleCallBtnPressed}>
+    <Pressable onPress={() => handleCallBtnPressed(phoneNumber)}>
       <View
         style={{
           height: 48,
@@ -924,7 +934,7 @@ const CallBtn = ({textInsideBtn, Btnwidth, handleCallBtnPressed}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>

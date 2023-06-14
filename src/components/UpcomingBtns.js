@@ -27,6 +27,8 @@ const UpcomingBtn = ({color, handlepress, text}) => {
             style={{
               borderBottomLeftRadius: 16,
               borderTopLeftRadius: 16,
+              borderWidth: 1,
+              borderColor: '#E3E9ED',
             }}>
             <View
               style={{
@@ -34,6 +36,7 @@ const UpcomingBtn = ({color, handlepress, text}) => {
                 justifyContent: 'center',
                 alignSelf: 'center',
                 marginVertical: 11,
+                alignItems: 'center',
               }}>
               <Text
                 style={{
@@ -58,6 +61,7 @@ const UpcomingBtn = ({color, handlepress, text}) => {
             borderBottomLeftRadius: 16,
             borderTopLeftRadius: 16,
             borderWidth: 1,
+            borderColor: '#E3E9ED',
           }}>
           <View
             style={{
