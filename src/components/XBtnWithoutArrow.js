@@ -46,7 +46,7 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginVertical: 14,
+                height: 48
               }}>
               <Text
                 style={{
@@ -55,9 +55,9 @@ const XBtnWithoutArrow = ({Btnwidth, textInsideBtn, goTo, disability, }) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova',
+                  fontFamily: 'ProximaNovaSemibold',
                   letterSpacing: 0.32,
-                  lineHeight: 18,
+                  
                 }}>
                 {textInsideBtn}
               </Text>

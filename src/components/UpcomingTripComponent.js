@@ -49,7 +49,7 @@ const UpcomingTripComponent = ({widthEditBtn, isInpayment, handleEditBtnPress}) 
         </View>
 
         {widthEditBtn === true ? (
-          <TouchableOpacity  onPress={handleEditBtnPress}>
+          <TouchableOpacity onPress={handleEditBtnPress}>
             <View style={styles.editBox}>
               <EditTrip />
               <Text style={styles.editText}>EDIT</Text>
@@ -113,6 +113,7 @@ const UpcomingTripComponent = ({widthEditBtn, isInpayment, handleEditBtnPress}) 
               flexDirection: 'row',
               justifyContent: 'space-between',
               marginBottom: 16,
+              
             }}>
             <View style={styles.iconWithText}>
               <View style={styles.svgSize2}>
@@ -137,6 +138,7 @@ const UpcomingTripComponent = ({widthEditBtn, isInpayment, handleEditBtnPress}) 
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
+              
             }}>
             <View style={styles.iconWithText2}>
               <View style={styles.svgSize}>
@@ -273,12 +275,14 @@ const styles = StyleSheet.create({
 
     height: 22,
     alignItems: 'center',
+    width: '50%',
   },
   iconWithText2: {
     flexDirection: 'row',
     gap: 8,
-
+    width: '50%',
     height: 22,
+    
   },
   svgSize: {
     height: 20,

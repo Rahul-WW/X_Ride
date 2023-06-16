@@ -59,6 +59,7 @@ const InputField=( {source, placeholder, value, dateInput,OpenModal,Icon, onDate
           borderRadius: 16,
           lineHeight: 16 * 1.4,
           color: '#4F565E',
+          letterSpacing: .32
         }}
         multiline={true}
         numberOfLines={4}

@@ -26,17 +26,17 @@ import LoaderIndicator from '../components/LoaderIndicator';
 import HeaderDrawerScreens from '../components/HeaderDrawerScreens';
 import MapView, {Marker} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-//
+import {Linking} from 'react-native';
 const TrackTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
     const [location, setLocation] = useState(null);
 
-  const handleCallBtnPressed = () => {
-    Alert.alert('Make a call to driver');
-  };
-  
- 
+   const handleCallBtnPressed = phoneNumber => {
+     const phoneUrl = `tel:${phoneNumber}`;
+     Linking.openURL(phoneUrl);
+   };
+
 
 
 
@@ -102,8 +102,10 @@ const TrackTrip = ({navigation}) => {
                 coordinate={location}
               />
             </MapView>
-          </View> 
-        ) : <LoaderIndicator/>}
+          </View>
+        ) : (
+          <LoaderIndicator />
+        )}
 
         <View style={styles.container}>
           <UpcomingTripComponent
@@ -203,6 +205,7 @@ const TrackTrip = ({navigation}) => {
                       textInsideBtn={'CALL DRIVER'}
                       Btnwidth={'100%'}
                       handleCallBtnPressed={handleCallBtnPressed}
+                      phoneNumber={'9973764333'}
                     />
                   </View>
                 </View>

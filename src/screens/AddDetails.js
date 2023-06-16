@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNova5',
   },
   secondText: {
     fontSize: 16,
@@ -639,7 +639,8 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     fontSize: 18,
     letterSpacing: 0.32,
-    fontFamily: 'ProximaNova',
+    // fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaSemibold',
   },
 
   unChecked: {

@@ -385,6 +385,7 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
+    fontFamily: 'ProximaNovaSemibold',
   },
   xlogo: {
     marginTop: 13,
@@ -410,7 +411,7 @@ const styles = StyleSheet.create({
   profileBox: {
     width: '100%',
     height: 66,
-   
+
     marginTop: 24,
     flexDirection: 'row',
     alignItems: 'center',
@@ -422,7 +423,6 @@ const styles = StyleSheet.create({
     width: '76%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-   
   },
   text1: {
     fontSize: 16,
@@ -430,6 +430,7 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNovaMedium',
   },
   text2: {
     fontWeight: 400,
@@ -437,6 +438,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   text3: {
     fontWeight: 400,
@@ -444,6 +446,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   headerBox: {
     height: 54,
@@ -470,7 +473,12 @@ const styles = StyleSheet.create({
     gap: 12,
     alignItems: 'center',
   },
-  title: {fontSize: 16, fontWeight: 400, color: '#4F565E'},
+  title: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#4F565E',
+    fontFamily: 'ProximaNova',
+  },
   screenBox2: {
     marginTop: 24,
     height: 24,

@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.for_title,
     color: Color.for_title,
     fontWeight: 600,
-    fontFamily: 'ProximaNova ',
+    fontFamily: 'ProximaNovaSemibold',
     letterSpacing: LetterSpacing.letterSpacing,
     lineHeight: LineHeight.lineHeight,
   },

@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
- Image,
+  Image,
   Platform,
 } from 'react-native';
 import {PermissionsAndroid} from 'react-native';
@@ -26,16 +26,33 @@ import LoaderIndicator from '../components/LoaderIndicator';
 import Target from '../svgImages/Target.svg';
 import Geolocation from '@react-native-community/geolocation';
 
+
+import {
+  PickupLocationReq,
+  DropLocationReq,
+  ViaLocationReq
+} from '../Redux/homeform/HomeActions'; //this is action
+import {useSelector, useDispatch} from 'react-redux';
+
+// import store from '../Redux/store';
+
 import axios from 'axios';
-const Location = ({navigation}) => {
+ const Location = ({navigation, route }) => {
+     const from= route.params
+      console.log(from)
+ 
   const [isloading, setIsloading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [predictions, setPredictions] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('');
-  const [getCurrentAddress, setGetCurrentAddress]= useState("")
+  const [getCurrentAddress, setGetCurrentAddress] = useState('');
+
+  const dispatch = useDispatch();
+
+  const form = useSelector(state => state.form); //takeing data from store
 
   const handleSearchTextChange = text => {
     setSearchText(text);
@@ -43,7 +60,6 @@ const Location = ({navigation}) => {
 
     // Clear the previous timeout
     clearTimeout(typingTimeout);
-    
 
     const newTypingTimeout = setTimeout(() => {
       fetch(
@@ -52,22 +68,19 @@ const Location = ({navigation}) => {
         .then(response => response.json())
         .then(data => {
           setPredictions(data.predictions);
-          console.log(data.predictions);
-           //Keyboard.dismiss();
+          // console.log(data.predictions);
+          //Keyboard.dismiss();
         })
         .catch(error => {
-         console.error('Error fetching predictions:', error);
-          if (error.message){
+          console.error('Error fetching predictions:', error);
+          if (error.message) {
             navigation.navigate('NoInternet');
           }
         });
     }, 400);
-    
+
     setTypingTimeout(newTypingTimeout);
   };
-
-
-
 
   const handlePredictionSelect = prediction => {
     let finalTextToDIsplay =
@@ -75,92 +88,100 @@ const Location = ({navigation}) => {
       ' ' +
       prediction.structured_formatting.secondary_text;
 
-    if (finalTextToDIsplay.length <= 35) {
-      setSearchText(finalTextToDIsplay);
-    } else {
-      let subString = finalTextToDIsplay.substring(0, 35);
-      setSearchText(subString + '...');
+    if (from.from === 'pickup') {
+      dispatch(PickupLocationReq(finalTextToDIsplay));
+    } else if (from.from === 'drop') {
+      dispatch(DropLocationReq(finalTextToDIsplay));
+    } else if (from.from === 'vai0') {
+      dispatch(ViaLocationReq(finalTextToDIsplay));
+    } else if (from.from === 'vai1') {
+      dispatch(ViaLocationReq(finalTextToDIsplay));
+    } else if (from.from === 'vai2') {
+      dispatch(ViaLocationReq(finalTextToDIsplay));
     }
+      if (finalTextToDIsplay.length <= 35) {
+        setSearchText(finalTextToDIsplay);
+      } else {
+        let subString = finalTextToDIsplay.substring(0, 35);
+        setSearchText(subString + '...');
+      }
     setShowSuggestions(false);
     navigation.goBack();
   };
-
-
-
 
   const handlePressCrossBtn = () => {
     setShowSuggestions(false);
     setSearchText('');
   };
 
-
-
-
-   const requestLocationPermission = async () => {
-    setIsloading(true)
-     if (Platform.OS === 'android') {
-       try {
-         const granted = await PermissionsAndroid.request(
-           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-           {
-             title: 'Location Permission',
-             message: 'MyApp needs access to your location',
-           },
-         );
-         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-           console.log('You can use the location');
-           fetchLocation();
-         } else {
-           console.log('Location permission denied');
-         }
-       } catch (err) {
-         console.warn(err);
-       }
-     } else {
-       fetchLocation();
-     }
-   };
-
-
-
-   const fetchLocation = () => {
-     Geolocation.getCurrentPosition(    
-       position => {
-         const {latitude, longitude} = position.coords;
-         console.log(latitude, longitude);
-         setCurrentLocation({latitude, longitude});
-         console.log(latitude, longitude);
-          getAddress(latitude, longitude);
-       },
-       error => console.log(error),
-       {enableHighAccuracy: false, timeout: 30000, maximumAge: 1000},
-     );
-    
-   };
-
-
-
-    const getAddress = async (lat, lng) => {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Api_Key}`;
+  const requestLocationPermission = async () => {
+    setIsloading(true);
+    if (Platform.OS === 'android') {
       try {
-        const response = await axios.get(url);
-      //  console.log(response)
-        console.log("End")
-        if (response.data.results.length > 0) {
-          setGetCurrentAddress(response.data.results[0].formatted_address);
-          setSearchText(response.data.results[0].formatted_address + ' ');
-          console.log(response.data.results[0].formatted_address);
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Permission',
+            message: 'MyApp needs access to your location',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('You can use the location');
+          fetchLocation();
         } else {
-          console.log('No address found');
+          console.log('Location permission denied');
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.warn(err);
       }
-      setIsloading(false)
-      navigation.goBack();
-    };
- 
+    } else {
+      fetchLocation();
+    }
+  };
 
+  const fetchLocation = () => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        console.log(latitude, longitude);
+        setCurrentLocation({latitude, longitude});
+        console.log(latitude, longitude);
+        getAddress(latitude, longitude);
+      },
+      error => console.log(error),
+      {enableHighAccuracy: false, timeout: 30000, maximumAge: 1000},
+    );
+  };
+
+  const getAddress = async (lat, lng) => {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${Google_Api_Key}`;
+    try {
+      const response = await axios.get(url);
+
+      if (response.data.results.length > 0) {
+        setGetCurrentAddress(response.data.results[0].formatted_address);
+        setSearchText(response.data.results[0].formatted_address + ' ');
+        if (from.from === 'pickup') {
+         
+           dispatch(
+             PickupLocationReq(
+               response.data.results[0].formatted_address + ' ',
+             ),
+           );
+        } else if (from.from === 'drop') {
+           dispatch(
+             DropLocationReq(response.data.results[0].formatted_address + ' '),
+           );
+        }
+      } else {
+        console.log('No address found');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setIsloading(false);
+    navigation.goBack();
+  };
 
   useEffect(() => {
     // Clear the timeout when the component is unmounted
@@ -169,10 +190,6 @@ const Location = ({navigation}) => {
     };
   }, [typingTimeout]);
 
-
-
-
-   
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F3F7FA'}}>
       <Animated.View>
@@ -347,7 +364,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: 'center',
     justifyContent: 'center',
-  
   },
 
   dropDownList1: {
@@ -357,6 +373,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     borderColor: '#E3E9ED',
+    alignItems: 'center',
   },
 
   dropDownList2: {
@@ -369,6 +386,7 @@ const styles = StyleSheet.create({
     gap: 12,
     borderBottomWidth: 1,
     marginTop: 16,
+    alignItems: 'center',
   },
 
   locationMainText: {

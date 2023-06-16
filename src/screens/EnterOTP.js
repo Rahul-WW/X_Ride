@@ -18,6 +18,7 @@ const {width, height} = Dimensions.get('window');
 const EnterOTP = ({navigation}) => {
     const [code, setCode] = React.useState(['', '', '', '']);
     const [seconds, setSeconds] = useState(60);
+    const [zero, setZero]= useState("0:")
 
     const inputRefs = useRef([
       React.createRef(),
@@ -72,8 +73,8 @@ const EnterOTP = ({navigation}) => {
 
        useEffect(() => {
          if (seconds === 0) {
-          setSeconds("00")
-           Alert.alert('Time is over');
+          setSeconds("resend otp")
+           setZero("")
          }
        }, [seconds]);
 
@@ -113,7 +114,7 @@ const EnterOTP = ({navigation}) => {
             ))}
           </View>
 
-          <Text style={styles.timer}>0:{seconds}</Text>
+          <Text style={styles.timer}>{zero}{seconds}</Text>
           <Text style={styles.didntRecieveText}>
             Didn’t receive the e-mail?
             <Text style={styles.resendText}> Resend Now</Text>
@@ -139,16 +140,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: 'white',
     alignSelf: 'center',
-    flexDirection:"row",
-    justifyContent:"center",
-    alignItems:"center"
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
-   flexDirection:"row",
+    flexDirection: 'row',
     fontSize: 20,
     marginLeft: 10,
-   
-   
   },
   container: {
     marginHorizontal: 20,
@@ -165,6 +164,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     letterSpacing: LetterSpacing.letterSpacing,
     lineHeight: LineHeight.lineHeight,
+    fontFamily: 'ProximaNovaSemibold',
   },
   VerifyEmailTextCaption: {
     textAlign: 'center',
@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 24,
     height: 270,
-    borderWidth:1,
-    borderColor:"transparent"
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   FourBoxCombine: {
     height: 56,

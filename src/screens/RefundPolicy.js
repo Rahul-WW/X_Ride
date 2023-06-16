@@ -146,12 +146,15 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   aboutCompanyText: {
     fontSize: 18,
     fontWeight: 500,
     color: '#292F3B',
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNovaMedium',
+    lineHeight: 18* 1.4,
   },
 
   termsAndCondition: {

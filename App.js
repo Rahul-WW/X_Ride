@@ -13,7 +13,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import BugTracking from '@ruttl/bug-tracking';
 
 import StackNavigator from './src/StackNavigator';
-
+import {Provider} from 'react-redux';
+import store from "./src/Redux/store"
 function App() {
 
 
@@ -62,13 +63,11 @@ function App() {
   //  }, []);
 
   return (
-    <NavigationContainer>
-      {/* <BugTracking
-        projectID="z96WXSe5gZldiInebqKp"
-        token="MrJEAODnvQaebscVuCanG4pAmNX2"
-      /> */}
-      <StackNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <StackNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
 

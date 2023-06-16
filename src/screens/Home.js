@@ -24,6 +24,7 @@ import {
   Keyboard,
   Modal,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import CheckBox from 'react-native-check-box';
@@ -51,31 +52,68 @@ import Notification2 from '../svgImages/Notification2.svg';
 import DrawerCross from '../svgImages/DrawerCross.svg';
 import Exclemation from '../svgImages/Exclemation.svg';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {ViaLocationReqRemove} from '../Redux/homeform/HomeActions';
+import { ToggleIsReturnJourney } from '../Redux/homeform/HomeActions';
+import {useDispatch} from 'react-redux';
 
 const Home = () => {
-  const [isChecked, setIsChecked] = useState(false);
+  const isReturnJourney = useSelector(store => store.form.isReturn);
+  const [isChecked, setIsChecked] = useState(isReturnJourney);
   const [isNotication, setIsNotification] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+
+
+  const pickupFromStore = useSelector(store => store.form.pickupLocation);
+  const dropFromStore = useSelector(store => store.form.dropLocation);
+  const viaFromStore = useSelector(store => store.form.viaLocation);
+  
+
+  const dispatch = useDispatch();
+  let PickupToDistplay = pickupFromStore;
+  let dropToDisplay = dropFromStore;
+  let viaToDisplay = [];
+  if (pickupFromStore.length <= 20) {
+    PickupToDistplay = pickupFromStore;
+  } else {
+    PickupToDistplay = pickupFromStore.substring(0, 28) + '...';
+  }
+  if (dropFromStore.length <= 20) {
+    dropToDisplay = dropFromStore;
+  } else {
+    dropToDisplay = dropFromStore.substring(0, 28) + '...';
+  }
+
+  for (let i = 0; i < viaFromStore.length; i++) {
+    if (viaFromStore[i].length <= 20) {
+      viaToDisplay[i] = viaFromStore[i];
+    } else {
+      viaToDisplay[i] = viaFromStore[i].substring(0, 32) + '...';
+    }
+  }
+
   const [form, setForm] = useState({
-    pickup: '',
-    drop: '',
-    vai: [],
+    pickup: useSelector(store => store.form.pickupLocation),
+    drop: useSelector(store => store.form.dropLocation),
+    vai: useSelector(store => store.form.viaLocation),
     pickupDate: '',
     pickuptime: '',
     passengersCount: '',
-    returnDate:"",
-    returnTime:""
+    returnDate: '',
+    returnTime: '',
   });
 
   const [errors, setErrors] = useState({
+    pickupError: '',
+    dropError: '',
+    viaErro: '',
     pickupDateTime: '',
     passengerCount: '',
-    returnDateTime:""
+    returnDateTime: '',
   });
-  const [pickupLocation, setPickupLocation] = useState('');
+  //const [pickupLocation, setPickupLocation] = useState('');
   const [dropLocation, setDropLocation] = useState('');
-  
-  
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [isDatePickerVisibleForReturn, setDatePickerVisibilityForReturn] =
@@ -95,21 +133,36 @@ const Home = () => {
 
   //this function is for increasing the Via Routes
   const incrementCount = () => {
-    if (count < 5) {
+    if (pickupFromStore === '') {
+      setErrors(errors => ({
+        ...errors,
+        pickupError: 'Select a Pickup Location first',
+      }));
+      return;
+    }
+    if (count < 3) {
+      setErrors(errors => ({
+        ...errors,
+        pickupError: '',
+      }));
       setCount(count + 1);
     }
   };
 
   // this function is used to decrease the Via Routes
-  const handleHideRouteInput = () => {
+  const handleHideRouteInput = index => {
     if (count > 0) {
       setCount(count - 1);
+      console.log('index', index);
+      dispatch(ViaLocationReqRemove(index));
     }
   };
 
   //this is for checkbox
   const handleCheckBox = () => {
+    
     setIsChecked(!isChecked);
+     dispatch(ToggleIsReturnJourney());
   };
 
   //this is for clicking on PickupLocation box to navigate to Location page
@@ -123,6 +176,13 @@ const Home = () => {
   };
 
   const showDatePicker = () => {
+    if(dropFromStore === ""){
+      setErrors(errors => ({
+        ...errors,
+        dropError: 'Select a Drop Location first',
+      }));
+      return 
+    }
     setDatePickerVisibility(true);
     //  setTimePickerVisibility(false);
   };
@@ -147,14 +207,14 @@ const Home = () => {
 
     let DateWhichIsSelected = new Date(currentDate).getTime();
     let TodaysDate = new Date(Date.now()).getTime();
-    //let dateAfter365days = new Date(new Date.getTime());
+    
 
     console.log(TodaysDate - DateWhichIsSelected, 'today');
 
     let day = currentDate.getDate();
     let month = currentDate.getMonth() + 1;
     let year = currentDate.getFullYear();
-    if (DateWhichIsSelected < TodaysDate) {
+    if (DateWhichIsSelected + 3600000 < TodaysDate) {
       setErrors(errors => ({
         ...errors,
         pickupDateTime: 'Enter valid Upcoming date and time',
@@ -177,55 +237,69 @@ const Home = () => {
     setErrors(errors => ({...errors, pickupDateTime: ''}));
     setTimePickerVisibility(true);
   };
- const onDateChange2 = (event, selectedDate) => {
-   const currentDate = selectedDate || date;
-   setDatePickerVisibilityForReturn(Platform.OS === 'ios');
-   setReturndate(currentDate);
+  const onDateChange2 = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDatePickerVisibilityForReturn(Platform.OS === 'ios');
+    setReturndate(currentDate);
 
-   let DateWhichIsSelected = new Date(currentDate).getTime();
-   let TodaysDate = new Date(Date.now()).getTime();
-   //let dateAfter365days = new Date(new Date.getTime());
+    let DateWhichIsSelected = new Date(currentDate).getTime();
+    let TodaysDate = new Date(Date.now()).getTime();
+    //let dateAfter365days = new Date(new Date.getTime());
 
-   console.log(TodaysDate - DateWhichIsSelected, 'today');
+    console.log(TodaysDate - DateWhichIsSelected, 'today');
 
-   let day = currentDate.getDate();
-   let month = currentDate.getMonth() + 1;
-   let year = currentDate.getFullYear();
-   if (DateWhichIsSelected < TodaysDate) {
-     setErrors(errors => ({
-       ...errors,
-       returnDateTime: 'Enter valid Upcoming return date and time',
-     }));
-     return;
-   }
-   if (DateWhichIsSelected > TodaysDate + 31536000000) {
-     setModalVisible2(true);
-     return;
-   }
-   setForm({
-     ...form,
-     returnDate: `${day < 10 ? '0' + day : day}/${
-       month < 10 ? '0' + month : month
-     }/${year}`,
-   });
+    let day = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+    if (DateWhichIsSelected < TodaysDate) {
+      setErrors(errors => ({
+        ...errors,
+        returnDateTime: 'Enter valid Upcoming return date and time',
+      }));
+      return;
+    }
+    if (DateWhichIsSelected > TodaysDate + 31536000000) {
+      setModalVisible2(true);
+      return;
+    }
+    setForm({
+      ...form,
+      returnDate: `${day < 10 ? '0' + day : day}/${
+        month < 10 ? '0' + month : month
+      }/${year}`,
+    });
 
-   
-   setErrors(errors => ({...errors, returnDateTime: ''}));
-   setTimePickerVisibilityForReturn(true);
- };
-
-
-
-
-
+    setErrors(errors => ({...errors, returnDateTime: ''}));
+    setTimePickerVisibilityForReturn(true);
+  };
 
   const onTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || time;
     setTimePickerVisibility(Platform.OS === 'ios');
     setTime(currentTime);
+
+  
+    let timeAfterHalfAnHr = new Date().getTime()+ 1800000  // time after half an hr in miliseconds
+    let selectedTimeInMilisecond=new Date(selectedTime).getTime()  //selected time in milisecond
+
+
+
+    let fdate = new Date(currentTime);// this is formated date
+
+    // if(selectedTimeInMilisecond < timeAfterHalfAnHr){
+    //   setErrors(errors => ({
+    //     ...errors,
+    //     pickupDateTime: 'Select time more than Half an hour from time of booking',
+    //   }));
+    //   return;
+    // }else{
+    //    setErrors(errors => ({
+    //      ...errors,
+    //      pickupDateTime:
+    //        '',
+    //    }));
+    // }
     
-    //let timestamp = '2023-05-31T15:25:57.755Z';
-    let fdate = new Date(currentTime);
 
     let hour = fdate.getHours();
     let minute = String(fdate.getMinutes()).padStart(2, '0');
@@ -242,28 +316,28 @@ const Home = () => {
     });
   };
 
-   const onTimeChange2 = (event, selectedTime) => {
-     const currentTime = selectedTime || time;
-     setTimePickerVisibilityForReturn(Platform.OS === 'ios');
-     setTime(currentTime);
+  const onTimeChange2 = (event, selectedTime) => {
+    const currentTime = selectedTime || time;
+    setTimePickerVisibilityForReturn(Platform.OS === 'ios');
+    setTime(currentTime);
 
-     //let timestamp = '2023-05-31T15:25:57.755Z';
-     let fdate = new Date(currentTime);
+    //let timestamp = '2023-05-31T15:25:57.755Z';
+    let fdate = new Date(currentTime);
 
-     let hour = fdate.getHours();
-     let minute = String(fdate.getMinutes()).padStart(2, '0');
-     let ampm = hour >= 12 ? 'pm' : 'am';
+    let hour = fdate.getHours();
+    let minute = String(fdate.getMinutes()).padStart(2, '0');
+    let ampm = hour >= 12 ? 'pm' : 'am';
 
-     // hour = hour % 12;
-     //  console.log('currentTime', hour);
-     hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
-     let formattedDate = ` ${hour}:${minute} ${ampm}`;
-     //console.log('currentTime', formattedDate);
-     setForm({
-       ...form,
-       returnTime: ` ${formattedDate}`,
-     });
-   };
+    // hour = hour % 12;
+    //  console.log('currentTime', hour);
+    hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
+    let formattedDate = ` ${hour}:${minute} ${ampm}`;
+    //console.log('currentTime', formattedDate);
+    setForm({
+      ...form,
+      returnTime: ` ${formattedDate}`,
+    });
+  };
 
   //this is for setting the form with the new changed data
   const handleInputChange = (field, value) => {
@@ -290,7 +364,7 @@ const Home = () => {
         ...errors,
         passengerCount: 'Passengers should be less than or equal  15',
       }));
-    }else{
+    } else {
       setErrors(errors => ({
         ...errors,
         passengerCount: '',
@@ -301,14 +375,27 @@ const Home = () => {
       ...form,
       [field]: value,
     });
-    console.log(form);
   };
-console.log(errors)
+
   //this function is for submitting the form where we have to collect all the input values and need to make a post request.
   const handleSubmit = () => {
-    Alert.alert('Form Submitted');
+   if(isChecked=== true && form.returnDate === ""){
+        setErrors(errors => ({
+          ...errors,
+          returnDateTime: 'Select a return date',
+        }));
+        return 
+   }
 
-    console.log(form);
+ 
+
+   if(form.pickup==="" || form.drop==="" || form.pickupDate==="" || form.passengersCount===""){
+    console.log(errors)
+    return
+   }
+
+
+
     if (isChecked === true) {
       console.log('Bothonly', isChecked);
       navigation.navigate('Quotes', {showReturnJourney: isChecked});
@@ -320,6 +407,21 @@ console.log(errors)
     }
   };
 
+  useEffect(() => {
+    if (pickupFromStore !== '') {
+      setErrors(errors => ({
+        ...errors,
+        pickupError: '',
+      }));
+    }
+    if(dropFromStore !== ""){
+       setErrors(errors => ({
+         ...errors,
+         dropError: '',
+       }));
+    }
+  }, [pickupFromStore, dropFromStore]);
+
   return (
     <SafeAreaView
       style={{
@@ -329,8 +431,7 @@ console.log(errors)
       }}>
       <Animated.View>
         <View style={styles.logoBox}>
-          <TouchableOpacity
-            onPress={() => navigation.openDrawer()}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <View style={styles.menulogo}>
               <MenuIcon width={24} height={24} />
             </View>
@@ -386,12 +487,22 @@ console.log(errors)
                         multiline={true}
                         numberOfLines={4}
                         scrollEnabled={true}
-                        placeholder="Pickup Location"
-                        onPressOut={() => navigation.navigate('Location')}
-                        value={pickupLocation}
+                        placeholder={
+                          PickupToDistplay
+                            ? PickupToDistplay
+                            : 'Pickup Location'
+                        }
+                        onPressOut={
+                          () =>
+                            navigation.navigate('Location', {from: 'pickup'}) // think about this tomorrow
+                        }
+                        value={PickupToDistplay}
                         showSoftInputOnFocus={false} //this will disable the Keyboard to open
                         onPressIn={handleInputPickupLocation}></TextInput>
                     </View>
+                    {errors.pickupError !== '' && (
+                      <Text style={styles.errorText}>{errors.pickupError}</Text>
+                    )}
                   </View>
                   {/* upto here pickup inputbox container */}
                   <View style={styles.line}></View>
@@ -415,14 +526,67 @@ console.log(errors)
                             styles.inputDiv2,
                             styles.inputDivforLine,
                           ]}>
-                          <InputFieldWithCross
-                            placeholder="Via Route"
-                            Icon={<ViaRouteIcon width={20} height={24} />}
-                            Icon2={<Cross width={11} height={11} />}
-                            handleHideRouteInput={handleHideRouteInput}
-                            value={form.vai[i]}
-                            handleGoToLocation={handleGoToLocation}
-                          />
+                          <View
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              borderRadius: 16,
+                              borderWidth: 1,
+                              backgroundColor: 'white',
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              borderColor: '#E3E9ED',
+                            }}>
+                            <View
+                              style={{
+                                marginLeft: 20,
+                                width: 24,
+                                height: 24,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                              }}>
+                              <ViaRouteIcon width={20} height={24} />
+                            </View>
+                            <TextInput
+                              style={{
+                                marginLeft: 12,
+                                fontSize: 16,
+                                fontFamily: 'ProximaNova',
+                                flex: 1,
+                                lineHeight: 16 * 1.4,
+                              }}
+                              multiline={true}
+                              numberOfLines={4}
+                              scrollEnabled={true}
+                              placeholder={
+                                viaToDisplay[i] ? viaToDisplay[i] : 'Via Route'
+                              }
+                              value={form.vai[i]}
+                              caretHidden={true}
+                              showSoftInputOnFocus={false}
+                              onPressOut={() =>
+                                navigation.navigate('Location', {
+                                  from: `vai${i}`,
+                                })
+                              }></TextInput>
+                            <TouchableOpacity
+                              onPress={() => handleHideRouteInput(i)}
+                              style={{
+                                width: 20,
+                                height: 20,
+                                marginRight: 20,
+                              }}>
+                              <View
+                                style={{
+                                  width: 20,
+                                  height: 20,
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}>
+                                <Cross width={11} height={11} />
+                              </View>
+                            </TouchableOpacity>
+                          </View>
 
                           <View style={styles.dashedLine2}></View>
                         </View>
@@ -440,12 +604,19 @@ console.log(errors)
                         multiline={true}
                         numberOfLines={4}
                         scrollEnabled={true}
-                        placeholder="Drop Location"
-                        onPressOut={() => navigation.navigate('Location')}
-                        value={dropLocation}
+                        placeholder={
+                          dropToDisplay ? dropToDisplay : 'Drop Location'
+                        }
+                        onPressOut={() =>
+                          navigation.navigate('Location', {from: 'drop'})
+                        }
+                        value={dropToDisplay}
                         showSoftInputOnFocus={false} //this will disable the Keyboard to open
                         onPressIn={handleInputDropLocation}></TextInput>
                     </View>
+                    {errors.dropError !== '' && (
+                      <Text style={styles.errorText}>{errors.dropError}</Text>
+                    )}
                   </View>
                   {/* upto here drop inputbox container */}
                   {/* this is Date and Time inputbox container */}
@@ -754,6 +925,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontFamily: 'ProximaNova',
     marginLeft: 10,
+    letterSpacing: 0.32,
   },
   gif: {
     width: 50,
@@ -771,12 +943,11 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     marginLeft: 12,
-    // fontSize: FontSize.for_caption,
-    // fontFamily: 'ProximaNova-Regular',
     fontSize: 16,
     flex: 1,
     borderRadius: 16,
     lineHeight: 16 * 1.4,
+    letterSpacing: 0.32,
     color: '#4F565E',
     fontFamily: 'ProximaNova',
   },
@@ -817,12 +988,11 @@ const styles = StyleSheet.create({
     // left: 20,
     // top: 10,
     width: 54,
-    height:54,
-    
+    height: 54,
+
     borderColor: 'white',
     paddingTop: 15,
-    paddingLeft: 20
-    
+    paddingLeft: 20,
   },
   belllogo: {
     position: 'absolute',
@@ -859,7 +1029,7 @@ const styles = StyleSheet.create({
     top: '77.87%',
     fontSize: 18,
     color: 'white',
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaSemibold',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
     fontWeight: 600,

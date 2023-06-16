@@ -60,12 +60,12 @@ const FAQ = ({navigation, route}) => {
       </Animated.View>
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.searchBox}>
+          {/* <View style={styles.searchBox}>
             <TextInput style={styles.searchInputStyle} />
             <View style={{marginRight: 20}}>
               <Search width={20} height={20} />
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.tabs}>
             {faqs.map(view => (
@@ -868,20 +868,33 @@ const SecurityContent = () => {
 };
 
 const styles = StyleSheet.create({
-  question:{fontWeight: 500, fontSize: 18, color: '#292F3B'},
- answer:{fontSize: 16, fontWeight: 400, color: '#4F565E', lineHeight: 16 * 1.4, letterSpacing: 0.32},
+  question: {
+    fontWeight: 500,
+    fontSize: 18,
+    color: '#292F3B',
+    fontFamily: 'ProximaNovaMedium',
+  },
+  answer: {
+    fontSize: 16,
+    fontWeight: 400,
+    color: '#4F565E',
+    lineHeight: 16 * 1.4,
+    letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
+  },
   singleFaqContentBox: {
     marginHorizontal: 20,
     height: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderWidth:1,
-    
-     borderColor:"transparent"
+    borderWidth: 1,
+
+    borderColor: 'transparent',
   },
   tabText: {
     fontSize: 16,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
   selectedView: {
     backgroundColor: '#048AD7',
@@ -891,7 +904,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   container: {
-    
     marginHorizontal: 20,
     marginTop: 20,
   },
@@ -925,7 +937,7 @@ const styles = StyleSheet.create({
   },
   tabs: {
     height: 80,
-  
+
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,

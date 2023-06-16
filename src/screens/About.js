@@ -110,6 +110,7 @@ const About = ({navigation}) => {
                           fontWeight: 600,
                           letterSpacing: 0.32,
                           lineHeight: 18 * 1.4,
+                          fontFamily: 'ProximaNovaSemibold',
                         }}>
                         Rate Us on Play Store
                       </Text>
@@ -127,6 +128,7 @@ const About = ({navigation}) => {
                           fontWeight: 400,
                           letterSpacing: 0.32,
                           lineHeight: 16 * 1.4,
+                          fontFamily: 'ProximaNova',
                         }}>
                         Tell others what do you thing about this app
                       </Text>
@@ -249,9 +251,14 @@ const About = ({navigation}) => {
                 </View>
               </View>
             </View>
-            <View
-              style={styles.appVersion}>
-              <Text style={{fontSize: 14, fontWeight: 400, color: '#4F565E'}}>
+            <View style={styles.appVersion}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontWeight: 400,
+                  color: '#4F565E',
+                  fontFamily: 'ProximaNova',
+                }}>
                 App Version 1.2
               </Text>
             </View>
@@ -297,7 +304,7 @@ const RateUsBtn = () => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNovaSemibold',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>
@@ -317,7 +324,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F7FA',
   },
   container: {
-   
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 80,
@@ -326,14 +332,12 @@ const styles = StyleSheet.create({
     width: initialWidth,
     height: initialWidth * aspectRatio,
     borderRadius: 12,
-    
   },
   image: {
     width: '100%',
     height: '100%',
   },
   aboutCompany: {
-   
     marginTop: 20,
   },
   paragraph1: {
@@ -342,6 +346,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 
   rateUsBox: {
@@ -372,6 +377,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     color: '#292F3B',
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNovaSemibold',
   },
   horizontalLne: {
     width: '100%',
@@ -386,6 +392,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   righticon: {
     flexDirection: 'row',

@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
+    fontFamily: 'ProximaNovaSemibold',
   },
   aboutCompany: {
     marginTop: 20,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   threeSections: {
     marginTop: 16,
@@ -166,6 +168,7 @@ const styles = StyleSheet.create({
     color: '#292F3B',
     letterSpacing: 0.32,
     lineHeight: 18 * 1.4,
+    fontFamily: 'ProximaNovaSemibold',
   },
   text2: {
     color: '#4F565E',
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
 });
 

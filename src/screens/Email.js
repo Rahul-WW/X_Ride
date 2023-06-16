@@ -30,6 +30,7 @@ import GradientText from '../components/GradientText';
 import DocumentPicker from 'react-native-document-picker';
 const Email = ({navigation, route}) => {
   const {from} = route.params;
+  console.log(from)
   const [contactnumber, setContactnumber]= useState("")
   const [issue, setIssue] = useState('');
   const [whatsWrong, setWhatsWrong] = useState('');
@@ -38,7 +39,7 @@ const Email = ({navigation, route}) => {
   const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
 
   const handleDropdown = () => {
-    setDropdownOption(true);
+    setDropdownOption(!dropdownOption);
   };
 
   const handleSelectOption = option => {
@@ -89,6 +90,7 @@ const Email = ({navigation, route}) => {
                   color: '#292F3B',
                   lineHeight: 20 * 1.4,
                   letterSpacing: 0.32,
+                  fontFamily: 'ProximaNovaSemibold',
                 }}>
                 Tell us how can we help you ?
               </Text>
@@ -101,6 +103,7 @@ const Email = ({navigation, route}) => {
                   color: '#4F565E',
                   lineHeight: 16 * 1.4,
                   letterSpacing: 0.32,
+                  fontFamily: 'ProximaNova',
                 }}>
                 Please let us know the necessary details as requested below
               </Text>
@@ -127,14 +130,15 @@ const Email = ({navigation, route}) => {
             </View>
             <View style={{height: 56, marginBottom: 20}}>
               {/* <InputField Icon={<WhatsWrong />} placeholder={"What's wrong?"} /> */}
-
-              <InputFieldWithCross
-                Icon={<WhatsWrong />}
-                Icon2={dropdownOption ? <UpArrow /> : <DownArrow />}
-                value={whatsWrong}
-                handleHideRouteInput={handleDropdown}
-                placeholder={"What's wrong?"}
-              />
+              <TouchableOpacity onPress={handleDropdown}>
+                <InputFieldWithCross
+                  Icon={<WhatsWrong />}
+                  Icon2={dropdownOption ? <UpArrow /> : <DownArrow />}
+                  value={whatsWrong}
+                  handleGoToLocation={handleDropdown}
+                  placeholder={"What's wrong?"}
+                />
+              </TouchableOpacity>
             </View>
 
             {dropdownOption ? (
@@ -150,6 +154,7 @@ const Email = ({navigation, route}) => {
                   gap: 16,
                   paddingLeft: 20,
                   paddingTop: 20,
+                  
                 }} // choose options
               >
                 {options.map((e, i) => {
@@ -180,18 +185,17 @@ const Email = ({navigation, route}) => {
                   onChangeText={value => setIssue(value)}></TextInput>
               </View>
             </View>
-           
-              <View >
-                <TouchableOpacity
-                  onPress={handleAttachFile}
-                  style={styles.attachment}>
-                  <Attachment />
-                  <GradientText style={styles.attachmentText}>
-                    Add Attachment
-                  </GradientText>
-                </TouchableOpacity>
-              </View>
-       
+
+            <View>
+              <TouchableOpacity
+                onPress={handleAttachFile}
+                style={styles.attachment}>
+                <Attachment />
+                <GradientText style={styles.attachmentText}>
+                  Add Attachment
+                </GradientText>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -242,7 +246,7 @@ const SubmitBtn = ({Btnwidth, textInsideBtn, handleSubmit}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNovaSemibold',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>
@@ -265,6 +269,7 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   maskedView: {
     flexDirection: 'row',
@@ -276,6 +281,7 @@ const styles = StyleSheet.create({
 
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNova',
   },
   transparentText: {
     opacity: 0,
@@ -287,7 +293,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
-  
   },
   inputContainer: {
     height: 150,
@@ -315,7 +320,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     fontSize: 16,
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova',
     flex: 1,
     lineHeight: 16 * 1.4,
     color: '#4F565E',

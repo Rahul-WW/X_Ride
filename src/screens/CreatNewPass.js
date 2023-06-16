@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   creatPasswordTextTitle: {
     fontSize: FontSize.for_title,
     color: Color.for_title,
-    fontFamily: 'proximanova-medium',
+    fontFamily: 'ProximaNovaSemibold',
     fontWeight: FontWeight.for_title,
 
     letterSpacing: LetterSpacing.letterSpacing,

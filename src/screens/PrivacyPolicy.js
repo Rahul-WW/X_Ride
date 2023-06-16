@@ -114,7 +114,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F7FA',
   },
   container: {
-    
     marginHorizontal: 20,
     marginTop: 20,
     marginBottom: 80,
@@ -130,17 +129,19 @@ const styles = StyleSheet.create({
     color: '#4F565E',
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
+    fontFamily: 'ProximaNova',
   },
   aboutCompanyText: {
     fontSize: 18,
     fontWeight: 500,
     color: '#292F3B',
+    lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNovaMedium',
   },
 
   termsAndCondition: {
-    
-    marginTop:32
+    marginTop: 32,
   },
 });
 

@@ -36,14 +36,11 @@ import NoInternet from './screens/NoInternet';
 import UnderMaintainance from './screens/UnderMaintainance';
 import PageNotFound from './screens/PageNotFound';
 import ServiceUnavailable from './screens/ServiceUnavailable';
-import CabsUnavailable from "./screens/CabsUnavailable"
+import CabsUnavailable from './screens/CabsUnavailable';
 import {Animated} from 'react-native';
 import OnboardingScreens from './screens/OnboardingScreens';
 
-
 const Stack = createStackNavigator();
-
-
 
 const forSlide = ({current, next, inverted, layouts: {screen}}) => {
   const progress = Animated.add(
@@ -86,9 +83,9 @@ const forSlide = ({current, next, inverted, layouts: {screen}}) => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator
-      //initialRouteName="OnboardingScreens"
+      initialRouteName="OnboardingScreens"
       //  initialRouteName="PageNotFound"
-        initialRouteName="DrawerNavigator"
+      //  initialRouteName="DrawerNavigator"
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
