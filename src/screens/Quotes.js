@@ -28,7 +28,7 @@ import Sort1 from '../svgImages/Sort1.svg';
 import HeaderForPopUps from '../components/HeaderForPopUps';
 import RadioForm from 'react-native-simple-radio-button';
 import GoTop from '../svgImages/GoTop.svg';
-
+import {useSelector} from 'react-redux';
 const Cabs = [
   {
     id: 1,
@@ -500,6 +500,8 @@ const Quotes = ({navigation, route}) => {
 };
 
 const HeaderForQuotes = () => {
+const pickupFromStore = useSelector(store => store.form.pickupLocation).substring(0,20)
+  const dropFromStore = useSelector(store => store.form.dropLocation).substring(0,20)
   return (
     <View
       style={{
@@ -524,14 +526,14 @@ const HeaderForQuotes = () => {
           }}
           horizontal>
           <View style={{marginRight: 8}}>
-            <Text style={styles.textstyling}>Manchester Stadium</Text>
+            <Text style={styles.textstyling}>{pickupFromStore}</Text>
           </View>
           <View style={{marginRight: 8}}>
             <BothDirection />
           </View>
           <View style={{marginRight: 8}}>
             <Text style={styles.textstyling}>
-              Elland Key Stadium.wwrtwqrtqrrgrw.
+             {dropFromStore}
             </Text>
           </View>
         </ScrollView>

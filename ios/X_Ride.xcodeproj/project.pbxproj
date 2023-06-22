@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* X_RideTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* X_RideTests.m */; };
+		09E3F419647D4DEFBBCF54EE /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C11346543D14F27997AFB9F /* proximanova-regular.otf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-X_Ride.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-X_Ride.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		280960825F1946F8AD0FFE49 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5F163588A0A4C14A09BDF27 /* proximanova-semibold.otf */; };
+		32D53A09C02B467BB54CAEA2 /* ProximaNova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4EB4D8765BF4419931FB34C /* ProximaNova.ttf */; };
+		40C7D7A340CA4CEA85434A25 /* Proxima_Nova_Font (1).otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C09BF56FAF549ED97ED62AE /* Proxima_Nova_Font (1).otf */; };
 		7699B88040F8A987B510C191 /* libPods-X_Ride-X_RideTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-X_Ride-X_RideTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B96FE39AFFF34F5390CA6044 /* proximanova-medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = CEEF1C1A96DB4071BAFB82C6 /* proximanova-medium.otf */; };
-		09E3F419647D4DEFBBCF54EE /* proximanova-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9C11346543D14F27997AFB9F /* proximanova-regular.otf */; };
-		280960825F1946F8AD0FFE49 /* proximanova-semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B5F163588A0A4C14A09BDF27 /* proximanova-semibold.otf */; };
-		40C7D7A340CA4CEA85434A25 /* Proxima_Nova_Font (1).otf in Resources */ = {isa = PBXBuildFile; fileRef = 0C09BF56FAF549ED97ED62AE /* Proxima_Nova_Font (1).otf */; };
-		32D53A09C02B467BB54CAEA2 /* ProximaNova.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4EB4D8765BF4419931FB34C /* ProximaNova.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +35,7 @@
 		00E356EE1AD99517003FC87E /* X_RideTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = X_RideTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* X_RideTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = X_RideTests.m; sourceTree = "<group>"; };
+		0C09BF56FAF549ED97ED62AE /* Proxima_Nova_Font (1).otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Proxima_Nova_Font (1).otf"; path = "../assets/fonts/Proxima_Nova_Font (1).otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* X_Ride.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = X_Ride.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = X_Ride/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = X_Ride/AppDelegate.mm; sourceTree = "<group>"; };
@@ -48,12 +49,11 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-X_Ride.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-X_Ride.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = X_Ride/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-X_Ride-X_RideTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-X_Ride-X_RideTests.release.xcconfig"; path = "Target Support Files/Pods-X_Ride-X_RideTests/Pods-X_Ride-X_RideTests.release.xcconfig"; sourceTree = "<group>"; };
+		9C11346543D14F27997AFB9F /* proximanova-regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "proximanova-regular.otf"; path = "../assets/fonts/proximanova-regular.otf"; sourceTree = "<group>"; };
+		B5F163588A0A4C14A09BDF27 /* proximanova-semibold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "proximanova-semibold.otf"; path = "../assets/fonts/proximanova-semibold.otf"; sourceTree = "<group>"; };
+		CEEF1C1A96DB4071BAFB82C6 /* proximanova-medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "proximanova-medium.otf"; path = "../assets/fonts/proximanova-medium.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		CEEF1C1A96DB4071BAFB82C6 /* proximanova-medium.otf */ = {isa = PBXFileReference; name = "proximanova-medium.otf"; path = "../assets/fonts/proximanova-medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		9C11346543D14F27997AFB9F /* proximanova-regular.otf */ = {isa = PBXFileReference; name = "proximanova-regular.otf"; path = "../assets/fonts/proximanova-regular.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B5F163588A0A4C14A09BDF27 /* proximanova-semibold.otf */ = {isa = PBXFileReference; name = "proximanova-semibold.otf"; path = "../assets/fonts/proximanova-semibold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		0C09BF56FAF549ED97ED62AE /* Proxima_Nova_Font (1).otf */ = {isa = PBXFileReference; name = "Proxima_Nova_Font (1).otf"; path = "../assets/fonts/Proxima_Nova_Font (1).otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F4EB4D8765BF4419931FB34C /* ProximaNova.ttf */ = {isa = PBXFileReference; name = "ProximaNova.ttf"; path = "../assets/fonts/ProximaNova.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F4EB4D8765BF4419931FB34C /* ProximaNova.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = ProximaNova.ttf; path = ../assets/fonts/ProximaNova.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,7 +160,7 @@
 			sourceTree = "<group>";
 		};
 		F79E2F0410EF4D7E98E9BEDF /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
 				CEEF1C1A96DB4071BAFB82C6 /* proximanova-medium.otf */,
 				9C11346543D14F27997AFB9F /* proximanova-regular.otf */,
@@ -169,8 +169,8 @@
 				F4EB4D8765BF4419931FB34C /* ProximaNova.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
 			path = "";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -593,7 +593,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -627,6 +627,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -664,7 +665,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -690,6 +691,7 @@
 					"-DFOLLY_MOBILE=1",
 					"-DFOLLY_USE_LIBCPP=1",
 				);
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

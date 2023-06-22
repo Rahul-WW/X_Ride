@@ -21,26 +21,28 @@ import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import Cross from '../svgImages/Cross.svg';
 import {Google_Api_Key} from '@env';
+import {Google_Map_Api_Key} from '@env';
 import Pin from '../svgImages/Pin.svg';
 import LoaderIndicator from '../components/LoaderIndicator';
 import Target from '../svgImages/Target.svg';
 import Geolocation from '@react-native-community/geolocation';
-
+import axios from 'axios';
 
 import {
   PickupLocationReq,
   DropLocationReq,
-  ViaLocationReq
+  ViaLocationReq,
+  PickupPlaceIdReq,
+  DropPlaceIdReq
 } from '../Redux/homeform/HomeActions'; //this is action
 import {useSelector, useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import store from '../Redux/store';
 
-import axios from 'axios';
- const Location = ({navigation, route }) => {
-     const from= route.params
-      console.log(from)
- 
+const Location = ({navigation, route}) => {
+  const from = route.params;
+
   const [isloading, setIsloading] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -49,6 +51,11 @@ import axios from 'axios';
   const [error, setError] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('');
   const [getCurrentAddress, setGetCurrentAddress] = useState('');
+ // const [origin, SetOrigin] = useState('');
+  //const [destination, setDestination] = useState('');
+  const [aproxTime, setAproxTime] = useState('');
+
+  let data=[]
 
   const dispatch = useDispatch();
 
@@ -60,7 +67,6 @@ import axios from 'axios';
 
     // Clear the previous timeout
     clearTimeout(typingTimeout);
-
     const newTypingTimeout = setTimeout(() => {
       fetch(
         `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${Google_Api_Key}&input=${text}`,
@@ -68,7 +74,8 @@ import axios from 'axios';
         .then(response => response.json())
         .then(data => {
           setPredictions(data.predictions);
-          // console.log(data.predictions);
+          //  console.log(data.predictions[0].place_id);
+          //  SetOrigin(data.predictions[0].place_id)
           //Keyboard.dismiss();
         })
         .catch(error => {
@@ -89,9 +96,18 @@ import axios from 'axios';
       prediction.structured_formatting.secondary_text;
 
     if (from.from === 'pickup') {
+      //console.log(finalTextToDIsplay)
+      // SetOrigin(prediction.place_id);
+      // console.log(prediction.place_id, 'place1');
+      //SaveOrigin(prediction.place_id);
       dispatch(PickupLocationReq(finalTextToDIsplay));
+      dispatch(PickupPlaceIdReq(prediction.place_id))
     } else if (from.from === 'drop') {
+      //setDestination(prediction.place_id);
+      //SaveDestination(prediction.place_id);
+      //console.log(prediction.place_id, 'place2');
       dispatch(DropLocationReq(finalTextToDIsplay));
+      dispatch(DropPlaceIdReq(prediction.place_id))
     } else if (from.from === 'vai0') {
       dispatch(ViaLocationReq(finalTextToDIsplay));
     } else if (from.from === 'vai1') {
@@ -99,15 +115,54 @@ import axios from 'axios';
     } else if (from.from === 'vai2') {
       dispatch(ViaLocationReq(finalTextToDIsplay));
     }
-      if (finalTextToDIsplay.length <= 35) {
-        setSearchText(finalTextToDIsplay);
-      } else {
-        let subString = finalTextToDIsplay.substring(0, 35);
-        setSearchText(subString + '...');
-      }
+    if (finalTextToDIsplay.length <= 35) {
+      setSearchText(finalTextToDIsplay);
+    } else {
+      let subString = finalTextToDIsplay.substring(0, 35);
+      setSearchText(subString + '...');
+    }
+
     setShowSuggestions(false);
+
     navigation.goBack();
   };
+
+  const SaveOrigin= async (org)=>{
+    
+    try {
+      await AsyncStorage.setItem(
+        'Place_Id_List',
+        JSON.stringify({origin: org}),
+      );
+    } catch (error) {
+      if (error.message) {
+        navigation.navigate('NoInternet');
+      }
+    }
+  }
+    const SaveDestination = async (org) => {
+      
+      try {
+        await AsyncStorage.setItem(
+          'Place_Id_List',
+          JSON.stringify({destination: org}),
+        );
+      } catch (error) {
+        if (error.message) {
+          navigation.navigate('NoInternet');
+        }
+      }
+    };
+
+  const GetData= async ()=>{
+    try {
+     const PlaceList= await AsyncStorage.getItem("Place_Id_List")
+     console.log(PlaceList, "list")
+    } catch (error) {
+      console.log(error)
+      return error
+    }
+  }
 
   const handlePressCrossBtn = () => {
     setShowSuggestions(false);
@@ -162,16 +217,13 @@ import axios from 'axios';
         setGetCurrentAddress(response.data.results[0].formatted_address);
         setSearchText(response.data.results[0].formatted_address + ' ');
         if (from.from === 'pickup') {
-         
-           dispatch(
-             PickupLocationReq(
-               response.data.results[0].formatted_address + ' ',
-             ),
-           );
+          dispatch(
+            PickupLocationReq(response.data.results[0].formatted_address + ' '),
+          );
         } else if (from.from === 'drop') {
-           dispatch(
-             DropLocationReq(response.data.results[0].formatted_address + ' '),
-           );
+          dispatch(
+            DropLocationReq(response.data.results[0].formatted_address + ' '),
+          );
         }
       } else {
         console.log('No address found');
@@ -183,12 +235,19 @@ import axios from 'axios';
     navigation.goBack();
   };
 
+  // console.log('predictions', origin, destination);
+  // console.log('orgin', origin);
+  // console.log('destination', destination);
+  //GetData()
+
   useEffect(() => {
     // Clear the timeout when the component is unmounted
     return () => {
       clearTimeout(typingTimeout);
     };
   }, [typingTimeout]);
+
+ 
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#F3F7FA'}}>

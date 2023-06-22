@@ -61,7 +61,24 @@ const SignUp = ({navigation}) => {
   const onDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDatePickerVisibility(Platform.OS === 'ios');
-    setDate(currentDate);
+    
+    const Today = new Date(); // the current date
+
+     const age = Today.getFullYear() - currentDate.getFullYear();
+    const m = Today.getMonth() - currentDate.getMonth();
+
+     if (m < 0 || (m === 0 && Today.getDate() < currentDate.getDate())) {
+      age--;
+    }
+
+  if (age < 12) {
+       setErrors(errors => ({...errors, dob: "Your age should be 12+"}));
+       return 
+    } else {
+      // if age is 12 or more
+      setDate(currentDate);
+    }
+    
 
     let day = currentDate.getDate();
     let month = currentDate.getMonth() + 1;
@@ -73,6 +90,8 @@ const SignUp = ({navigation}) => {
         month < 10 ? '0' + month : month
       }/${year}`,
     });
+
+    setErrors(errors => ({...errors, dob: ""}));
   };
 
   const handleInputChange = (field, value) => {
@@ -82,12 +101,18 @@ const SignUp = ({navigation}) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const mobileRegex = /^\d{10}$/;
     const errorMessages = {
-      name: 'Name should be  only  alphabets',
+      name: 'Name should be only alphabets',
       dob: 'Format must be dd/mm/yyyy eg 12/05/2023',
       email: 'Please provide a valid email',
       mobile: 'Mobile number must be 10 digits',
       password: 'Password field cannot be empty',
     };
+
+     if(form.dob !== ""){
+      setErrors(errors=>({...errors, dob:""}))
+    }
+
+
     if (field === 'name' && !nameRegex.test(value)) {
       setErrors(errors => ({...errors, name: errorMessages.name}));
     } else if (field === 'dob' && !dobRegex.test(value)) {
@@ -96,11 +121,13 @@ const SignUp = ({navigation}) => {
       setErrors(errors => ({...errors, email: errorMessages.email}));
     } else if (field === 'mobile' && !mobileRegex.test(value)) {
       setErrors(errors => ({...errors, mobile: errorMessages.mobile}));
-    } else if (field === 'password' && value === '') {
+    } else if (field === 'password' && value >= 8) {
       setErrors(errors => ({...errors, password: errorMessages.password}));
     } else {
       setErrors(errors => ({...errors, [field]: ''}));
     }
+
+   
 
     console.log(errors);
     setForm({
@@ -115,11 +142,17 @@ const SignUp = ({navigation}) => {
        /^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$/;
      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
      const mobileRegex = /^\d{10}$/;
-
-     if (!nameRegex.test(form.name)) {
+     if(form.name === ""){
        setErrors(errors => ({
          ...errors,
          name: 'Name cannot be empty',
+       }));
+       return;
+     }
+     if (!nameRegex.test(form.name)) {
+       setErrors(errors => ({
+         ...errors,
+         name: "Name should be  only  alphabets",
        }));
        return;
      }
@@ -142,9 +175,15 @@ const SignUp = ({navigation}) => {
        return;
      }
 
-     if (form.password === '') {
+     if (form.password === '' ) {
       
         setErrors(errors => ({...errors, password: "Please enter valid password"}));
+       
+       return;
+     }
+      if (form.password.length < 6  ) {
+      console.log(form.password.length)
+        setErrors(errors => ({...errors, password: "Password length should be atleast six"}));
        
        return;
      }

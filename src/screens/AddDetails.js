@@ -370,7 +370,7 @@ const AddDetails = () => {
                 )}
               </View>
 
-              {dropdownHidden && (
+             
                 <View style={[styles.orderSummaryBox]}>
                   <View style={styles.orderTextBox}>
                     <Text style={styles.orderSummaryText}>Order Summary</Text>
@@ -414,7 +414,7 @@ const AddDetails = () => {
                     </View>
                   </View>
                 </View>
-              )}
+              
             </View>
           </View>
         </ScrollView>
@@ -534,7 +534,7 @@ const ApplyBtn = ({textInsideBtn, Btnwidth, handleApplyBtnPressed}) => {
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: 600,
-                  fontFamily: 'ProximaNova-Regular',
+                  fontFamily: 'ProximaNova',
                   letterSpacing: 0.32,
                   lineHeight: 18,
                 }}>
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
-    fontFamily: 'ProximaNova5',
+    fontFamily: 'ProximaNovaSemibold',
   },
   secondText: {
     fontSize: 16,
@@ -688,7 +688,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#292F3B',
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaMedium',
   },
 
   totalCostDetails: {
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
-    fontFamily: 'ProximaNova',
+    fontFamily: 'ProximaNovaSemibold',
   },
 
   horizontalLinebelowApplyOffers: {

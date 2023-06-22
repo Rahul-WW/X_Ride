@@ -327,11 +327,11 @@ const CustomDrawer = props => {
                         style={{
                           marginHorizontal: 20,
                           flexDirection: 'row',
-                          justifyContent: 'space-between',
+                         
                           gap: 16,
                           height: 48,
                         }}>
-                        <Pressable style={{width: 124}}>
+                        <Pressable style={{width: "37.15%"}}>
                           <LinearGradient
                             colors={['#00c96d', '#048ad7']}
                             useAngle={true}
@@ -347,7 +347,7 @@ const CustomDrawer = props => {
                             </TouchableOpacity>
                           </LinearGradient>
                         </Pressable>
-                        <Pressable style={{width: 195}}>
+                        <Pressable style={{width: "58.29%"}}>
                           <LinearGradient
                             colors={['#00c96d', '#048ad7']}
                             useAngle={true}

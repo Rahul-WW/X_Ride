@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  ScrollView,
+  // ScrollView,
   StyleSheet,
   SafeAreaView,
   Alert,
@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   Modal, TextInput
 } from 'react-native';
+import {ScrollView} from "react-native-gesture-handler"
 import React, {useState, useEffect, useRef} from 'react';
 import DrawerCross from "../svgImages/DrawerCross.svg"
 import Header from '../components/Header';
@@ -31,22 +32,39 @@ import EditTrip from '../svgImages/EditTrip.svg';
 import WhiteVia from '../svgImages/WhiteVia.svg';
 import WhiteDrop from '../svgImages/WhiteDrop.svg';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import {Google_Map_Api_Key} from '@env';
 
 
 const TripDetails = ({navigation, route}) => {
   const {showReturnJourney} = route.params;
-  console.log('trip', showReturnJourney);
+ 
+  const pickupFromStore = useSelector(store => store.form.pickupLocation)
+  const dropFromStore = useSelector(store => store.form.dropLocation)
+  const pickupDateTimeFromStore= useSelector(store=> store.form.pickupDateTime)
+const returnDateTimeFromStore= useSelector(store=> store.form.returnDateTime)
+const PickupPlaceIdFromStore= useSelector(store=> store.form.origin)
+const DropPlaceIdFromStore= useSelector(store=> store.form.destination)
+
+
+  //console.log('pickuDateTime', PickupPlaceIdFromStore, returnDateTimeFromStore);
+
+
   const PickupLocation = 'Manchester Club Stadium (M16)';
   const PickupDateTime = 'Wed 24 Feb, 12 PM';
   const DropLocation = 'Elland Road Stadium, Leed United';
   const DropDateTime = 'Wed 22 Feb';
-  const VaiRoute = 'Great Ancoats Street';
+  const VaiRoute =
+    'Great Ancoats Street Great Ancoats Street Great Ancoats Street Great Ancoats Street';
   const PricePickupJourney = 280;
   const PriceReturnJourney = 240;
 
+   
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
+  const [distance, setDistance]= useState("")
+  const [estimatedTime, setEstimatedTime]= useState("")
 
   const [EditTimeValue, setEditTimeValue] = useState('03.15 PM');
 
@@ -81,6 +99,35 @@ const TripDetails = ({navigation, route}) => {
     setModalVisible4(false);
   };
 
+  const getDistanceAndTime = async () => {
+    try {
+      const response = await axios.get(
+        'https://maps.googleapis.com/maps/api/distancematrix/json',
+        {
+          params: {
+            origins: `place_id:${PickupPlaceIdFromStore}`, // replace with your origin place ID
+            destinations: `place_id:${DropPlaceIdFromStore}`, // replace with your destination place ID
+            key: Google_Map_Api_Key, // replace with your Google Maps API Key
+          },
+        },
+      );
+
+      const result = response.data.rows[0].elements[0];
+
+      const distance1 = result.distance.text;
+      const duration1 = result.duration.text;
+      setDistance(distance1)
+      setEstimatedTime(duration1)
+
+      // console.log(`Distance: ${distance}`);
+      // console.log(`Estimated travel time: ${duration}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  getDistanceAndTime();
+
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -102,17 +149,18 @@ const TripDetails = ({navigation, route}) => {
               /> */}
 
               <TripDetailsIncludingViaRoutes
-                PickupLocation={PickupLocation}
-                PickupDateTime={PickupDateTime}
-                DropLocation={DropLocation}
-                DropDateTime={DropDateTime}
+                PickupLocation={pickupFromStore}
+                PickupDateTime={pickupDateTimeFromStore}
+                DropLocation={dropFromStore}
+                DropDateTime={distance}
+                estimatedTime={estimatedTime}
                 VaiRoute={VaiRoute}
                 handleEditBtnPress={handleEditBtnPress}
               />
               <PickupDetails
-                PickupLocation={PickupLocation}
-                PickupDateTime={PickupDateTime}
-                DropLocation={DropLocation}
+                PickupLocation={pickupFromStore}
+                PickupDateTime={pickupDateTimeFromStore}
+                DropLocation={dropFromStore}
                 DropDateTime={DropDateTime}
                 pickupOrReturn={'Pickup'}
                 Price={PricePickupJourney}
@@ -121,9 +169,9 @@ const TripDetails = ({navigation, route}) => {
 
               {showReturnJourney ? (
                 <ReturnDetails
-                  PickupLocation={PickupLocation}
-                  PickupDateTime={PickupDateTime}
-                  DropLocation={DropLocation}
+                  PickupLocation={dropFromStore}
+                  PickupDateTime={returnDateTimeFromStore}
+                  DropLocation={pickupFromStore}
                   DropDateTime={DropDateTime}
                   pickupOrReturn={'Return'}
                   Price={PriceReturnJourney}
@@ -185,8 +233,6 @@ const TripDetails = ({navigation, route}) => {
           </View>
         </View>
       </View>
-
-     
     </SafeAreaView>
   );
 };
@@ -200,6 +246,22 @@ const PickupDetails = ({
   Price,
   showReturnJourney,
 }) => {
+
+  console.log("haaan", PickupDateTime)
+  const dateTimeStr = PickupDateTime; 
+const [dateStr, timeStr] = dateTimeStr.split('  ');
+
+// Convert date string to date object
+const [day, month, year] = dateStr.split('/');
+const dateObj = new Date(`${year}-${month}-${day}`);
+
+// Format the date
+const options = {  month: 'long', day: 'numeric' };
+const formattedDateStr = dateObj.toLocaleDateString('en-GB', options);
+
+// Concatenate formatted date with time
+const formattedDateTimeStr = `${formattedDateStr}`;
+console.log(formattedDateTimeStr, "formated"); // Logs: '22 June 2023, 23:35 PM'
   return (
     <View
       style={[styles.PickBox, {marginBottom: !showReturnJourney ? 100 : 20}]}>
@@ -235,6 +297,7 @@ const PickupDetails = ({
       {/* third layer ie type of cab, pickup time, ratings */}
 
       <View style={styles.cabDetails}>
+        
         <View style={styles.cabTypeBox}>
           <View style={styles.svgSize}>
             <CabIcon width={18} height={18} />
@@ -249,12 +312,17 @@ const PickupDetails = ({
 
           <Text style={styles.cabTypeText}> Saloon</Text>
         </View>
-        <View style={styles.cabTypeBox2}>
+        <View style={styles.cabTypeBox3}>
           <View style={styles.svgSize}>
             <TimePicker width={18} height={18} />
           </View>
-
-          <Text style={styles.cabTypeText}>22 Feb, 12 PM</Text>
+          <ScrollView style={{height:"100%"}} horizontal>
+            <Text
+              style={
+                styles.cabTypeText
+              }>{`${formattedDateTimeStr}, ${timeStr}`}</Text>
+           
+          </ScrollView>
         </View>
         <View style={styles.cabTypeBox2}>
           <View style={styles.svgSize}>
@@ -277,6 +345,21 @@ const ReturnDetails = ({
   pickupOrReturn,
   Price,
 }) => {
+  console.log('haaan', PickupDateTime);
+  const dateTimeStr = PickupDateTime;
+  const [dateStr, timeStr] = dateTimeStr.split('  ');
+
+  // Convert date string to date object
+  const [day, month, year] = dateStr.split('/');
+  const dateObj = new Date(`${year}-${month}-${day}`);
+
+  // Format the date
+  const options = {month: 'long', day: 'numeric'};
+  const formattedDateStr = dateObj.toLocaleDateString('en-GB', options);
+
+  // Concatenate formatted date with time
+  const formattedDateTimeStr = `${formattedDateStr}`;
+  console.log(formattedDateTimeStr, 'formated'); // Logs: '22 June 2023, 23:35 PM'
   return (
     <View style={[styles.PickBox2]}>
       {/* first layer of title and price */}
@@ -325,12 +408,17 @@ const ReturnDetails = ({
 
           <Text style={styles.cabTypeText}> Saloon</Text>
         </View>
-        <View style={styles.cabTypeBox2}>
+        <View style={styles.cabTypeBox3}>
           <View style={styles.svgSize}>
             <TimePicker width={18} height={18} />
           </View>
-
-          <Text style={styles.cabTypeText}>22 Feb, 12 PM</Text>
+          <ScrollView style={{height: '100%'}} horizontal>
+           
+            <Text
+              style={
+                styles.cabTypeText
+              }>{`${formattedDateTimeStr}, ${timeStr}`}</Text>
+          </ScrollView>
         </View>
         <View style={styles.cabTypeBox2}>
           <View style={styles.svgSize}>
@@ -353,21 +441,26 @@ const TripDetailsIncludingViaRoutes = ({
   DropDateTime,
   VaiRoute,
   handleEditBtnPress,
+  estimatedTime
 }) => {
+
+
+  
   return (
     <View
       style={{
-        height: 263,
+        height: 253,
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: '#292F3B',
         position: 'relative',
         marginBottom: 32,
+        
       }}>
       <View
         style={{
           position: 'absolute',
-          top: 20,
+          top: 15,
           left: 20,
           right: 20,
           bottom: 20,
@@ -377,27 +470,28 @@ const TripDetailsIncludingViaRoutes = ({
           <WhitePickup width={24} height={24} />
 
           <View
-            style={{
-              height: 39,
-            }}>
-            <Text style={styles.pickupText}>{PickupLocation}</Text>
+            style={{borderWidth: 1, borderColor: 'transparent', width: '90%'}}>
+            <ScrollView style={{width: '100%', height: 39, marginBottom: 4}}>
+              <Text style={styles.pickupText}>{PickupLocation}</Text>
+            </ScrollView>
+
             <Text style={styles.dateTimeOfpickup}>{PickupDateTime}</Text>
           </View>
         </View>
-
-       
 
         <View
           style={{
             flexDirection: 'row',
             gap: 12,
-            marginTop: 30+22+12,
+            marginTop: 18,
           }}>
           <WhiteVia width={24} height={24} />
 
-          <View>
-            <Text style={styles.pickupText}>{VaiRoute}</Text>
-          </View>
+      
+            <ScrollView style={{height: 39, width:"100%"}}>
+              <Text style={styles.pickupText}>{VaiRoute}</Text>
+            </ScrollView>
+          
         </View>
 
         <View style={styles.dropLocationBox}>
@@ -406,18 +500,40 @@ const TripDetailsIncludingViaRoutes = ({
           </View>
 
           <View
-            style={{
-              height: 39,
-              marginTop: 5,
-            }}>
-            <Text style={styles.pickupText}>{DropLocation}</Text>
-            <Text style={styles.dateTimeOfpickup}>{DropDateTime}</Text>
+            style={
+              {
+                // marginTop: 5,
+              }
+            }>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: 'transparent',
+                width: '90%',
+              }}>
+              <ScrollView style={{height: 39, width: '100%', marginTop: 4}}>
+                <Text style={styles.pickupText}>{DropLocation}</Text>
+              </ScrollView>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  gap: 12,
+                  marginLeft: -32,
+                  marginTop: 16,
+                }}>
+                {/* <Text style={styles.dateTimeOfpickup2}>{`Distance: ${DropDateTime}`},</Text> */}
+                <Text
+                  style={
+                    styles.dateTimeOfpickup2
+                  }>{`Estimated Time: ${estimatedTime}`}</Text>
+              </View>
+            </View>
           </View>
         </View>
 
         <View
           style={{
-            height: 73,
+            height: 50,
             width: 1,
             position: 'absolute',
 
@@ -425,18 +541,18 @@ const TripDetailsIncludingViaRoutes = ({
             borderColor: 'white',
             borderStyle: 'dashed',
             left: 11.75,
-            top: 28,
+            top: 26,
           }}></View>
         <View
           style={{
-            height: 73,
+            height: 50,
             width: 1,
             position: 'absolute',
             borderLeftWidth: 1,
             borderColor: 'white',
             borderStyle: 'dashed',
             left: 11.75,
-            top: 126,
+            top: 106,
           }}></View>
       </View>
     </View>
@@ -444,11 +560,10 @@ const TripDetailsIncludingViaRoutes = ({
 };
 
 const styles = StyleSheet.create({
-
   dropLocationBox: {
     flexDirection: 'row',
     gap: 12,
-    marginTop: 54,
+    marginTop: 24,
   },
   editBox: {
     height: 22,
@@ -475,7 +590,6 @@ const styles = StyleSheet.create({
     color: 'white',
     letterSpacing: 0.32,
     fontFamily: 'ProximaNova',
-    lineHeight: 16 * 1.4,
   },
   dateTimeOfpickup: {
     fontSize: 13,
@@ -486,10 +600,21 @@ const styles = StyleSheet.create({
 
     lineHeight: 16 * 1,
   },
+  dateTimeOfpickup2: {
+    fontSize: 16,
+    fontWeight: 400,
+    fontFamily: 'ProximaNova',
+    color: '#ffffff',
+    letterSpacing: 0.32,
+
+    lineHeight: 16 * 1,
+  },
   pickupBox: {
     flexDirection: 'row',
     gap: 12,
-    height: 39,
+    // height: 39,
+    // borderWidth:1,
+    // borderColor:"white"
   },
   mainContainer: {
     flex: 1,
@@ -542,6 +667,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 600,
     color: 'white',
+    fontFamily: 'ProximaNovaSemibold',
   },
   PickupTitle: {
     fontSize: 18,
@@ -549,6 +675,7 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     lineHeight: 18 * 1.4,
     letterSpacing: 0.32,
+    fontFamily: 'ProximaNovaMedium',
   },
   horizontalLine: {
     marginHorizontal: 20,
@@ -575,6 +702,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#292F3B',
+    fontFamily: 'ProximaNova',
   },
   droplocationTextBox: {
     width: '40%',
@@ -586,6 +714,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    // borderWidth: 1,
   },
   cabTypeBox: {
     flexDirection: 'row',
@@ -596,6 +725,8 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 22,
     alignItems: 'center',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   cabTypeBox2: {
     flexDirection: 'row',
@@ -603,6 +734,14 @@ const styles = StyleSheet.create({
 
     marginBottom: 16,
     width: '40%',
+    alignItems: 'center',
+  },
+  cabTypeBox3: {
+    flexDirection: 'row',
+    gap: 8,
+
+    marginBottom: 16,
+    width: '55%',
     alignItems: 'center',
   },
   svgSize: {
@@ -618,6 +757,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.32,
     lineHeight: 16 * 1.4,
     color: '#4F565E',
+    fontFamily: 'ProximaNova',
   },
 
   priceAndBookBox: {
