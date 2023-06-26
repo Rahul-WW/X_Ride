@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
     fontFamily: 'ProximaNova',
+    fontSize:16,
   },
   dashedline: {
     position: 'absolute',

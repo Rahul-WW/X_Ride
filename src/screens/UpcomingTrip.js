@@ -30,13 +30,17 @@ import Clock from '../svgImages/Clock.svg';
 import FadedClock from '../svgImages/FadedClock.svg';
 import GradientText from '../components/GradientText';
 import {Linking} from 'react-native';
+import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const UpcomingTrip = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
   const [modalVisible4, setModalVisible4] = useState(false);
-  const [EditTimeValue, setEditTimeValue] = useState('07.15 AM');
-
+  const [EditTimeValue, setEditTimeValue] = useState('09.15 AM');
+ const pickupDateTimeFromStore = useSelector(
+   store => store.form.pickupDateTime,
+ );
   // const {selectedfromList} = route.params;
 
   // console.log(selectedfromList);
@@ -63,11 +67,64 @@ const UpcomingTrip = ({navigation}) => {
   };
 
   const handleEditBtnPress = () => {
-    const pickupTime = new Date(); // this will come from backend
-    pickupTime.setHours(17, 15, 0, 0); // take random time of 7.15 PM
+    //const pickupTime = new Date(); // this will come from backend
+   // pickupTime.setHours(6, 15, 0, 0); // take random time of 7.15 PM
 
-    let currentTime = new Date();
-     console.log(pickupTime, currentTime)
+    //console.log('pickupTime', new Date(pickupDateTimeFromStore).getTime());
+    let timeTodisplayInInputBox = pickupDateTimeFromStore.split('  ')
+    console.log('hii', timeTodisplayInInputBox[1]);
+    setEditTimeValue(timeTodisplayInInputBox[1]);
+
+
+  let pickupTime = 1687537581285;  //this is taken as random
+  let DateWhichIsSelected = new Date().getTime();
+   let currentTime = new Date().getTime();
+   const getValue = async () => {
+     try {
+       DateWhichIsSelected = await AsyncStorage.getItem('DateWhichIsSelected');
+       console.log(DateWhichIsSelected, 'DateWhichIsSelected');
+        let timeDifference = DateWhichIsSelected - currentTime;
+        console.log(timeDifference);
+        if (timeDifference < 21600000) {
+          setModalVisible4(true);
+        } else {
+          setModalVisible3(true);
+        }
+     } catch (e) {
+       // error reading value
+     }
+   };
+
+   getValue()
+    // let dateTimeString = '24/06/2023 15:15 PM';
+
+    // // Split the date and time
+    // let [date, time, period] = pickupDateTimeFromStore.split(' ');
+
+    // // Split the date into day, month, and year
+    // let [day, month, year] = date.split('/');
+
+    // // Adjust month to zero-indexed (January is 0, December is 11)
+    // month = Number(month) - 1;
+
+    // // Convert the 12-hour time to 24-hour time
+    // let [hours, minutes] = time.split(':');
+    // if (period.toUpperCase() === 'PM' && hours !== '12') {
+    //   hours = Number(hours) + 12;
+    // } else if (period.toUpperCase() === 'AM' && hours === '12') {
+    //   hours = '00';
+    // }
+
+    // // Create a new Date object
+    // let dateTime = new Date(year, month, day, hours, minutes);
+
+    // // Convert to milliseconds since the Unix epoch
+    // let milliseconds = dateTime.getTime();
+
+    // console.log(milliseconds, "mili");
+
+   
+    //console.log('now', currentTime);
     // currentTime.setHours(
     //   parseInt(time.split(':')[0]),
     //   parseInt(time.split(':')[1]),
@@ -75,13 +132,7 @@ const UpcomingTrip = ({navigation}) => {
     //   0,
     // );
 
-    let timeDifference = (pickupTime - currentTime) / (1000 * 60 * 60);
-
-    if (timeDifference < 6) {
-      setModalVisible4(true);
-    } else {
-      setModalVisible3(true);
-    }
+   
   };
 
   const handlePressSaveBtn = () => {
@@ -224,7 +275,6 @@ const UpcomingTrip = ({navigation}) => {
                       handleCallBtnPressed={handleCallBtnPressed}
                       phoneNumber={'9973764333'}
                     />
-
                   </View>
                 </View>
               </LinearGradient>
@@ -246,7 +296,7 @@ const UpcomingTrip = ({navigation}) => {
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Name</Text>
-                <Text style={styles.detailsListText}>Jaslin Jay</Text>
+                <Text style={styles.detailsListText2}>Jaslin Jay</Text>
               </View>
               <View
                 style={{
@@ -255,7 +305,7 @@ const UpcomingTrip = ({navigation}) => {
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Contact No</Text>
-                <Text style={styles.detailsListText}>5455545454</Text>
+                <Text style={styles.detailsListText2}>5455545454</Text>
               </View>
               <View
                 style={{
@@ -264,7 +314,7 @@ const UpcomingTrip = ({navigation}) => {
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Email</Text>
-                <Text style={styles.detailsListText}>Jaslin@gmail.com</Text>
+                <Text style={styles.detailsListText2}>Jaslin@gmail.com</Text>
               </View>
               <View
                 style={{
@@ -273,7 +323,7 @@ const UpcomingTrip = ({navigation}) => {
                   height: 22,
                 }}>
                 <Text style={styles.detailsListText}>Paid By</Text>
-                <Text style={styles.detailsListText}>Cash</Text>
+                <Text style={styles.detailsListText2}>Cash</Text>
               </View>
             </View>
           </View>
@@ -291,7 +341,10 @@ const UpcomingTrip = ({navigation}) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   gap: 12,
-                }}>
+
+                  width: '50%',
+                }}
+                onPress={() => handleCallBtnPressed(88888888888)}>
                 <CallIcon width={20} height={20} />
                 <View>
                   <Text style={styles.detailsListText}>Call Us</Text>
@@ -485,11 +538,11 @@ const UpcomingTrip = ({navigation}) => {
                     style={{
                       marginHorizontal: 20,
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
+
                       gap: 16,
                       height: 48,
                     }}>
-                    <Pressable style={{width: 124}}>
+                    <Pressable style={{width: '37.15%'}}>
                       <LinearGradient
                         colors={['#00c96d', '#048ad7']}
                         useAngle={true}
@@ -505,7 +558,7 @@ const UpcomingTrip = ({navigation}) => {
                         </TouchableOpacity>
                       </LinearGradient>
                     </Pressable>
-                    <Pressable style={{width: '52%'}}>
+                    <Pressable style={{width: '58.29%'}}>
                       <LinearGradient
                         colors={['#00c96d', '#048ad7']}
                         useAngle={true}
@@ -984,7 +1037,6 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     position: 'absolute',
     bottom: 0,
-    
   },
   resetBtn: {
     borderRadius: 15,
@@ -1257,10 +1309,11 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
   },
+
   detailsListText2: {
     fontSize: 16,
     fontWeight: 400,
-    color: '#4F565E',
+    color: '#292F3B',
     // lineHeight: 16 * 1.4,
     // letterSpacing: 0.32,
   },

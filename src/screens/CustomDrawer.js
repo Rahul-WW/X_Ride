@@ -39,8 +39,11 @@ import Instagram from '../svgImages/Instagram.svg';
 import Twitter from '../svgImages/Twitter.svg';
 import Youtube from '../svgImages/Youtube.svg';
 import LoaderIndicator from '../components/LoaderIndicator';
+import { useNavigation } from '@react-navigation/native';
 
 const CustomDrawer = props => {
+const nav = useNavigation();
+
   const [isloading, setIsloading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const translateY = useState(new Animated.Value(300))[0]; // this is to slide the modal slowly
@@ -61,7 +64,8 @@ const CustomDrawer = props => {
       useNativeDriver: true,
     }).start(() => setModalVisible(false)); // Hide the modal in the end of the animation
 
-    Alert.alert('You are logged out ');
+   // Alert.alert('You are logged out ');
+   nav.navigate("SignIn")
   };
   return (
     <SafeAreaView style={{flex: 1, width: '100%'}}>

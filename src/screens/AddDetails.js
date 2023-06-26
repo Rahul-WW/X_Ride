@@ -23,7 +23,7 @@ import CheckedRadio from '../svgImages/CheckedRadio.svg';
 import LinearGradient from 'react-native-linear-gradient';
 import XBtnWithoutArrow from '../components/XBtnWithoutArrow';
 import CheckedCB from '../svgImages/CheckedCB.svg';
-
+import {useSelector} from 'react-redux';
 const PriceList = [
   {name: 'Ride-Id', value: '#4502500121'},
   {name: 'Miles', value: 10.5},
@@ -34,7 +34,7 @@ const PriceList = [
   {name: 'Coupon', value: -5},
 ];
 
-const AddDetails = () => {
+const AddDetails = ({navigation}) => {
   const [isChecked, setIsChecked] = useState(false);
   const [dropdownHidden, setDropdownHidden] = useState(false);
   const [radio1, setRadio1] = useState(false);
@@ -42,7 +42,75 @@ const AddDetails = () => {
   const [radio3, setRadio3] = useState(false);
   const [data, setData] = useState([]); // data willl come from API response as of now PriceList is used Hard Coded.
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isAirportPickup, setIsAirportPickup] = useState(false);
+   const [fields, setFields] = useState({
+     name: '',
+     email: '',
+     contact: '',
+     company: '',
+     crn: '',
+     flightOrigin: '',
+     flightNumber: '',
+   });
+   const [errors, setErrors] = useState({});
+  const pickupFromStore = useSelector(store => store.form.pickupLocation);
 
+   useEffect(() => {
+     validate();
+     console.log(errors)
+   }, [fields]);
+
+
+     const validate = () => {
+       let tempErrors = {};
+       // validation rules
+       tempErrors.name = fields.name
+         ? /[A-Za-z ]+/.test(fields.name)
+           ? ''
+           : 'Name should only contain alphabets'
+         : 'This field is required';
+       tempErrors.email = fields.email
+         ? /\S+@\S+\.\S+/.test(fields.email)
+           ? ''
+           : 'Email is not valid'
+         : 'This field is required';
+       tempErrors.contact = fields.contact
+         ? fields.contact.length === 10
+           ? ''
+           : 'Contact Number should have 10 digits'
+         : 'This field is required';
+
+       if (isChecked) {
+         tempErrors.company = fields.company ? '' : 'This field is required';
+         tempErrors.crn = fields.crn
+           ? /^[0-9]{8}$|^[A-Za-z]{2}[0-9]{6}$/.test(fields.crn)
+             ? ''
+             : 'CRN should be 8 digits or two letters followed by 6 digits'
+           : 'This field is required';
+       }
+
+        if (isAirportPickup) {
+          tempErrors.flightOrigin = fields.flightOrigin
+            ? ''
+            : 'This field is required';
+          tempErrors.flightNumber = fields.flightNumber
+            ? /^[A-Za-z]{2}[0-9]{3}$/.test(fields.flightNumber)
+              ? ''
+              : 'It should be 5 characters, first 2 letters followed by 3 digits'
+            : 'This field is required';
+        }
+
+       setErrors({...tempErrors});
+     };
+
+      const handleChange = (name, value) => {
+        setFields({
+          ...fields,
+          [name]: value,
+        });
+      };
+
+  //console.log(pickupFromStore);
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
   };
@@ -64,7 +132,7 @@ const AddDetails = () => {
   };
 
   const handleApplyBtnPressed = () => {
-    Alert.alert('yes pressed');
+    //Alert.alert('yes pressed');
   };
 
   useEffect(() => {
@@ -78,6 +146,33 @@ const AddDetails = () => {
     );
     setTotalPrice(total);
   };
+
+
+  const handlePressPayNow=()=>{
+     if (Object.values(errors).some(error => error !== '')) {
+      //  Alert.alert(
+      //    'Validation error',
+      //    'Please fix the errors before submitting',
+      //  );
+     } else {
+       //Alert.alert('Form data', JSON.stringify(fields));
+       navigation.navigate("Payment")
+       
+     }
+  }
+  useEffect(() => {
+    const string = pickupFromStore;
+    const searchTerm = 'airport';
+    const containsTerm = string
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    
+    if (containsTerm === true) {
+      setIsAirportPickup(true);
+    } else {
+      setIsAirportPickup(false);
+    }
+  }, []);
   return (
     <SafeAreaView style={{backgroundColor: '#F3F7FA', flex: 1}}>
       <Animated.View>
@@ -101,20 +196,65 @@ const AddDetails = () => {
             </View>
             <View style={styles.inputBoxContainer}>
               <View style={styles.inputDivs}>
-                <InputFeildForDetails placeholder="Name" />
+                <InputFeildForDetails
+                  placeholder="Name"
+                  value={fields.name}
+                  onChangeText={value => handleChange('name', value)}
+                  onBlur={validate}
+                  error={errors.name}
+                />
+                <Text style={styles.errorText}>{errors.name}</Text>
               </View>
               <View style={styles.inputDivs}>
-                <InputFeildForDetails placeholder="Email Id" />
+                <InputFeildForDetails
+                  placeholder="Email Id"
+                  keyboardType="email-address"
+                  value={fields.email}
+                  onChangeText={value => handleChange('email', value)}
+                  onBlur={validate}
+                  error={errors.email}
+                />
+                <Text style={styles.errorText}>{errors.email}</Text>
               </View>
               <View style={styles.inputDivs}>
-                <InputFeildForDetails placeholder="Contact No." />
+                <InputFeildForDetails
+                  placeholder="Contact No."
+                  keyboardType="numeric"
+                  maxLength={10}
+                  value={fields.contact}
+                  onChangeText={value => handleChange('contact', value)}
+                  onBlur={validate}
+                  error={errors.contact}
+                />
+                <Text style={styles.errorText}>{errors.contact}</Text>
               </View>
-              <View style={styles.inputDivs}>
-                <InputFeildForDetails placeholder="Flight Origin " />
-              </View>
-              <View style={styles.inputDivs}>
-                <InputFeildForDetails placeholder="Flight Number" />
-              </View>
+
+              {isAirportPickup && (
+                <View style={styles.inputDivs}>
+                  <InputFeildForDetails
+                    placeholder="Flight Origin "
+                    value={fields.flightOrigin}
+                    onChangeText={value => handleChange('flightOrigin', value)}
+                    onBlur={validate}
+                    error={errors.flightOrigin}
+                  />
+                  <Text style={styles.errorText}>{errors.flightOrigin}</Text>
+                </View>
+              )}
+
+              {isAirportPickup && (
+                <View style={styles.inputDivs}>
+                  <InputFeildForDetails
+                    placeholder="Flight Number"
+                    value={fields.flightNumber}
+                    onChangeText={value => handleChange('flightNumber', value)}
+                    onBlur={validate}
+                    error={errors.flightNumber}
+                  />
+                  <Text style={styles.errorText}>{errors.flightNumber}</Text>
+                </View>
+              )}
+
               <View style={styles.checkBoxDiv}>
                 <View>
                   {/* <CheckBox
@@ -143,17 +283,32 @@ const AddDetails = () => {
                 </View>
 
                 <View>
-                  <Text style={styles.checkboxText}>Have CNR Details</Text>
+                  <Text style={styles.checkboxText}>Have CRN Details</Text>
                 </View>
               </View>
 
               {isChecked && (
                 <View>
                   <View style={styles.inputDivs}>
-                    <InputFeildForDetails placeholder="Company Name" />
+                    <InputFeildForDetails
+                      placeholder="Company Name"
+                      value={fields.company}
+                      onChangeText={value => handleChange('company', value)}
+                      onBlur={validate}
+                      error={errors.company}
+                    />
+                    <Text style={styles.errorText}>{errors.company}</Text>
                   </View>
                   <View style={styles.inputDivs}>
-                    <InputFeildForDetails placeholder="CRN" />
+                    <InputFeildForDetails
+                      placeholder="CRN"
+                      maxLength={8}
+                      value={fields.crn}
+                      onChangeText={value => handleChange('crn', value)}
+                      onBlur={validate}
+                      error={errors.crn}
+                    />
+                    <Text style={styles.errorText}>{errors.crn}</Text>
                   </View>
                 </View>
               )}
@@ -370,51 +525,49 @@ const AddDetails = () => {
                 )}
               </View>
 
-             
-                <View style={[styles.orderSummaryBox]}>
-                  <View style={styles.orderTextBox}>
-                    <Text style={styles.orderSummaryText}>Order Summary</Text>
-                  </View>
+              <View style={[styles.orderSummaryBox]}>
+                <View style={styles.orderTextBox}>
+                  <Text style={styles.orderSummaryText}>Order Summary</Text>
+                </View>
+                <View // this is horizontal line
+                  style={{
+                    borderTopWidth: 1,
+                    marginTop: 12,
+                    marginHorizontal: 20,
+                    borderColor: '#E3E9ED',
+                    marginBottom: 20,
+                  }}></View>
+
+                <View style={styles.totalCostDetails}>
+                  {PriceList.map((e, i) => {
+                    return (
+                      <View key={i} style={styles.nameAndPriceBox}>
+                        <Text style={styles.priceName}>{e.name}</Text>
+                        <Text style={styles.priceValue}>
+                          {e.name === 'Coupon'
+                            ? `- £ ${e.value}`
+                            : e.name === 'Ride-Id'
+                            ? e.value
+                            : `£ ${e.value}`}
+                        </Text>
+                      </View>
+                    );
+                  })}
+
                   <View // this is horizontal line
                     style={{
                       borderTopWidth: 1,
-                      marginTop: 12,
-                      marginHorizontal: 20,
                       borderColor: '#E3E9ED',
-                      marginBottom: 20,
+                      marginBottom: 12,
                     }}></View>
 
-                  <View style={styles.totalCostDetails}>
-                    {PriceList.map((e, i) => {
-                      return (
-                        <View key={i} style={styles.nameAndPriceBox}>
-                          <Text style={styles.priceName}>{e.name}</Text>
-                          <Text style={styles.priceValue}>
-                            {e.name === 'Coupon'
-                              ? `- £ ${e.value}`
-                              : e.name === 'Ride-Id'
-                              ? e.value
-                              : `£ ${e.value}`}
-                          </Text>
-                        </View>
-                      );
-                    })}
-
-                    <View // this is horizontal line
-                      style={{
-                        borderTopWidth: 1,
-                        borderColor: '#E3E9ED',
-                        marginBottom: 12,
-                      }}></View>
-
-                    <View style={styles.totalFairbox}>
-                      <Text style={styles.totalFairText}>Total Fair</Text>
-                      <Text
-                        style={styles.totalFairText}>{`£ ${totalPrice}`}</Text>
-                    </View>
+                  <View style={styles.totalFairbox}>
+                    <Text style={styles.totalFairText}>Total Fair</Text>
+                    <Text
+                      style={styles.totalFairText}>{`£ ${totalPrice}`}</Text>
                   </View>
                 </View>
-              
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -454,11 +607,12 @@ const AddDetails = () => {
             </View>
           </View>
           <View style={{width: '50%'}}>
-            <XBtnWithoutArrow
+            {/* <XBtnWithoutArrow
               Btnwidth={'100%'}
               textInsideBtn={'PAY NOW'}
               goTo={'Payment'}
-            />
+            /> */}
+            <PayBtn handlePressPayNow={handlePressPayNow} />
           </View>
         </View>
       </View>
@@ -466,7 +620,15 @@ const AddDetails = () => {
   );
 };
 
-const InputFeildForDetails = ({placeholder}) => {
+const InputFeildForDetails = ({
+  keyboardType,
+  placeholder,
+  value,
+  onChangeText,
+  onBlur,
+  error,
+  maxLength,
+}) => {
   return (
     <View
       style={{
@@ -484,16 +646,20 @@ const InputFeildForDetails = ({placeholder}) => {
           marginLeft: 20,
           fontSize: 16,
           fontFamily: 'ProximaNova',
-
           flex: 1,
-
           lineHeight: 16 * 1.4,
           letterSpacing: 0.32,
         }}
         multiline={true}
         numberOfLines={4}
         scrollEnabled={true}
-        placeholder={placeholder}></TextInput>
+        keyboardType={keyboardType}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+        onBlur={onBlur}
+        maxLength={maxLength}
+        error={error}></TextInput>
     </View>
   );
 };
@@ -547,8 +713,63 @@ const ApplyBtn = ({textInsideBtn, Btnwidth, handleApplyBtnPressed}) => {
     </Pressable>
   );
 };
+const PayBtn = ({handlePressPayNow}) => {
+  return (
+    <Pressable onPress={handlePressPayNow}>
+      <View
+        style={{
+          height: 48,
+
+          width: '100%',
+        }}>
+        <LinearGradient
+          locations={[0, 1]}
+          colors={['#00c96d', '#048ad7']}
+          useAngle={true}
+          angle={90}
+          style={{borderRadius: 16}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              textAlign: 'center',
+              justifyContent: 'center',
+              gap: 8,
+              borderRadius: 16,
+            }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                height: 48,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  fontFamily: 'ProximaNovaSemibold',
+                  letterSpacing: 0.32,
+                }}>
+                PAY NOW
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </View>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
+  errorText: {
+    fontSize: 12,
+    color: 'red',
+    fontWeight: 400,
+    fontFamily: 'ProximaNova',
+    marginLeft: 25,
+  },
   footer: {
     position: 'absolute',
     bottom: 0,

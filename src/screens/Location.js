@@ -127,19 +127,7 @@ const Location = ({navigation, route}) => {
     navigation.goBack();
   };
 
-  const SaveOrigin= async (org)=>{
-    
-    try {
-      await AsyncStorage.setItem(
-        'Place_Id_List',
-        JSON.stringify({origin: org}),
-      );
-    } catch (error) {
-      if (error.message) {
-        navigation.navigate('NoInternet');
-      }
-    }
-  }
+  
     const SaveDestination = async (org) => {
       
       try {
@@ -154,15 +142,6 @@ const Location = ({navigation, route}) => {
       }
     };
 
-  const GetData= async ()=>{
-    try {
-     const PlaceList= await AsyncStorage.getItem("Place_Id_List")
-     console.log(PlaceList, "list")
-    } catch (error) {
-      console.log(error)
-      return error
-    }
-  }
 
   const handlePressCrossBtn = () => {
     setShowSuggestions(false);

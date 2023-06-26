@@ -118,10 +118,11 @@ const DropPlaceIdFromStore= useSelector(store=> store.form.destination)
       const duration1 = result.duration.text;
       setDistance(distance1)
       setEstimatedTime(duration1)
-
+     //console.log(distance1)
       // console.log(`Distance: ${distance}`);
       // console.log(`Estimated travel time: ${duration}`);
     } catch (error) {
+      console.log(error.response.data, 'error');
       console.error(error);
     }
   };

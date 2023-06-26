@@ -44,7 +44,7 @@ const TripCompletion = ({navigation}) => {
     };
 
     const handleSubmit=()=>{
-        Alert.alert(`Rating has been submitted  ${selectedStar} Stars and Comment as ${comment}`)
+       // Alert.alert(`Rating has been submitted  ${selectedStar} Stars and Comment as ${comment}`)
         navigation.navigate("Home")
     }
 

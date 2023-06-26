@@ -9,11 +9,16 @@ const ChatSupport = ({navigation, route}) => {
     console.log(from)
   return (
     <SafeAreaView>
-      <View />
-      <BugTracking
-        projectID="z96WXSe5gZldiInebqKp"
-        token="MrJEAODnvQaebscVuCanG4pAmNX2"
-      />
+      <Animated.View>
+        <HeaderDrawerScreens
+          headertext={'Chat Support'}
+          backto={from}
+          navigation={navigation}
+        />
+      </Animated.View>
+      <View style={{marginLeft: 80, marginTop: 80}}>
+        <Text style={{fontWeight: 600, fontSize: 20}}>Chat support</Text>
+      </View>
     </SafeAreaView>
   );
 }

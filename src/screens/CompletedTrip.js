@@ -37,7 +37,7 @@ const CompletedTrip = ({navigation}) => {
   const [filePath, setFilePath] = useState('');
 
   const handleRateBtnPressed = () => {
-    Alert.alert('yes rated');
+   
     navigation.navigate('TripCompletion');
   };
 

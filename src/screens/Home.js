@@ -26,7 +26,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
 } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckBox from 'react-native-check-box';
 import LinearGradient from 'react-native-linear-gradient';
 import {FontSize, Color, FontWeight} from '../../GlobalStyles';
@@ -54,11 +54,10 @@ import Exclemation from '../svgImages/Exclemation.svg';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {ViaLocationReqRemove} from '../Redux/homeform/HomeActions';
-import { ToggleIsReturnJourney } from '../Redux/homeform/HomeActions';
+import {ToggleIsReturnJourney} from '../Redux/homeform/HomeActions';
 import {useDispatch} from 'react-redux';
-import { PickupDateTimeReq } from '../Redux/homeform/HomeActions';
-import { ReturnDateTimeReq } from '../Redux/homeform/HomeActions';
-
+import {PickupDateTimeReq} from '../Redux/homeform/HomeActions';
+import {ReturnDateTimeReq} from '../Redux/homeform/HomeActions';
 
 const Home = () => {
   const isReturnJourney = useSelector(store => store.form.isReturn);
@@ -66,15 +65,17 @@ const Home = () => {
   const [isNotication, setIsNotification] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
 
-
   const pickupFromStore = useSelector(store => store.form.pickupLocation);
   const dropFromStore = useSelector(store => store.form.dropLocation);
   const viaFromStore = useSelector(store => store.form.viaLocation);
-  const pickupdateTimeFromStore=useSelector(store => store.form.pickupDateTime);
- const returndateTimeFromStore= useSelector(store=> store.form.returnDateTime)
+  const pickupdateTimeFromStore = useSelector(
+    store => store.form.pickupDateTime,
+  );
+  const returndateTimeFromStore = useSelector(
+    store => store.form.returnDateTime,
+  );
 
   const dispatch = useDispatch();
-
 
   let PickupToDistplay = pickupFromStore;
   let dropToDisplay = dropFromStore;
@@ -166,19 +167,17 @@ const Home = () => {
 
   //this is for checkbox
   const handleCheckBox = () => {
-    
     setIsChecked(!isChecked);
-     dispatch(ToggleIsReturnJourney());
-      
+    dispatch(ToggleIsReturnJourney());
   };
 
   //this is for clicking on PickupLocation box to navigate to Location page
   const handleInputPickupLocation = () => {
     Keyboard.dismiss();
-        setErrors(errors => ({
-          ...errors,
-          pickupError: '',
-        }));
+    setErrors(errors => ({
+      ...errors,
+      pickupError: '',
+    }));
     navigation.navigate('Location');
   };
   const handleInputDropLocation = () => {
@@ -187,12 +186,12 @@ const Home = () => {
   };
 
   const showDatePicker = () => {
-    if(dropFromStore === ""){
+    if (dropFromStore === '') {
       setErrors(errors => ({
         ...errors,
         dropError: 'Select a Drop Location first',
       }));
-      return 
+      return;
     }
     setDatePickerVisibility(true);
     //  setTimePickerVisibility(false);
@@ -218,9 +217,21 @@ const Home = () => {
 
     let DateWhichIsSelected = new Date(currentDate).getTime();
     let TodaysDate = new Date(Date.now()).getTime();
-    
 
     //console.log(TodaysDate - DateWhichIsSelected, 'today');
+      const saveValue = async () => {
+        try {
+          await AsyncStorage.setItem(
+            'DateWhichIsSelected',
+            JSON.stringify(DateWhichIsSelected),
+          );
+          
+        } catch (e) {
+          // saving error
+        }
+      };
+
+      saveValue()
 
     let day = currentDate.getDate();
     let month = currentDate.getMonth() + 1;
@@ -242,7 +253,7 @@ const Home = () => {
         month < 10 ? '0' + month : month
       }/${year}`,
     });
-//  console.log(form.pickupDate, "pickup")
+    //  console.log(form.pickupDate, "pickup")
     // console.log(form);
     // console.log(pickupTime);
     setErrors(errors => ({...errors, pickupDateTime: ''}));
@@ -289,32 +300,31 @@ const Home = () => {
     setTimePickerVisibility(Platform.OS === 'ios');
     setTime(currentTime);
 
-  
-    let timeAfterHalfAnHr = new Date().getTime()+ 1800000  // time after half an hr in miliseconds
-    let selectedTimeInMilisecond=new Date(selectedTime).getTime()  //selected time in milisecond
+    let timeAfterHalfAnHr = new Date().getTime() + 1800000; // time after half an hr in miliseconds
+    let selectedTimeInMilisecond = new Date(currentTime).getTime(); //selected time in milisecond
+    console.log(selectedTimeInMilisecond, "selctrd")
+    
 
 
+    let fdate = new Date(currentTime); // this is formated date
 
-    let fdate = new Date(currentTime);// this is formated date
-
-    // if(selectedTimeInMilisecond < timeAfterHalfAnHr){
+    // if (selectedTimeInMilisecond < timeAfterHalfAnHr) {
     //   setErrors(errors => ({
     //     ...errors,
-    //     pickupDateTime: 'Select time more than Half an hour from time of booking',
+    //     pickupDateTime:
+    //       'Select time more than Half an hour from time of booking',
     //   }));
     //   return;
-    // }else{
-    //    setErrors(errors => ({
-    //      ...errors,
-    //      pickupDateTime:
-    //        '',
-    //    }));
+    // } else {
+    //   setErrors(errors => ({
+    //     ...errors,
+    //     pickupDateTime: '',
+    //   }));
     // }
 
     // let day = currentDate.getDate();
     // let month = currentDate.getMonth() + 1;
     // let year = currentDate.getFullYear();
-   
 
     let hour = fdate.getHours();
     let minute = String(fdate.getMinutes()).padStart(2, '0');
@@ -324,19 +334,17 @@ const Home = () => {
     //  console.log('currentTime', hour);
     hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
     let formattedDate = ` ${hour}:${minute} ${ampm}`; //this is formated Time like 12:00 PM
-   // console.log('currentTime', formattedDate);
+    // console.log('currentTime', formattedDate);
 
-    dispatch(PickupDateTimeReq(form.pickupDate+` ${formattedDate}`))
+    dispatch(PickupDateTimeReq(form.pickupDate + ` ${formattedDate}`));
     setForm({
       ...form,
       pickuptime: ` ${formattedDate}`,
     });
 
-
     // console.log(form.pickupDate+" "+ ` ${formattedDate}`  )
     // dispatch(PickupDateTimeReq(form.pickupDate+` ${formattedDate}` ))
-     //dispatch(PickupDateTimeReq(`${formattedDate}`))
-    
+    //dispatch(PickupDateTimeReq(`${formattedDate}`))
   };
 
   const onTimeChange2 = (event, selectedTime) => {
@@ -356,7 +364,7 @@ const Home = () => {
     hour = hour ? String(hour).padStart(2, '0') : 12; // the hour '0' should be '12'
     let formattedDate = ` ${hour}:${minute} ${ampm}`;
     //console.log('currentTime', formattedDate);
-    dispatch(ReturnDateTimeReq(form.returnDate+` ${formattedDate}`))
+    dispatch(ReturnDateTimeReq(form.returnDate + ` ${formattedDate}`));
     setForm({
       ...form,
       returnTime: ` ${formattedDate}`,
@@ -403,43 +411,36 @@ const Home = () => {
 
   //this function is for submitting the form where we have to collect all the input values and need to make a post request.
   const handleSubmit = () => {
-
-
-   
-   if(isChecked=== true && form.returnDate === ""){
-        setErrors(errors => ({
-          ...errors,
-          returnDateTime: 'Select a return date',
-        }));
-        return 
-   }
-
- 
-
-  //  if(form.pickup==="" || form.drop==="" || form.pickupDate==="" || form.passengersCount===""){
-  //   console.log(errors)
-  //   return
-  //  }
-
-  if(errors.pickup ==="" || pickupFromStore===""){
-     setErrors(errors => ({
-          ...errors,
-          pickupError: 'Select a Pickup Location first',
-        }));
-        return 
-  }
-
-   if(errors.dropError !== ""){
+    if (isChecked === true && form.returnDate === '') {
       setErrors(errors => ({
-          ...errors,
-          pickupError: 'Select a Pickup Location first 2',
-        }));
-        return 
-   }
+        ...errors,
+        returnDateTime: 'Select a return date',
+      }));
+      return;
+    }
 
-//console.log(form)
+    //  if(form.pickup==="" || form.drop==="" || form.pickupDate==="" || form.passengersCount===""){
+    //   console.log(errors)
+    //   return
+    //  }
 
+    if (errors.pickup === '' || pickupFromStore === '') {
+      setErrors(errors => ({
+        ...errors,
+        pickupError: 'Select a Pickup Location first',
+      }));
+      return;
+    }
 
+    if (errors.dropError !== '') {
+      setErrors(errors => ({
+        ...errors,
+        pickupError: 'Select a Pickup Location first 2',
+      }));
+      return;
+    }
+
+    //console.log(form)
 
     if (isChecked === true) {
       console.log('Bothonly', isChecked);
@@ -459,23 +460,23 @@ const Home = () => {
         pickupError: '',
       }));
       setForm({
-      ...form,
-      pickup: pickupFromStore,
-    })
+        ...form,
+        pickup: pickupFromStore,
+      });
     }
-    if(dropFromStore !== ""){
-       setErrors(errors => ({
-         ...errors,
-         dropError: '',
-       }));
-       setForm({
-      ...form,
-    drop: dropFromStore,
-    });
+    if (dropFromStore !== '') {
+      setErrors(errors => ({
+        ...errors,
+        dropError: '',
+      }));
+      setForm({
+        ...form,
+        drop: dropFromStore,
+      });
     }
   }, [pickupFromStore, dropFromStore]);
 
-  console.log("datetime", pickupdateTimeFromStore)
+  console.log('datetime', pickupdateTimeFromStore);
   return (
     <SafeAreaView
       style={{
@@ -562,20 +563,26 @@ const Home = () => {
                   <View style={styles.line}></View>
 
                   <View style={styles.viaRouteBox}>
-                   
-                    <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-                      <View ></View>
-                      <TouchableOpacity style={{ flexDirection:"row", gap: 8, alignItems:"center"}} onPress={incrementCount}>
-                        <View >
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                      }}>
+                      <View></View>
+                      <TouchableOpacity
+                        style={{
+                          flexDirection: 'row',
+                          gap: 8,
+                          alignItems: 'center',
+                        }}
+                        onPress={incrementCount}>
+                        <View>
                           <Via width={16} height={16} />
                         </View>
 
-                         <Text style={styles.viaText}>Via</Text>
+                        <Text style={styles.viaText}>Via</Text>
                       </TouchableOpacity>
-                      
                     </View>
-                  
-                   
 
                     {Array(count)
                       .fill()
@@ -1030,7 +1037,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16 * 1.4,
     fontFamily: 'ProximaNova',
-    letterSpacing: 0.32
+    letterSpacing: 0.32,
   },
   logoBox: {
     width,
@@ -1102,21 +1109,16 @@ const styles = StyleSheet.create({
   viaRouteBox: {
     marginTop: 12,
     position: 'relative',
-
   },
   viaSmallbox: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 8,
-    
 
     height: 23,
     alignItems: 'center',
-   
-   width: 52,
-   
-    
-    
+
+    width: 52,
   },
   inputDiv2: {
     marginTop: 12,

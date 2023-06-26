@@ -36,6 +36,9 @@ const Email = ({navigation, route}) => {
   const [whatsWrong, setWhatsWrong] = useState('');
   const [dropdownOption, setDropdownOption] = useState(false);
   const [file, setFile] = useState(null);
+  const [contactError, setContactError]= useState("")
+
+
   const options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
 
   const handleDropdown = () => {
@@ -46,6 +49,16 @@ const Email = ({navigation, route}) => {
     setWhatsWrong(option);
     setDropdownOption(false);
   };
+
+  const handleContactNumberPressed=(word)=>{
+   
+    if (contactnumber.length < 10) {
+      setContactError('');
+    }
+    setContactnumber(word);
+    
+   
+  }
 
     const handleAttachFile = async () => {
       try {
@@ -62,12 +75,12 @@ const Email = ({navigation, route}) => {
       }
     };
   const handleSubmit = () => {
-        Alert.alert(
-          'Submitted',
-          `Input: ${whatsWrong}\nSelected option: ${whatsWrong}\nFile: ${
-            file ? file.name : 'No file attached'
-          }`,
-        );
+
+    if(contactnumber.length < 10){
+      setContactError("Mobile Number Should be of 10 Digits")
+      return
+    }
+       navigation.navigate(from)
   };
   return (
     <SafeAreaView
@@ -113,7 +126,7 @@ const Email = ({navigation, route}) => {
           <View style={{height: 302, marginTop: 24}}>
             <View style={{height: 56, marginBottom: 20}}>
               <View style={styles.inputContainer1}>
-                <View style={{marginTop: 16, marginLeft: 20}}>
+                <View style={{marginLeft: 20, marginTop: 4}}>
                   <MobileIcon />
                 </View>
 
@@ -125,8 +138,16 @@ const Email = ({navigation, route}) => {
                   placeholder={'Contact Number'}
                   value={contactnumber}
                   keyboardType="numeric"
-                  onChangeText={value => setContactnumber(value)}></TextInput>
+                  maxLength={10}
+                  onChangeText={word =>
+                    handleContactNumberPressed(word)
+                  }></TextInput>
               </View>
+              {contactError !== '' ? (
+                <Text style={styles.errorText}>
+                  Mobile number must be 10 digits
+                </Text>
+              ) : null}
             </View>
             <View style={{height: 56, marginBottom: 20}}>
               {/* <InputField Icon={<WhatsWrong />} placeholder={"What's wrong?"} /> */}
@@ -154,7 +175,6 @@ const Email = ({navigation, route}) => {
                   gap: 16,
                   paddingLeft: 20,
                   paddingTop: 20,
-                  
                 }} // choose options
               >
                 {options.map((e, i) => {
@@ -176,7 +196,7 @@ const Email = ({navigation, route}) => {
                 </View>
 
                 <TextInput
-                  style={styles.inputBox}
+                  style={styles.inputBox1}
                   multiline={true}
                   scrollEnabled={true}
                   numberOfLines={4}
@@ -263,6 +283,13 @@ const SubmitBtn = ({Btnwidth, textInsideBtn, handleSubmit}) => {
 
 
 const styles = StyleSheet.create({
+  errorText: {
+    fontSize: 12,
+    color: 'red',
+    fontWeight: 400,
+    fontFamily: 'ProximaNova',
+    marginLeft: 40,
+  },
   optionText: {
     fontSize: 16,
     fontWeight: 400,
@@ -309,13 +336,27 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     backgroundColor: 'white',
-    textAlignVertical: 'top',
+    // textAlignVertical: 'top',
     borderColor: '#E3E9ED',
 
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   inputBox: {
+    ///textAlignVertical: 'top',
+    paddingTop: 16,
+    paddingLeft: 18,
+    fontSize: 16,
+    fontFamily: 'ProximaNova',
+    flex: 1,
+    lineHeight: 16 * 1.4,
+    color: '#4F565E',
+    borderWidth: 1,
+
+    borderColor: 'transparent',
+  },
+  inputBox1: {
     textAlignVertical: 'top',
     paddingTop: 16,
     paddingLeft: 16,
@@ -325,6 +366,7 @@ const styles = StyleSheet.create({
     lineHeight: 16 * 1.4,
     color: '#4F565E',
     borderWidth: 1,
+
     borderColor: 'transparent',
   },
   submitBtn: {

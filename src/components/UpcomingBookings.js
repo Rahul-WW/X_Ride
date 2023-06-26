@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
   passengerPriceText: {
     color: '#4F565E',
     fontWeight: 400,
+    fontSize: 16,
     lineHeight: 16 * 1.4,
     letterSpacing: 0.32,
     fontFamily: 'ProximaNova',
