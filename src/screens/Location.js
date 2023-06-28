@@ -196,10 +196,14 @@ const Location = ({navigation, route}) => {
         setGetCurrentAddress(response.data.results[0].formatted_address);
         setSearchText(response.data.results[0].formatted_address + ' ');
         if (from.from === 'pickup') {
+           dispatch(
+             DropPlaceIdReq(response.data.results[0].place_id),
+           );
           dispatch(
             PickupLocationReq(response.data.results[0].formatted_address + ' '),
           );
         } else if (from.from === 'drop') {
+             dispatch(DropPlaceIdReq(response.data.results[0].place_id));
           dispatch(
             DropLocationReq(response.data.results[0].formatted_address + ' '),
           );

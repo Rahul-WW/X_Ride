@@ -15,6 +15,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import React, {useState} from 'react';
+import {Linking} from 'react-native';
 
 import UpcomingTripComponent from '../components/UpcomingTripComponent';
 import LinearGradient from 'react-native-linear-gradient';
@@ -40,6 +41,11 @@ const CompletedTrip = ({navigation}) => {
    
     navigation.navigate('TripCompletion');
   };
+
+    const handleCallBtnPressed = phoneNumber => {
+      const phoneUrl = `tel:${phoneNumber}`;
+      Linking.openURL(phoneUrl);
+    };
 
   return (
     <SafeAreaView
@@ -317,7 +323,8 @@ const CompletedTrip = ({navigation}) => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   gap: 12,
-                }}>
+                }}
+                onPress={() => handleCallBtnPressed(88888888888)}>
                 <CallIcon width={20} height={20} />
                 <View>
                   <Text style={styles.detailsListText}>Call Us</Text>
