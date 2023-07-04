@@ -26,6 +26,7 @@ import PrivacyIcon from '../svgImages/PrivacyIcon.svg';
 import RefundIcon from '../svgImages/RefundIcon.svg';
 import RightBlackArrow from '../svgImages/RightBlackArrow.svg';
 
+
 const initialImageWidth = 335;
 const initialImageHeight = 160;
 const aspectRatio = initialImageHeight / initialImageWidth;
@@ -216,7 +217,7 @@ const About = ({navigation}) => {
             <View style={styles.policies}>
               <View>
                 <View style={{height: 25}}>
-                  <Text style={styles.aboutCompanyText}>Usefull Links</Text>
+                  <Text style={styles.aboutCompanyText}>Useful Links</Text>
                 </View>
 
                 <View style={styles.horizontalLne}></View>

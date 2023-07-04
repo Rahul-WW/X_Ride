@@ -650,6 +650,7 @@ const InputFeildForDetails = ({
           lineHeight: 16 * 1.4,
           letterSpacing: 0.32,
         }}
+        placeholderTextColor={'#4F565E'}  /// this may be reason why placeholder is not visible. try changing in all TextInputs
         multiline={true}
         numberOfLines={4}
         scrollEnabled={true}

@@ -27,7 +27,7 @@ import PasswordIcon from '../svgImages/PasswordIcon.svg';
 import Pencil2 from '../svgImages/Pencil2.svg';
 import DrawerCross from '../svgImages/DrawerCross.svg';
 import LinearGradient from 'react-native-linear-gradient';
-
+import ProfileEditIcon from '../svgImages/ProfileEditIcon.svg';
 const Profile = ({navigation}) => {
   const [cantEditEmail, setCantEditEmail] = useState(false);
   const [cantEditPassword, setCantEditPassword] = useState(false);
@@ -60,7 +60,8 @@ const Profile = ({navigation}) => {
                 }}
               />
               <View style={styles.profileIcon}>
-                <Image source={require('../images/ProfileimageIcon.png')} />
+                {/* <Image source={require('../images/ProfileimageIcon.png')} /> */}
+                <ProfileEditIcon/>
               </View>
             </View>
             <View style={styles.inputDivs}>
@@ -103,7 +104,7 @@ const Profile = ({navigation}) => {
         </View>
       </ScrollView>
       <View style={styles.getQuotesDiv}>
-        <Pressable onPress={()=> navigation.navigate("Home")}>
+        <Pressable onPress={() => navigation.navigate('Home')}>
           <SaveBtn Btnwidth={'100%'} textInsideBtn="SAVE DETAILS " />
         </Pressable>
       </View>

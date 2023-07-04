@@ -145,7 +145,7 @@ const OnboardingScreens = ({navigation}) => {
             <Text style={styles.nextTypo}>Skip</Text>
           </Pressable>
           <Pressable
-            style={[styles.skip, styles.skipPosition]}
+            // style={[styles.skip, styles.skipPosition]}
             onPress={handlePressNextBtn}>
             <View>
               {/* <XBtn Btnwidth={127} textInsideBtn={'Next'} goTo={'SignUp'} /> */}
@@ -358,9 +358,12 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
   },
 
-  
+  skipPosition: {
+    
+    padding: 5,
+    paddingLeft:0,
+  },
   indicator: {
-   
     height: 8,
     backgroundColor: '#4F565E',
     width: 8,

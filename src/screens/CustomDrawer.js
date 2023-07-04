@@ -162,7 +162,7 @@ const nav = useNavigation();
               <View
                 style={{flexDirection: 'row', gap: 12, alignItems: 'center'}}>
                 <Support />
-                <Text style={styles.title}>Suppport</Text>
+                <Text style={styles.title}>Support</Text>
               </View>
               <View style={styles.arrowBox}>
                 <ArrowSidebar />
@@ -379,7 +379,7 @@ const nav = useNavigation();
 
 const styles = StyleSheet.create({
   followUsBox: {
-    marginTop: 193,
+    marginTop: 153,
     height: 77,
     marginHorizontal: 20,
   },
@@ -468,7 +468,9 @@ const styles = StyleSheet.create({
   },
   srceensBox: {
     marginHorizontal: 20,
-    height: 264,
+    height: 304,
+   
+
   },
   iconRouteBox: {
     height: 24,
@@ -484,7 +486,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova',
   },
   screenBox2: {
-    marginTop: 24,
+    marginTop: 32,
     height: 24,
 
     flexDirection: 'row',

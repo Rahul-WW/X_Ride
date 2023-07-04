@@ -66,10 +66,12 @@ const Location = ({navigation, route}) => {
     setShowSuggestions(true);
 
     // Clear the previous timeout
+    // for India : in
+    //for uk : gb
     clearTimeout(typingTimeout);
     const newTypingTimeout = setTimeout(() => {
       fetch(
-        `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${Google_Api_Key}&input=${text}`,
+        `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${Google_Api_Key}&input=${text}&components=country:${"in"}`,
       )
         .then(response => response.json())
         .then(data => {
@@ -281,7 +283,7 @@ const Location = ({navigation, route}) => {
               </TouchableOpacity>
             </View>
 
-            {predictions?.map(prediction => {
+            {showSuggestions && predictions?.map(prediction => {
               return (
                 <View key={prediction.place_id} horizontal>
                   <TouchableOpacity

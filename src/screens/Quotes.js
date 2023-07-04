@@ -502,6 +502,8 @@ const Quotes = ({navigation, route}) => {
 const HeaderForQuotes = () => {
 const pickupFromStore = useSelector(store => store.form.pickupLocation).substring(0,20)
   const dropFromStore = useSelector(store => store.form.dropLocation).substring(0,20)
+
+  console.log(pickupFromStore, dropFromStore);
   return (
     <View
       style={{
